@@ -1,0 +1,15 @@
+<div class="auth-container">
+  <h2>Connexion</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <label>Email :</label>
+      <input type="email" [(ngModel)]="email" name="email" required />
+    </div>
+    <div>
+      <label>Mot de passe :</label>
+      <input type="password" [(ngModel)]="motDePasse" name="motDePasse" required />
+    </div>
+    <button type="submit">Se connecter</button>
+    <p class="error" *ngIf="erreur">{{ erreur }}</p>
+  </form>
+</div>
