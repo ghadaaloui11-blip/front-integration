@@ -1,0 +1,25 @@
+<div class="report-container">
+  <h2>Créer un Signalement</h2>
+  <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <div>
+      <label>Description :</label>
+      <textarea [(ngModel)]="description" name="description" required></textarea>
+    </div>
+    <div>
+      <button type="button" (click)="obtenirGPS()">📍 Utiliser ma position GPS</button>
+      <p>Lat: {{ latitude }} | Lon: {{ longitude }}</p>
+    </div>
+    <div>
+      <label>Photo :</label>
+      <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+    </div>
+    <div>
+      <label>
+        <input type="checkbox" [(ngModel)]="estAnonyme" name="estAnonyme" /> Rester anonyme
+      </label>
+    </div>
+    <button type="submit">Envoyer le signalement</button>
+    <p class="success" *ngIf="message">{{ message }}</p>
+    <p class="error" *ngIf="erreur">{{ erreur }}</p>
+  </form>
+</div>

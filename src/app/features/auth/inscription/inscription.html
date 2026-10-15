@@ -1,0 +1,100 @@
+<div class="inscription-container">
+  <h2>Créer un compte</h2>
+
+  <form [formGroup]="inscriptionForm" (ngSubmit)="onRegister()">
+    <div class="form-group">
+      <label>Nom : *</label>
+      <input type="text" formControlName="nom" />
+      <small
+        class="error"
+        *ngIf="inscriptionForm.get('nom')?.invalid && inscriptionForm.get('nom')?.touched"
+      >
+        Le nom est obligatoire.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>Prénom : *</label>
+      <input type="text" formControlName="prenom" />
+      <small
+        class="error"
+        *ngIf="inscriptionForm.get('prenom')?.invalid && inscriptionForm.get('prenom')?.touched"
+      >
+        Le prénom est obligatoire.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>E-mail : *</label>
+      <input type="email" formControlName="email" />
+      <small
+        class="error"
+        *ngIf="inscriptionForm.get('email')?.invalid && inscriptionForm.get('email')?.touched"
+      >
+        Entrez une adresse e-mail valide.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>Téléphone : *</label>
+      <input type="text" formControlName="telephone" />
+      <small
+        class="error"
+        *ngIf="
+          inscriptionForm.get('telephone')?.invalid && inscriptionForm.get('telephone')?.touched
+        "
+      >
+        Numéro de téléphone invalide.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>Mot de passe : *</label>
+      <input type="password" formControlName="motDePasse" />
+      <small
+        class="error"
+        *ngIf="
+          inscriptionForm.get('motDePasse')?.invalid && inscriptionForm.get('motDePasse')?.touched
+        "
+      >
+        Le mot de passe doit contenir au moins 6 caractères.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>Rôle : *</label>
+      <select formControlName="role">
+        <option value="citoyen">Citoyen</option>
+        <option value="association">Association</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Adresse : *</label>
+      <input type="text" formControlName="adresse" />
+      <small
+        class="error"
+        *ngIf="inscriptionForm.get('adresse')?.invalid && inscriptionForm.get('adresse')?.touched"
+      >
+        L'adresse est obligatoire.
+      </small>
+    </div>
+
+    <!-- Champs spécifiques si le rôle est une association -->
+    <div class="form-group" *ngIf="inscriptionForm.get('role')?.value === 'association'">
+      <label>Nom de l'association :</label>
+      <input type="text" formControlName="nomAssociation" />
+    </div>
+
+    <div class="form-group" *ngIf="inscriptionForm.get('role')?.value === 'association'">
+      <label>Matricule Fiscal :</label>
+      <input type="text" formControlName="matriculeFiscal" />
+    </div>
+
+    <p class="error-global" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <button type="submit" [disabled]="inscriptionForm.invalid">S'inscrire</button>
+  </form>
+
+  <p>Déjà un compte ? <a routerLink="/login">Se connecter</a></p>
+</div>
