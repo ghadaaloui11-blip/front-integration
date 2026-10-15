@@ -1,0 +1,51 @@
+<h1 class="title">Signalements reçus</h1>
+<p class="sub">Situations signalées par la communauté.</p>
+
+@if (loading()) { <p class="sub">Chargement...</p> }
+@if (error()) { <div class="alert-error">{{ error() }}</div> }
+
+<div class="card-box">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Signalement</th>
+        <th>Catégorie</th>
+        <th>Lieu</th>
+        <th>Reçu</th>
+        <th>Statut</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (r of reports(); track r.id) {
+        <tr>
+          <td class="bold">{{ r.titre }}</td>
+          <td>
+            @if (r.categorie) {
+              <span [class]="'badge ' + r.classe">{{ r.categorie }}</span>
+            } @else {
+              <span class="muted">-</span>
+            }
+          </td>
+          <td>{{ r.lieu || '-' }}@if (r.anonyme) { (anonyme) }</td>
+          <td class="muted">{{ tempsEcoule(r.date) }}</td>
+          <td><span class="statut">{{ r.statut }}</span></td>
+          <td><a class="voir" (click)="selected = r">Voir ›</a></td>
+        </tr>
+      } @empty {
+        @if (!loading()) {
+          <tr><td colspan="6" class="muted">Aucun signalement.</td></tr>
+        }
+      }
+    </tbody>
+  </table>
+</div>
+
+@if (selected) {
+  <div class="card-box detail">
+    <h3 class="detail-title">{{ selected.titre }}</h3>
+    <p class="detail-text">{{ selected.description }}</p>
+    <p class="muted">Lieu : {{ selected.lieu || '-' }}</p>
+    <a class="voir" (click)="selected = null">Fermer</a>
+  </div>
+}

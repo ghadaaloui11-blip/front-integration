@@ -1,1 +1,36 @@
-<router-outlet></router-outlet>
+@if (isAuthPage()) {
+  <router-outlet />
+} @else {
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">♥ Solidarité</div>
+
+      <nav class="menu">
+        <a routerLink="/campagnes" routerLinkActive="active">Campagnes</a>
+
+        @if (auth.getRole() === 'association') {
+          <a routerLink="/mes-campagnes" routerLinkActive="active">Mes campagnes</a>
+          <a routerLink="/association-reports" routerLinkActive="active">Signalements</a>
+        } @else {
+          <a routerLink="/signalement" routerLinkActive="active">Nouveau signalement</a>
+        }
+      </nav>
+
+      <a class="logout" (click)="logout()">Se déconnecter</a>
+    </aside>
+
+    <!-- Contenu -->
+    <div class="main">
+      <header class="topbar">
+        <input class="search" placeholder="Rechercher une campagne..." />
+      </header>
+
+      <main class="content">
+        <router-outlet />
+      </main>
+    </div>
+
+  </div>
+}

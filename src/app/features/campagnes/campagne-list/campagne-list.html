@@ -1,0 +1,45 @@
+<h1 class="title">Campagnes</h1>
+<p class="sub">Choisissez une cause à soutenir.</p>
+
+<!-- Onglets -->
+<div class="tabs">
+  <button type="button" class="tab" [class.active]="onglet === 'toutes'" (click)="onglet = 'toutes'">Toutes</button>
+  <button type="button" class="tab" [class.active]="onglet === 'campagnes'" (click)="onglet = 'campagnes'">Campagnes</button>
+  <button type="button" class="tab" [class.active]="onglet === 'associations'" (click)="onglet = 'associations'">Associations</button>
+</div>
+
+@if (loading()) { <p class="sub">Chargement...</p> }
+@if (error()) { <div class="alert-error">{{ error() }}</div> }
+
+<!-- Campagnes -->
+@if (onglet !== 'associations') {
+  <div class="grid">
+    @for (c of campagnes(); track c.id) {
+      <a class="card-camp" [routerLink]="['/campagnes', c.id]">
+        <div class="photo">photo</div>
+        <div class="card-body">
+          <h3 class="card-title">{{ c.titre }}</h3>
+          <div class="card-asso">{{ $any(c).association_nom }}</div>
+
+          <div class="bar"><div class="fill" [style.width.%]="pourcentage(c)"></div></div>
+
+          <div class="card-stats">{{ pourcentage(c) }} % · {{ c.montant_collecte }} TND</div>
+        </div>
+      </a>
+    } @empty {
+      @if (!loading()) { <p class="sub">Aucune campagne pour le moment.</p> }
+    }
+  </div>
+}
+
+<!-- Associations -->
+@if (onglet !== 'campagnes') {
+  <h2 class="title2">Associations</h2>
+  <div class="card-box">
+    @for (a of associations(); track $index) {
+      <div class="asso-row">{{ a.nom ?? a.nom_association }}</div>
+    } @empty {
+      <div class="asso-row muted">Aucune association.</div>
+    }
+  </div>
+}

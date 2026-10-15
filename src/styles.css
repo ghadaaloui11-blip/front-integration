@@ -1,13 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f7f6;
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
   min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #f1f5f9;
 }
+
+app-root {
+  display: block;
+  width: 100%;
+}
+
+/* ===== Pages login / inscription / signalement (équipe) ===== */
 
 .auth-container,
 .inscription-container,
@@ -18,47 +28,70 @@ body {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 450px;
-  box-sizing: border-box;
 }
 
-h2 {
+.auth-container,
+.inscription-container {
+  margin: 60px auto;
+}
+
+.auth-container h2,
+.inscription-container h2,
+.report-container h2 {
   text-align: center;
   color: #2c3e50;
   margin-bottom: 25px;
 }
 
-.form-group {
+.auth-container .form-group,
+.inscription-container .form-group,
+.report-container .form-group {
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
 }
 
-label {
+.auth-container label,
+.inscription-container label,
+.report-container label {
   font-weight: 600;
   margin-bottom: 5px;
   color: #34495e;
   font-size: 14px;
 }
 
-input,
-select,
-textarea {
+.auth-container input,
+.auth-container select,
+.auth-container textarea,
+.inscription-container input,
+.inscription-container select,
+.inscription-container textarea,
+.report-container input,
+.report-container select,
+.report-container textarea {
   padding: 10px 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 14px;
-  transition: border-color 0.3s ease;
 }
 
-input:focus,
-select:focus,
-textarea:focus {
+.auth-container input:focus,
+.auth-container select:focus,
+.auth-container textarea:focus,
+.inscription-container input:focus,
+.inscription-container select:focus,
+.inscription-container textarea:focus,
+.report-container input:focus,
+.report-container select:focus,
+.report-container textarea:focus {
   outline: none;
   border-color: #3498db;
   box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
 }
 
-button[type='submit'] {
+.auth-container button[type='submit'],
+.inscription-container button[type='submit'],
+.report-container button[type='submit'] {
   width: 100%;
   padding: 12px;
   background-color: #3498db;
@@ -68,26 +101,33 @@ button[type='submit'] {
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
   margin-top: 10px;
 }
 
-button[type='submit']:hover:not(:disabled) {
+.auth-container button[type='submit']:hover:not(:disabled),
+.inscription-container button[type='submit']:hover:not(:disabled),
+.report-container button[type='submit']:hover:not(:disabled) {
   background-color: #2980b9;
 }
 
-button[type='submit']:disabled {
+.auth-container button[type='submit']:disabled,
+.inscription-container button[type='submit']:disabled,
+.report-container button[type='submit']:disabled {
   background-color: #bdc3c7;
   cursor: not-allowed;
 }
 
-.error {
+.auth-container .error,
+.inscription-container .error,
+.report-container .error {
   color: #e74c3c;
   font-size: 12px;
   margin-top: 4px;
 }
 
-.error-global {
+.auth-container .error-global,
+.inscription-container .error-global,
+.report-container .error-global {
   background-color: #fadbd8;
   color: #c0392b;
   padding: 10px;
@@ -97,19 +137,25 @@ button[type='submit']:disabled {
   margin-bottom: 15px;
 }
 
-p {
+.auth-container p,
+.inscription-container p,
+.report-container p {
   text-align: center;
   margin-top: 20px;
   font-size: 14px;
   color: #7f8c8d;
 }
 
-a {
+.auth-container a,
+.inscription-container a,
+.report-container a {
   color: #3498db;
   text-decoration: none;
   font-weight: 600;
 }
 
-a:hover {
+.auth-container a:hover,
+.inscription-container a:hover,
+.report-container a:hover {
   text-decoration: underline;
 }

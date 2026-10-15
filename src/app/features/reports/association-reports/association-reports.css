@@ -1,0 +1,150 @@
+.title {
+  color: #1f4e79;
+  font-size: 34px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.sub {
+  color: #64748b;
+  margin: 0 0 24px 0;
+  font-size: 17px;
+}
+
+/* Onglets */
+.tabs {
+  display: inline-flex;
+  gap: 4px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+
+.tab {
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 16px;
+  color: #1f4e79;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: #1f4e79;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Carte + tableau */
+.card-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px 28px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  text-align: left;
+  color: #64748b;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.table td {
+  padding: 18px 8px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 17px;
+  color: #0f172a;
+}
+
+.table tr:last-child td {
+  border-bottom: 0;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.muted {
+  color: #64748b;
+  font-size: 15px;
+}
+
+/* Badges catégorie */
+.badge {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 14px;
+  background: #ffffff;
+  border: 1px solid #1f4e79;
+  color: #1f4e79;
+}
+
+.badge.social {
+  border-color: #a855c7;
+  color: #a855c7;
+}
+
+.badge.sante {
+  border-color: #dc2626;
+  color: #dc2626;
+}
+
+.badge.urgence {
+  border-color: #ea580c;
+  color: #ea580c;
+}
+
+/* Statut */
+.statut {
+  display: inline-block;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  color: #92400e;
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 14px;
+}
+
+.voir {
+  color: #1f4e79;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Détail */
+.detail {
+  margin-top: 24px;
+}
+
+.detail-title {
+  color: #1f4e79;
+  font-size: 22px;
+  margin: 0 0 10px 0;
+}
+
+.detail-text {
+  color: #0f172a;
+  margin: 0 0 14px 0;
+  line-height: 1.5;
+}
+
+.alert-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}

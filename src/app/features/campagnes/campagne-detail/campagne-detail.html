@@ -1,0 +1,81 @@
+<a routerLink="/campagnes" class="back">‹ Campagnes</a>
+
+@if (data(); as d) {
+  <div class="detail">
+
+    <!-- Colonne gauche -->
+    <div class="left">
+      <div class="image-box">Image de la campagne</div>
+
+      <div class="card-box">
+        <h1 class="title">{{ d.titre }}</h1>
+        <p class="verified">{{ d.statut }}</p>
+
+        <h3 class="section">Utilisation des fonds</h3>
+
+        @for (u of d.utilisation_fonds; track u.id) {
+          <div class="row">
+            <span>{{ u.libelle }} <small class="date">({{ u.date_utilisation }})</small></span>
+            <strong>{{ u.montant }} TND</strong>
+          </div>
+        } @empty {
+          <div class="row">
+            <span>Aucune utilisation enregistrée.</span>
+          </div>
+        }
+
+        <div class="row">
+          <span>Total utilisé</span>
+          <strong>{{ d.total_utilise }} TND</strong>
+        </div>
+        <div class="row">
+          <span>Solde disponible</span>
+          <strong>{{ d.solde_disponible }} TND</strong>
+        </div>
+
+        @if (isAssociation) {
+          <h3 class="section">Déclarer une utilisation</h3>
+          <div class="form-line">
+            <input [(ngModel)]="libelle" placeholder="Libellé" />
+            <input [(ngModel)]="montant" type="number" placeholder="Montant" />
+          </div>
+          <button type="button" class="btn-main" (click)="ajouterUtilisation()">Enregistrer</button>
+        }
+      </div>
+    </div>
+
+    <!-- Colonne droite -->
+    <div class="right">
+      <div class="card-box">
+        <h3 class="suivi">Suivi</h3>
+
+        <div class="bar"><div class="fill" [style.width.%]="d.pourcentage"></div></div>
+
+        <div class="stats">
+          <div>
+            <div class="num">{{ d.montant_collecte }} TND</div>
+            <div class="label">collectés</div>
+          </div>
+          <div>
+            <div class="num">{{ d.pourcentage }} %</div>
+            <div class="label">de l'objectif</div>
+          </div>
+          <div>
+            <div class="num">{{ d.jours_restants }}</div>
+            <div class="label">jours restants</div>
+          </div>
+        </div>
+
+        <p class="reste">Reste à collecter : {{ d.montant_restant }} TND</p>
+
+        @if (!isAssociation) {
+          <a class="btn-main btn-link" [routerLink]="['/campagnes', campagneId, 'don']">Faire un don</a>
+        }
+      </div>
+    </div>
+
+  </div>
+}
+
+@if (error()) { <p class="error">{{ error() }}</p> }
+@if (success()) { <p class="success">{{ success() }}</p> }

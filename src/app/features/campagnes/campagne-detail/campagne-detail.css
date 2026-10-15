@@ -1,0 +1,157 @@
+.back {
+  color: #1f4e79;
+  text-decoration: underline;
+  display: inline-block;
+  margin-bottom: 14px;
+}
+
+.detail {
+  display: grid;
+  grid-template-columns: 1fr 575px;
+  gap: 30px;
+  align-items: start;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.image-box {
+  height: 375px;
+  background: #dfe6ef;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+}
+
+.card-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 28px;
+}
+
+.title {
+  color: #1f4e79;
+  font-size: 34px;
+  margin: 0 0 6px 0;
+}
+
+.verified {
+  color: #4a7c2f;
+  font-size: 18px;
+  margin: 0 0 24px 0;
+}
+
+.section {
+  color: #0f172a;
+  font-size: 20px;
+  margin: 24px 0 10px 0;
+}
+
+.line {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 17px;
+}
+
+.date {
+  color: #94a3b8;
+}
+
+/* Suivi */
+.suivi {
+  font-size: 20px;
+  margin: 0 0 14px 0;
+}
+
+.bar {
+  background: #dfe6ef;
+  border-radius: 8px;
+  height: 12px;
+  overflow: hidden;
+}
+
+.fill {
+  background: #4a7c2f;
+  height: 100%;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin: 24px 0 14px 0;
+}
+
+.num {
+  color: #1f4e79;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.label {
+  color: #64748b;
+  font-size: 15px;
+}
+
+.reste {
+  color: #64748b;
+  margin: 0 0 20px 0;
+}
+
+/* Formulaire association */
+.form-line {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.form-line input {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 16px;
+  outline: none;
+}
+
+.form-line input:focus {
+  border-color: #1f4e79;
+}
+
+/* Boutons */
+.btn-main {
+  display: block;
+  width: 100%;
+  background: #1f4e79;
+  color: #ffffff;
+  border: 0;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-main:hover {
+  background: #1a4268;
+}
+
+/* Messages */
+.error { color: #b91c1c; margin-top: 16px; }
+.success { color: #4a7c2f; margin-top: 16px; }
+
+@media (max-width: 1100px) {
+  .detail {
+    grid-template-columns: 1fr;
+  }
+}

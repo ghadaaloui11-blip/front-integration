@@ -1,0 +1,119 @@
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.title {
+  color: #1f4e79;
+  font-size: 34px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.sub {
+  color: #64748b;
+  margin: 0;
+  font-size: 17px;
+}
+
+.btn-main {
+  background: #1f4e79;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btn-main:hover {
+  background: #1a4268;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 26px;
+}
+
+.card-camp {
+  display: block;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.card-camp:hover {
+  border-color: #1f4e79;
+  box-shadow: 0 4px 14px rgba(31, 78, 121, 0.12);
+}
+
+.photo {
+  height: 190px;
+  background: #dfe6ef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  color: #0f172a;
+  font-size: 21px;
+  margin: 0 0 8px 0;
+}
+
+.statut {
+  display: inline-block;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  color: #92400e;
+  border-radius: 20px;
+  padding: 3px 12px;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+.bar {
+  background: #dfe6ef;
+  border-radius: 8px;
+  height: 12px;
+  overflow: hidden;
+}
+
+.fill {
+  background: #4a7c2f;
+  height: 100%;
+}
+
+.card-stats {
+  color: #4a7c2f;
+  font-weight: 600;
+  font-size: 16px;
+  margin: 14px 0;
+}
+
+.link {
+  color: #1f4e79;
+  text-decoration: underline;
+  font-size: 15px;
+}
+
+.alert-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}

@@ -1,14 +1,24 @@
-import { Component } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
-
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
-export class AppComponent {
-  title = 'solidarite-frontend';
+export class App {
+  private router = inject(Router);
+  auth = inject(AuthService);
+
+  isAuthPage(): boolean {
+    const url = this.router.url;
+    return url.startsWith('/login') || url.startsWith('/inscription');
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
 }

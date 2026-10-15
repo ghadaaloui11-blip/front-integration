@@ -29,4 +29,14 @@ export class AuthService {
   deconnecter(): void {
     localStorage.removeItem('token');
   }
+  getRole(): string | null {
+  const token = this.getToken();
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+    return payload.role ?? null;
+  } catch {
+    return null;
+  }
+}
 }

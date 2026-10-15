@@ -1,0 +1,29 @@
+<div class="head">
+  <div>
+    <h1 class="title">Mes campagnes</h1>
+    <p class="sub">Suivez l'avancement de vos campagnes.</p>
+  </div>
+  <a class="btn-main" routerLink="/campagnes/nouvelle">+ Nouvelle campagne</a>
+</div>
+
+@if (loading()) { <p class="sub">Chargement...</p> }
+@if (error()) { <div class="alert-error">{{ error() }}</div> }
+
+<div class="grid">
+  @for (c of campagnes(); track c.id) {
+    <a class="card-camp" [routerLink]="['/campagnes', c.id]">
+      <div class="photo">photo</div>
+      <div class="card-body">
+        <h3 class="card-title">{{ c.titre }}</h3>
+        <div class="statut">{{ c.statut }}</div>
+
+        <div class="bar"><div class="fill" [style.width.%]="pourcentage(c)"></div></div>
+
+        <div class="card-stats">{{ pourcentage(c) }} % · {{ c.montant_collecte }} / {{ c.objectif_montant }} TND</div>
+        <div class="link">Avancement et utilisation ›</div>
+      </div>
+    </a>
+  } @empty {
+    @if (!loading()) { <p class="sub">Vous n'avez encore créé aucune campagne.</p> }
+  }
+</div>

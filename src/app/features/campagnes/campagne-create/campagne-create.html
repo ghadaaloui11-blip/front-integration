@@ -1,0 +1,77 @@
+<div class="page">
+  <h1 class="page-title">Nouvelle campagne</h1>
+  <p class="page-sub">Créez une campagne pour collecter des dons.</p>
+
+  <div class="card-box">
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+
+      <!-- Titre -->
+      <div class="field">
+        <label for="titre">Titre</label>
+        <input
+          id="titre"
+          placeholder="Ex. Aide scolaire – rentrée 2026"
+          formControlName="titre"
+          [class.is-invalid]="form.controls.titre.touched && form.controls.titre.invalid"
+        />
+        @if (form.controls.titre.touched && form.controls.titre.invalid) {
+          <div class="error-text">Titre obligatoire (3 caractères minimum).</div>
+        }
+      </div>
+
+      <!-- Description -->
+      <div class="field">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          rows="4"
+          placeholder="Décrivez la campagne..."
+          formControlName="description"
+          [class.is-invalid]="form.controls.description.touched && form.controls.description.invalid"
+        ></textarea>
+        @if (form.controls.description.touched && form.controls.description.invalid) {
+          <div class="error-text">Description obligatoire.</div>
+        }
+      </div>
+
+      <!-- Objectif -->
+      <div class="field">
+        <label for="objectif">Objectif (TND)</label>
+        <input
+          id="objectif"
+          type="number"
+          formControlName="objectif_montant"
+          [class.is-invalid]="form.controls.objectif_montant.touched && form.controls.objectif_montant.invalid"
+        />
+        @if (form.controls.objectif_montant.touched && form.controls.objectif_montant.invalid) {
+          <div class="error-text">L'objectif doit être supérieur à 0.</div>
+        }
+      </div>
+
+      <!-- Dates -->
+      <div class="row-2">
+        <div class="field">
+          <label for="date_debut">Date de début</label>
+          <input id="date_debut" type="date" formControlName="date_debut" />
+        </div>
+        <div class="field">
+          <label for="date_fin">Date de fin</label>
+          <input id="date_fin" type="date" formControlName="date_fin" />
+        </div>
+      </div>
+
+      <!-- Erreur serveur -->
+      @if (error()) {
+        <div class="alert-error">{{ error() }}</div>
+      }
+
+      <button type="submit" class="btn-main" [disabled]="loading()">
+        @if (loading()) {
+          Création...
+        } @else {
+          Créer la campagne
+        }
+      </button>
+    </form>
+  </div>
+</div>
