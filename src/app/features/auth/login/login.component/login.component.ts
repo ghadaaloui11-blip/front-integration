@@ -28,7 +28,7 @@ export class LoginComponent {
         if (role === 'association') {
           this.router.navigate(['/mes-campagnes']);
         } else if (role === 'admin') {
-          this.router.navigate(['/campagnes']); // à remplacer par la page admin du Membre 1
+          this.router.navigate(['/admin/associations']);
         } else {
           this.router.navigate(['/signalement']); // citoyen
         }

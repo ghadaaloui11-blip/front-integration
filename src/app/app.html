@@ -10,10 +10,15 @@
       <nav class="menu">
         <a routerLink="/campagnes" routerLinkActive="active">Campagnes</a>
 
+        @if (auth.getRole() === 'admin') {
+          <a routerLink="/admin/associations" routerLinkActive="active">Gestion associations</a>
+        }
+
         @if (auth.getRole() === 'association') {
           <a routerLink="/mes-campagnes" routerLinkActive="active">Mes campagnes</a>
           <a routerLink="/association-reports" routerLinkActive="active">Signalements</a>
-        } @else {
+          <a routerLink="/mes-documents" routerLinkActive="active">Mes documents</a>
+        } @else if (auth.getRole() !== 'admin') {
           <a routerLink="/signalement" routerLinkActive="active">Nouveau signalement</a>
         }
       </nav>

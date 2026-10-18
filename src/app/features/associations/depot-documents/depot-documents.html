@@ -1,0 +1,99 @@
+<div class="page">
+  <h1 class="page-title">Mes documents légaux</h1>
+  <p class="page-sub">Déposez les documents requis pour valider votre association.</p>
+
+  <!-- Statut de validation -->
+  @if (statut()) {
+    <div class="statut-card" [ngClass]="'statut-' + statut()!.statut_validation">
+      <span class="statut-icon">
+        @if (statut()!.statut_validation === 'approuve') { ✅ }
+        @else if (statut()!.statut_validation === 'refuse') { ❌ }
+        @else { ⏳ }
+      </span>
+      <div>
+        <strong>Statut : {{ getStatutLabel(statut()!.statut_validation) }}</strong>
+        @if (statut()!.commentaire_admin) {
+          <p class="statut-commentaire">{{ statut()!.commentaire_admin }}</p>
+        }
+        @if (statut()!.date_validation) {
+          <p class="statut-date">Le {{ statut()!.date_validation }}</p>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Formulaire de dépôt -->
+  <div class="card-box">
+    <h2 class="section-title">Déposer un document</h2>
+
+    @if (error()) {
+      <div class="alert-error">{{ error() }}</div>
+    }
+    @if (success()) {
+      <div class="alert-success">{{ success() }}</div>
+    }
+
+    <div class="upload-form">
+      <div class="field">
+        <label for="typeDoc">Type de document</label>
+        <select id="typeDoc" [(ngModel)]="typeDocument">
+          @for (type of typesDocument; track type.value) {
+            <option [value]="type.value">{{ type.label }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="fichier">Fichier (PDF, JPG, PNG — max 10 Mo)</label>
+        <input
+          id="fichier"
+          type="file"
+          accept=".pdf,.jpg,.jpeg,.png"
+          (change)="onFichierChange($event)"
+          class="file-input"
+        />
+        @if (fichierSelectionne) {
+          <span class="file-name">{{ fichierSelectionne.name }}</span>
+        }
+      </div>
+
+      <button class="btn-main" (click)="deposer()" [disabled]="uploading()">
+        @if (uploading()) { Envoi en cours... } @else { Déposer le document }
+      </button>
+    </div>
+  </div>
+
+  <!-- Liste des documents déposés -->
+  <div class="card-box">
+    <h2 class="section-title">Documents déposés</h2>
+
+    @if (loading()) {
+      <p class="loading-text">Chargement...</p>
+    } @else if (documents().length === 0) {
+      <p class="empty-text">Aucun document déposé pour le moment.</p>
+    } @else {
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Nom du fichier</th>
+            <th>Date de dépôt</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (doc of documents(); track doc.id) {
+            <tr>
+              <td><span class="badge-type">{{ getTypeLabel(doc.type_document) }}</span></td>
+              <td>{{ doc.nom_original }}</td>
+              <td>{{ doc.date_depot }}</td>
+              <td>
+                <button class="btn-delete" (click)="supprimer(doc.id)">Supprimer</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+</div>

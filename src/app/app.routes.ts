@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './features/auth/login/login.component/login.component';
 import { Inscription } from './features/auth/inscription/inscription';
 import { CreateReportComponent } from './features/reports/create-report/report.component/report.component';
-import { associationGuard, citoyenGuard } from './core/guards/role.guards';
+import { associationGuard, citoyenGuard, adminGuard } from './core/guards/role.guards';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -42,6 +42,22 @@ export const routes: Routes = [
     canActivate: [associationGuard],
     loadComponent: () =>
       import('./features/reports/association-reports/association-reports').then(m => m.AssociationReports),
+  },
+
+  // US02 : dépôt des documents légaux (association)
+  {
+    path: 'mes-documents',
+    canActivate: [associationGuard],
+    loadComponent: () =>
+      import('./features/associations/depot-documents/depot-documents').then(m => m.DepotDocuments),
+  },
+
+  // US03 : gestion des associations (admin)
+  {
+    path: 'admin/associations',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./features/associations/admin-associations/admin-associations').then(m => m.AdminAssociations),
   },
 
   { path: '', redirectTo: 'login', pathMatch: 'full' },

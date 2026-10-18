@@ -23,3 +23,14 @@ export const citoyenGuard: CanActivateFn = () => {
   router.navigate(['/association-reports']);
   return false;
 };
+
+export const adminGuard: CanActivateFn = () => {
+  const auth = inject(AuthService);
+  const router = inject(Router);
+
+  if (auth.getRole() === 'admin') {
+    return true;
+  }
+  router.navigate(['/campagnes']);
+  return false;
+};
