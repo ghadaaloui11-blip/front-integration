@@ -47,6 +47,7 @@
         <label for="fichier">Fichier (PDF, JPG, PNG — max 10 Mo)</label>
         <input
           id="fichier"
+          #fichierInput
           type="file"
           accept=".pdf,.jpg,.jpeg,.png"
           (change)="onFichierChange($event)"

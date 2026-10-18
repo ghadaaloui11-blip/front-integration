@@ -82,13 +82,31 @@
 
     <!-- Champs spécifiques si le rôle est une association -->
     <div class="form-group" *ngIf="inscriptionForm.get('role')?.value === 'association'">
-      <label>Nom de l'association :</label>
+      <label>Nom de l'association : *</label>
       <input type="text" formControlName="nomAssociation" />
+      <small
+        class="error"
+        *ngIf="
+          inscriptionForm.get('nomAssociation')?.invalid &&
+          inscriptionForm.get('nomAssociation')?.touched
+        "
+      >
+        Le nom de l'association est obligatoire.
+      </small>
     </div>
 
     <div class="form-group" *ngIf="inscriptionForm.get('role')?.value === 'association'">
-      <label>Matricule Fiscal :</label>
+      <label>Matricule Fiscal : *</label>
       <input type="text" formControlName="matriculeFiscal" />
+      <small
+        class="error"
+        *ngIf="
+          inscriptionForm.get('matriculeFiscal')?.invalid &&
+          inscriptionForm.get('matriculeFiscal')?.touched
+        "
+      >
+        Le matricule fiscal est obligatoire.
+      </small>
     </div>
 
     <p class="error-global" *ngIf="errorMessage">{{ errorMessage }}</p>

@@ -5,7 +5,9 @@ import {
   AssociationService,
   AssociationAdmin,
   DocumentAdmin,
+  statutLabel,
 } from '../../../core/services/association.service';
+import { API_BASE } from '../../../core/config/api-base.token';
 
 @Component({
   selector: 'app-admin-associations',
@@ -14,8 +16,9 @@ import {
   templateUrl: './admin-associations.html',
   styleUrl: './admin-associations.css',
 })
-export class AdminAssociations implements OnInit {
+export class AdminAssociationsComponent implements OnInit {
   private service = inject(AssociationService);
+  private apiBase = inject(API_BASE);
 
   associations = signal<AssociationAdmin[]>([]);
   loading = signal(true);
@@ -73,7 +76,8 @@ export class AdminAssociations implements OnInit {
         this.documents.set(docs);
         this.loadingDocs = false;
       },
-      error: () => {
+      error: (e) => {
+        this.error.set(e.error?.erreur ?? e.error?.message ?? 'Impossible de charger les documents.');
         this.loadingDocs = false;
       },
     });
@@ -103,7 +107,7 @@ export class AdminAssociations implements OnInit {
         this.charger();
       },
       error: (e) => {
-        this.error.set(e.error?.message ?? 'Erreur lors de la validation.');
+        this.error.set(e.error?.erreur ?? e.error?.message ?? 'Erreur lors de la validation.');
       },
     });
   }
@@ -118,16 +122,11 @@ export class AdminAssociations implements OnInit {
   }
 
   getStatutLabel(s: string): string {
-    const map: Record<string, string> = {
-      pending: 'En attente',
-      approuve: 'Approuvée',
-      refuse: 'Refusée',
-    };
-    return map[s] ?? s;
+    return statutLabel(s);
   }
 
   getDocUrl(chemin: string): string {
-    return `http://localhost:5000/${chemin}`;
+    return `${this.apiBase}/${chemin}`;
   }
 
   getDocIcon(nom: string): string {

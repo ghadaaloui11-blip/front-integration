@@ -1,0 +1,147 @@
+<a [routerLink]="['/campagnes', campagneId]" class="back no-print">‹ Retour à la campagne</a>
+
+@if (receipt(); as r) {
+  <!-- ===== Reçu ===== -->
+  <div class="page receipt-page">
+    <div class="card-box receipt" id="recu">
+      <div class="receipt-head">
+        <div class="receipt-logo">♥ Solidarité</div>
+        <div class="receipt-title">Reçu de don</div>
+        <div class="receipt-sub">Merci pour votre générosité !</div>
+      </div>
+
+      <div class="receipt-row">
+        <span>Référence</span>
+        <strong>{{ r.reference }}</strong>
+      </div>
+      <div class="receipt-row">
+        <span>Campagne</span>
+        <strong>{{ campagne()?. titre ?? 'Campagne #' + r.campagne_id }}</strong>
+      </div>
+      <div class="receipt-row">
+        <span>Donateur</span>
+        <strong>{{ r.est_anonyme ? 'Anonyme' : r.nom || 'Non renseigné' }}</strong>
+      </div>
+      <div class="receipt-row">
+        <span>Date</span>
+        <strong>{{ r.date | date: 'dd/MM/yyyy HH:mm' }}</strong>
+      </div>
+      @if (r.message) {
+        <div class="receipt-row">
+          <span>Message</span>
+          <strong>{{ r.message }}</strong>
+        </div>
+      }
+      <div class="receipt-row receipt-total">
+        <span>Montant</span>
+        <strong>{{ r.montant | number: '1.2-2' }} TND</strong>
+      </div>
+
+      <div class="receipt-statut">{{ r.statut }}</div>
+
+      <div class="receipt-actions no-print">
+        <button type="button" class="btn-main" (click)="imprimer()">Imprimer / Télécharger PDF</button>
+        <a class="btn-link" [routerLink]="['/campagnes', campagneId]">Retour à la campagne</a>
+      </div>
+    </div>
+  </div>
+} @else {
+  <!-- ===== Formulaire ===== -->
+  <div class="page">
+    <h1 class="page-title">Faire un don</h1>
+    @if (campagne(); as c) {
+      <p class="page-sub">Campagne : {{ c.titre }}</p>
+    } @else {
+      <p class="page-sub">Soutenez une campagne de solidarité.</p>
+    }
+
+    @if (campagne(); as c) {
+      <div class="card-box summary">
+        <div class="summary-item">
+          <div class="num">{{ c.montant_collecte | number: '1.0-0' }} TND</div>
+          <div class="label">collectés</div>
+        </div>
+        <div class="summary-item">
+          <div class="num">{{ c.pourcentage }} %</div>
+          <div class="label">de l'objectif</div>
+        </div>
+        <div class="summary-item">
+          <div class="num">{{ c.montant_restant | number: '1.0-0' }} TND</div>
+          <div class="label">reste à collecter</div>
+        </div>
+      </div>
+    }
+
+    <div class="card-box">
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <!-- Montants prédéfinis -->
+        <div class="field">
+          <label>Montant (TND)</label>
+          <div class="chips">
+            @for (p of presets; track p) {
+              <button
+                type="button"
+                class="chip"
+                [class.active]="form.controls.montant.value === p"
+                (click)="setMontant(p)"
+              >
+                {{ p }}
+              </button>
+            }
+          </div>
+          <input
+            id="montant"
+            type="number"
+            min="1"
+            placeholder="Ou saisissez un montant libre"
+            formControlName="montant"
+            [class.is-invalid]="form.controls.montant.touched && form.controls.montant.invalid"
+          />
+          @if (form.controls.montant.touched && form.controls.montant.invalid) {
+            <div class="error-text">Le montant doit être supérieur à 0.</div>
+          }
+        </div>
+
+        <!-- Don anonyme -->
+        <div class="field check">
+          <label class="check-label">
+            <input type="checkbox" formControlName="estAnonyme" />
+            Don anonyme (mon nom ne sera pas affiché)
+          </label>
+        </div>
+
+        @if (!form.controls.estAnonyme.value) {
+          <!-- Nom affiché -->
+          <div class="field">
+            <label for="nom">Nom affiché (optionnel)</label>
+            <input id="nom" type="text" placeholder="Votre nom" formControlName="nom" />
+          </div>
+
+          <!-- Message -->
+          <div class="field">
+            <label for="message">Message (optionnel)</label>
+            <textarea
+              id="message"
+              rows="3"
+              placeholder="Un mot d'encouragement..."
+              formControlName="message"
+            ></textarea>
+          </div>
+        }
+
+        @if (error()) {
+          <div class="alert-error">{{ error() }}</div>
+        }
+
+        <button type="submit" class="btn-main" [disabled]="loading()">
+          @if (loading()) {
+            Traitement...
+          } @else {
+            Valider le don
+          }
+        </button>
+        <p class="note">Paiement simulé — aucun montant réel ne sera débité.</p>
+      </form>
+    </div>
+  </div>
+}

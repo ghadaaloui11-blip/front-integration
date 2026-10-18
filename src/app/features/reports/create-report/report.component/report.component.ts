@@ -6,8 +6,7 @@ import { SignalementService } from '../../../../core/services/signalement.servic
   selector: 'app-report',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './report.component.html',  
-  styleUrls: ['./report.component.css']})
+  templateUrl: './report.component.html'})
 export class CreateReportComponent {
   description = '';
   latitude = '';
@@ -16,6 +15,7 @@ export class CreateReportComponent {
   selectedFile: File | null = null;
   message = '';
   erreur = '';
+  envoi = false;
 
   constructor(private signalementService: SignalementService) {}
 
@@ -27,24 +27,33 @@ export class CreateReportComponent {
           this.latitude = position.coords.latitude.toString();
           this.longitude = position.coords.longitude.toString();
         },
-        (error) => {
-          alert("Impossible de récupérer la géolocalisation.");
+        () => {
+          this.erreur = 'Impossible de récupérer la géolocalisation.';
         }
       );
     } else {
-      alert("La géolocalisation n'est pas supportée par votre navigateur.");
+      this.erreur = "La géolocalisation n'est pas supportée par votre navigateur.";
     }
   }
 
-  onFileSelected(event: any) {
-    if (event.target.files.length > 0) {
-      this.selectedFile = event.target.files[0];
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
     }
   }
 
   onSubmit() {
+    if (this.envoi) return;
+    this.message = '';
+    this.erreur = '';
+    if (!this.description.trim()) {
+      this.erreur = 'La description est obligatoire.';
+      return;
+    }
+
     const formData = new FormData();
-    formData.append('description', this.description);
+    formData.append('description', this.description.trim());
     if (this.latitude) formData.append('latitude', this.latitude);
     if (this.longitude) formData.append('longitude', this.longitude);
     formData.append('est_anonyme', String(this.estAnonyme));
@@ -52,15 +61,27 @@ export class CreateReportComponent {
       formData.append('photo', this.selectedFile);
     }
 
+    this.envoi = true;
     this.signalementService.creerSignalement(formData).subscribe({
-      next: (res: any) => {
+      next: () => {
         this.message = 'Signalement créé avec succès !';
         this.erreur = '';
+        this.reset();
+        this.envoi = false;
       },
-      error: (err: { error: { erreur: string; }; }) => {
-        this.erreur = err.error.erreur || "Erreur lors de l'envoi.";
+      error: (err) => {
+        this.erreur = err.error?.erreur ?? err.error?.message ?? "Erreur lors de l'envoi.";
         this.message = '';
+        this.envoi = false;
       }
     });
+  }
+
+  private reset() {
+    this.description = '';
+    this.latitude = '';
+    this.longitude = '';
+    this.estAnonyme = false;
+    this.selectedFile = null;
   }
 }

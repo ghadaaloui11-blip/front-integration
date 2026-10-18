@@ -19,7 +19,7 @@
         <div class="photo">photo</div>
         <div class="card-body">
           <h3 class="card-title">{{ c.titre }}</h3>
-          <div class="card-asso">{{ $any(c).association_nom }}</div>
+          <div class="card-asso">{{ c.association_nom }}</div>
 
           <div class="bar"><div class="fill" [style.width.%]="pourcentage(c)"></div></div>
 

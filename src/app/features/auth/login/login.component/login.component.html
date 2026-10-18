@@ -1,15 +1,36 @@
 <div class="auth-container">
   <h2>Connexion</h2>
-  <form (ngSubmit)="onSubmit()">
-    <div>
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
       <label>Email :</label>
-      <input type="email" [(ngModel)]="email" name="email" required />
+      <input
+        type="email"
+        [(ngModel)]="email"
+        name="email"
+        required
+        email
+        #emailField="ngModel"
+      />
+      @if (emailField.invalid && emailField.touched) {
+        <p class="error">Veuillez saisir une adresse email valide.</p>
+      }
     </div>
-    <div>
+    <div class="form-group">
       <label>Mot de passe :</label>
-      <input type="password" [(ngModel)]="motDePasse" name="motDePasse" required />
+      <input
+        type="password"
+        [(ngModel)]="motDePasse"
+        name="motDePasse"
+        required
+        #mdpField="ngModel"
+      />
+      @if (mdpField.invalid && mdpField.touched) {
+        <p class="error">Le mot de passe est obligatoire.</p>
+      }
     </div>
-    <button type="submit">Se connecter</button>
+    <button type="submit" [disabled]="loginForm.invalid || envoi">
+      {{ envoi ? 'Connexion...' : 'Se connecter' }}
+    </button>
     <p class="error" *ngIf="erreur">{{ erreur }}</p>
   </form>
 

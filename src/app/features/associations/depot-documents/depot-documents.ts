@@ -1,10 +1,11 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
   AssociationService,
   DocumentAssociation,
   StatutValidation,
+  statutLabel,
 } from '../../../core/services/association.service';
 
 @Component({
@@ -14,7 +15,7 @@ import {
   templateUrl: './depot-documents.html',
   styleUrl: './depot-documents.css',
 })
-export class DepotDocuments implements OnInit {
+export class DepotDocumentsComponent implements OnInit {
   private service = inject(AssociationService);
 
   // State
@@ -28,6 +29,8 @@ export class DepotDocuments implements OnInit {
   // Formulaire upload
   typeDocument = 'statuts';
   fichierSelectionne: File | null = null;
+
+  @ViewChild('fichierInput') fichierInput?: ElementRef<HTMLInputElement>;
 
   typesDocument = [
     { value: 'statuts', label: 'Statuts de l\'association' },
@@ -44,14 +47,18 @@ export class DepotDocuments implements OnInit {
     this.loading.set(true);
     this.service.getMonStatut().subscribe({
       next: (s) => this.statut.set(s),
-      error: () => {},
+      error: (e) => {
+        this.error.set(e.error?.erreur ?? e.error?.message ?? 'Impossible de charger votre statut.');
+        this.loading.set(false);
+      },
     });
     this.service.getMesDocuments().subscribe({
       next: (docs) => {
         this.documents.set(docs);
         this.loading.set(false);
       },
-      error: () => {
+      error: (e) => {
+        this.error.set(e.error?.erreur ?? e.error?.message ?? 'Impossible de charger vos documents.');
         this.loading.set(false);
       },
     });
@@ -71,19 +78,22 @@ export class DepotDocuments implements OnInit {
       return;
     }
 
+    if (this.fichierSelectionne.size > 10 * 1024 * 1024) {
+      this.error.set('Le fichier ne doit pas dépasser 10 Mo.');
+      return;
+    }
+
     this.uploading.set(true);
     this.service.deposerDocument(this.typeDocument, this.fichierSelectionne).subscribe({
       next: () => {
         this.success.set('Document déposé avec succès.');
         this.fichierSelectionne = null;
-        // reset input file
-        const input = document.getElementById('fichier') as HTMLInputElement;
-        if (input) input.value = '';
+        if (this.fichierInput) this.fichierInput.nativeElement.value = '';
         this.chargerDonnees();
         this.uploading.set(false);
       },
       error: (e) => {
-        this.error.set(e.error?.message ?? 'Erreur lors du dépôt.');
+        this.error.set(e.error?.erreur ?? e.error?.message ?? 'Erreur lors du dépôt.');
         this.uploading.set(false);
       },
     });
@@ -101,12 +111,7 @@ export class DepotDocuments implements OnInit {
   }
 
   getStatutLabel(s: string): string {
-    const map: Record<string, string> = {
-      pending: 'En attente de validation',
-      approuve: 'Approuvée',
-      refuse: 'Refusée',
-    };
-    return map[s] ?? s;
+    return statutLabel(s);
   }
 
   getTypeLabel(value: string): string {

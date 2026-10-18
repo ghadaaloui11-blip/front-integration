@@ -10,7 +10,7 @@ import { AuthService } from '../../../core/services/auth.service';
   templateUrl: './campagne-detail.html',
   styleUrl: './campagne-detail.css',
 })
-export class CampagneDetail implements OnInit {
+export class CampagneDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private service = inject(CampagneService);
   private auth = inject(AuthService);
@@ -28,12 +28,18 @@ export class CampagneDetail implements OnInit {
     return Number(this.route.snapshot.paramMap.get('id'));
   }
 
-  ngOnInit() { this.load(); }
+  ngOnInit() {
+    if (!Number.isFinite(this.campagneId)) {
+      this.error.set('Campagne introuvable.');
+      return;
+    }
+    this.load();
+  }
 
   load() {
     this.service.getAvancement(this.campagneId).subscribe({
       next: (d) => this.data.set(d),
-      error: (e) => this.error.set(e.error?.message ?? 'Campagne introuvable.'),
+      error: (e) => this.error.set(e.error?.erreur ?? e.error?.message ?? 'Campagne introuvable.'),
     });
   }
 
@@ -51,7 +57,7 @@ export class CampagneDetail implements OnInit {
         this.montant = null;
         this.load();
       },
-      error: (e) => this.error.set(e.error?.message ?? 'Erreur lors de l\'enregistrement.'),
+      error: (e) => this.error.set(e.error?.erreur ?? e.error?.message ?? 'Erreur lors de l\'enregistrement.'),
     });
   }
 }

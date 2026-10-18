@@ -18,7 +18,9 @@
         <input type="checkbox" [(ngModel)]="estAnonyme" name="estAnonyme" /> Rester anonyme
       </label>
     </div>
-    <button type="submit">Envoyer le signalement</button>
+    <button type="submit" [disabled]="envoi">
+      {{ envoi ? 'Envoi en cours...' : 'Envoyer le signalement' }}
+    </button>
     <p class="success" *ngIf="message">{{ message }}</p>
     <p class="error" *ngIf="erreur">{{ erreur }}</p>
   </form>

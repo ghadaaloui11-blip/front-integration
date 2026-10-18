@@ -1,21 +1,50 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_BASE } from '../config/api-base.token';
+
+export interface Identifiants {
+  email: string;
+  motDePasse: string;
+}
+
+export interface InscriptionData {
+  nom: string;
+  prenom: string;
+  email: string;
+  telephone: string;
+  motDePasse: string;
+  role: string;
+  adresse: string;
+  nomAssociation?: string;
+  matriculeFiscal?: string;
+}
+
+export interface ReponseAuth {
+  token: string;
+}
+
+/** Claims utiles du JWT (décodés côté client, le backend reste la source de vérité). */
+export interface JwtPayload {
+  role?: string;
+  nom?: string;
+  prenom?: string;
+  email?: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5000/api/auth';
+  private http = inject(HttpClient);
+  private apiUrl = `${inject(API_BASE)}/api/auth`;
 
-  constructor(private http: HttpClient) {}
-
-  inscrire(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/inscription`, userData);
+  inscrire(userData: InscriptionData): Observable<ReponseAuth> {
+    return this.http.post<ReponseAuth>(`${this.apiUrl}/inscription`, userData);
   }
 
-  connecter(credentials: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/connexion`, credentials);
+  connecter(credentials: Identifiants): Observable<ReponseAuth> {
+    return this.http.post<ReponseAuth>(`${this.apiUrl}/connexion`, credentials);
   }
 
   sauvegarderToken(token: string): void {
@@ -30,13 +59,25 @@ export class AuthService {
     localStorage.removeItem('token');
   }
   getRole(): string | null {
-  const token = this.getToken();
-  if (!token) return null;
-  try {
-    const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
-    return payload.role ?? null;
-  } catch {
+    return this.decodePayload()?.role ?? null;
+  }
+
+  getNom(): string | null {
+    const payload = this.decodePayload();
+    if (!payload) return null;
+    if (payload.nom && payload.prenom) return `${payload.prenom} ${payload.nom}`;
+    if (payload.nom) return String(payload.nom);
+    if (payload.email) return String(payload.email);
     return null;
   }
-}
+
+  private decodePayload(): JwtPayload | null {
+    const token = this.getToken();
+    if (!token) return null;
+    try {
+      return JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+    } catch {
+      return null;
+    }
+  }
 }

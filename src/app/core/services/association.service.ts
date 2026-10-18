@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_BASE } from '../config/api-base.token';
 
 export interface DocumentAssociation {
   id: number;
@@ -36,7 +37,7 @@ export interface StatutValidation {
 @Injectable({ providedIn: 'root' })
 export class AssociationService {
   private http = inject(HttpClient);
-  private api = 'http://localhost:5000/api/associations';
+  private api = `${inject(API_BASE)}/api/associations`;
 
   // ─── US02 : Association ──────────────────────────────────────────────────
 
@@ -46,7 +47,7 @@ export class AssociationService {
   }
 
   /** Déposer un document légal */
-  deposerDocument(typeDocument: string, fichier: File): Observable<any> {
+  deposerDocument(typeDocument: string, fichier: File): Observable<unknown> {
     const form = new FormData();
     form.append('type_document', typeDocument);
     form.append('document', fichier);
@@ -59,7 +60,7 @@ export class AssociationService {
   }
 
   /** Supprimer un de mes documents */
-  supprimerDocument(id: number): Observable<any> {
+  supprimerDocument(id: number): Observable<unknown> {
     return this.http.delete(`${this.api}/documents/${id}`);
   }
 
@@ -77,7 +78,17 @@ export class AssociationService {
   }
 
   /** Valider ou refuser une association (admin) */
-  validerAssociation(id: number, statut: 'approuve' | 'refuse', commentaire?: string): Observable<any> {
+  validerAssociation(id: number, statut: 'approuve' | 'refuse', commentaire?: string): Observable<unknown> {
     return this.http.patch(`${this.api}/${id}/validation`, { statut, commentaire });
   }
+}
+
+/** Libellé français d'un statut de validation (partagé admin + dépôt de documents). */
+export function statutLabel(statut: string): string {
+  const map: Record<string, string> = {
+    pending: 'En attente de validation',
+    approuve: 'Approuvée',
+    refuse: 'Refusée',
+  };
+  return map[statut] ?? statut;
 }

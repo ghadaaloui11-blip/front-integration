@@ -9,18 +9,21 @@ import { AuthService } from '../../../../core/services/auth.service';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   email = '';
   motDePasse = '';
   erreur = '';
+  envoi = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
+    if (this.envoi) return;
+    this.erreur = '';
+    this.envoi = true;
     this.authService.connecter({ email: this.email, motDePasse: this.motDePasse }).subscribe({
-      next: (response: { token: any; }) => {
+      next: (response) => {
         this.authService.sauvegarderToken(response.token);
 
         const role = this.authService.getRole();
@@ -33,8 +36,9 @@ export class LoginComponent {
           this.router.navigate(['/signalement']); // citoyen
         }
       },
-      error: (err: { error: { erreur: string; }; }) => {
-        this.erreur = err.error?.erreur || 'Erreur lors de la connexion.';
+      error: (err) => {
+        this.erreur = err.error?.erreur ?? err.error?.message ?? 'Erreur lors de la connexion.';
+        this.envoi = false;
       }
     });
   }

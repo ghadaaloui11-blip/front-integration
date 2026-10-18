@@ -1,0 +1,308 @@
+.page {
+  max-width: 720px;
+}
+
+.page-title {
+  color: #1f4e79;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.page-sub {
+  color: #64748b;
+  margin: 0 0 24px 0;
+}
+
+.back {
+  display: inline-block;
+  color: #1f4e79;
+  text-decoration: none;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+/* Carte blanche */
+.card-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 20px;
+}
+
+/* Résumé campagne */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  text-align: center;
+  padding: 20px;
+}
+
+.summary-item .num {
+  color: #1f4e79;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.summary-item .label {
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* Champs */
+.field {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.field input,
+.field textarea {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 16px;
+  color: #0f172a;
+  outline: none;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #94a3b8;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: #1f4e79;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(31, 78, 121, 0.15);
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+/* Chips de montant */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.chip {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f4e79;
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: #1f4e79;
+}
+
+.chip.active {
+  background: #1f4e79;
+  border-color: #1f4e79;
+  color: #ffffff;
+}
+
+/* Case à cocher */
+.field.check .check-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: #0f172a;
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+.field.check input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: #1f4e79;
+}
+
+/* Erreurs */
+.is-invalid {
+  border-color: #b91c1c !important;
+}
+
+.error-text {
+  color: #b91c1c;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.alert-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+
+/* Bouton */
+.btn-main {
+  width: 100%;
+  background: #1f4e79;
+  color: #ffffff;
+  border: 0;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-main:hover {
+  background: #1a4268;
+}
+
+.btn-main:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.note {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 13px;
+  margin: 12px 0 0 0;
+}
+
+/* ===== Reçu ===== */
+.receipt-page {
+  max-width: 560px;
+}
+
+.receipt {
+  text-align: left;
+}
+
+.receipt-head {
+  text-align: center;
+  border-bottom: 2px dashed #e2e8f0;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+}
+
+.receipt-logo {
+  color: #1f4e79;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.receipt-title {
+  color: #0f172a;
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.receipt-sub {
+  color: #64748b;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 15px;
+}
+
+.receipt-row span {
+  color: #64748b;
+}
+
+.receipt-row strong {
+  color: #0f172a;
+  text-align: right;
+  word-break: break-word;
+}
+
+.receipt-total {
+  border-bottom: 0;
+  border-top: 2px dashed #e2e8f0;
+  margin-top: 6px;
+  font-size: 20px;
+}
+
+.receipt-total strong {
+  color: #1f4e79;
+  font-size: 22px;
+}
+
+.receipt-statut {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+  border-radius: 10px;
+  padding: 12px 14px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.receipt-actions {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.receipt-actions .btn-link {
+  text-align: center;
+  color: #1f4e79;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.receipt-actions .btn-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== Impression ===== */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .receipt-page {
+    max-width: 100%;
+  }
+
+  .receipt {
+    border: 0;
+    padding: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .summary {
+    grid-template-columns: 1fr;
+  }
+}

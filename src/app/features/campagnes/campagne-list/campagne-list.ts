@@ -1,6 +1,11 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Campagne, CampagneService } from '../../../core/services/campagne.service';
+import {
+  AssociationListee,
+  Campagne,
+  CampagneService,
+  pourcentageCampagne,
+} from '../../../core/services/campagne.service';
 
 @Component({
   selector: 'app-campagne-list',
@@ -8,11 +13,11 @@ import { Campagne, CampagneService } from '../../../core/services/campagne.servi
   templateUrl: './campagne-list.html',
   styleUrl: './campagne-list.css',
 })
-export class CampagneList implements OnInit {
+export class CampagneListComponent implements OnInit {
   private service = inject(CampagneService);
 
   campagnes = signal<Campagne[]>([]);
-  associations = signal<any[]>([]);
+  associations = signal<AssociationListee[]>([]);
   loading = signal(true);
   error = signal('');
 
@@ -29,8 +34,6 @@ export class CampagneList implements OnInit {
   }
 
   pourcentage(c: Campagne): number {
-    const objectif = Number(c.objectif_montant);
-    if (!objectif) return 0;
-    return Math.min(100, Math.round((Number(c.montant_collecte) / objectif) * 100));
+    return pourcentageCampagne(c);
   }
 }

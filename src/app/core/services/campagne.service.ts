@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_BASE } from '../config/api-base.token';
 
 export interface Campagne {
   id: number;
@@ -12,6 +13,15 @@ export interface Campagne {
   date_fin: string;
   statut: string;
   association_id: number;
+  /** Renseigné par GET /api/campagnes (liste publique). */
+  association_nom?: string;
+}
+
+/** Association telle que renvoyée par GET /api/campagnes/associations. */
+export interface AssociationListee {
+  id: number;
+  nom?: string;
+  nom_association?: string;
 }
 
 export interface UtilisationFonds {
@@ -38,25 +48,21 @@ export interface Avancement {
 @Injectable({ providedIn: 'root' })
 export class CampagneService {
   private http = inject(HttpClient);
-  private api = 'http://localhost:5000/api/campagnes';
+  private api = `${inject(API_BASE)}/api/campagnes`;
 
   getAll(): Observable<Campagne[]> {
     return this.http.get<Campagne[]>(this.api);
   }
 
-  getAssociations(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.api}/associations`);
+  getAssociations(): Observable<AssociationListee[]> {
+    return this.http.get<AssociationListee[]>(`${this.api}/associations`);
   }
 
   getMesCampagnes(): Observable<Campagne[]> {
     return this.http.get<Campagne[]>(`${this.api}/mes-campagnes`);
   }
 
-  getOne(id: number): Observable<Campagne> {
-    return this.http.get<Campagne>(`${this.api}/${id}`);
-  }
-
-  create(data: Partial<Campagne>): Observable<any> {
+  create(data: Partial<Campagne>): Observable<unknown> {
     return this.http.post(this.api, data);
   }
 
@@ -64,7 +70,14 @@ export class CampagneService {
     return this.http.get<Avancement>(`${this.api}/${id}/avancement`);
   }
 
-  addUtilisation(id: number, data: { libelle: string; montant: number }): Observable<any> {
+  addUtilisation(id: number, data: { libelle: string; montant: number }): Observable<unknown> {
     return this.http.post(`${this.api}/${id}/utilisation`, data);
   }
+}
+
+/** Pourcentage collecté (0–100), protégé contre la division par zéro. */
+export function pourcentageCampagne(c: Pick<Campagne, 'objectif_montant' | 'montant_collecte'>): number {
+  const objectif = Number(c.objectif_montant);
+  if (!objectif) return 0;
+  return Math.min(100, Math.round((Number(c.montant_collecte) / objectif) * 100));
 }

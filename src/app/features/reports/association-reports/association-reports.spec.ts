@@ -1,18 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
 
-import { AssociationReports } from './association-reports';
+import { AssociationReportsComponent } from './association-reports';
 
-describe('AssociationReports', () => {
-  let component: AssociationReports;
-  let fixture: ComponentFixture<AssociationReports>;
+describe('AssociationReportsComponent', () => {
+  let component: AssociationReportsComponent;
+  let fixture: ComponentFixture<AssociationReportsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AssociationReports]
-    })
-    .compileComponents();
+      imports: [AssociationReportsComponent],
+      providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter([])],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(AssociationReports);
+    fixture = TestBed.createComponent(AssociationReportsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

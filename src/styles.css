@@ -125,6 +125,16 @@ app-root {
   margin-top: 4px;
 }
 
+.report-container .success {
+  background-color: #d5f5e3;
+  color: #1e8449;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
 .auth-container .error-global,
 .inscription-container .error-global,
 .report-container .error-global {
@@ -158,4 +168,22 @@ app-root {
 .inscription-container a:hover,
 .report-container a:hover {
   text-decoration: underline;
+}
+
+/* ===== Impression (reçu de don) ===== */
+@media print {
+  .sidebar,
+  .topbar {
+    display: none !important;
+  }
+
+  .layout,
+  html,
+  body {
+    background: #ffffff;
+  }
+
+  .content {
+    padding: 0;
+  }
 }

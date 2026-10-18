@@ -9,7 +9,7 @@ import { CampagneService } from '../../../core/services/campagne.service';
   templateUrl: './campagne-create.html',
   styleUrl: './campagne-create.css',
 })
-export class CampagneCreate {
+export class CampagneCreateComponent {
   private fb = inject(FormBuilder);
   private service = inject(CampagneService);
   private router = inject(Router);
@@ -40,7 +40,7 @@ export class CampagneCreate {
     this.service.create(v).subscribe({
       next: () => this.router.navigate(['/mes-campagnes']),
       error: (e) => {
-        this.error.set(e.error?.message ?? 'Erreur lors de la création.');
+        this.error.set(e.error?.erreur ?? e.error?.message ?? 'Erreur lors de la création.');
         this.loading.set(false);
       },
     });

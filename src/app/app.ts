@@ -8,7 +8,7 @@ import { AuthService } from './core/services/auth.service';
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App {
+export class AppComponent {
   private router = inject(Router);
   auth = inject(AuthService);
 
@@ -18,7 +18,7 @@ export class App {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    this.auth.deconnecter();
     this.router.navigate(['/login']);
   }
 }
