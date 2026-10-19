@@ -10,9 +10,9 @@ export interface DocumentAssociation {
   date_depot: string;
 }
 
-export interface DocumentAdmin extends DocumentAssociation {
-  chemin_fichier: string;
-}
+/** Le backend ne renvoie plus de chemin : le telechargement passe par
+ *  GET /api/documents/:id/file (authentifie). */
+export type DocumentAdmin = DocumentAssociation;
 
 export interface AssociationAdmin {
   id: number;
