@@ -22,7 +22,7 @@ export class LoginComponent {
     if (this.envoi) return;
     this.erreur = '';
     this.envoi = true;
-    this.authService.connecter({ email: this.email, motDePasse: this.motDePasse }).subscribe({
+    this.authService.connecter({ email: this.email.trim(), motDePasse: this.motDePasse.trim() }).subscribe({
       next: (response) => {
         this.authService.sauvegarderToken(response.token);
 

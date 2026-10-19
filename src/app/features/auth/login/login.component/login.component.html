@@ -9,6 +9,7 @@
         name="email"
         required
         email
+        autocomplete="username"
         #emailField="ngModel"
       />
       @if (emailField.invalid && emailField.touched) {
@@ -22,6 +23,7 @@
         [(ngModel)]="motDePasse"
         name="motDePasse"
         required
+        autocomplete="new-password"
         #mdpField="ngModel"
       />
       @if (mdpField.invalid && mdpField.touched) {
