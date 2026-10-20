@@ -68,7 +68,7 @@
 
         <p class="reste">Reste à collecter : {{ d.montant_restant }} TND</p>
 
-        @if (!isAssociation) {
+        @if (peutDonner) {
           <a class="btn-main btn-link" [routerLink]="['/campagnes', campagneId, 'don']">Faire un don</a>
         }
       </div>

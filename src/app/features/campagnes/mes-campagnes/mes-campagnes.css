@@ -117,3 +117,19 @@
   padding: 12px 14px;
   margin-bottom: 16px;
 }
+
+.alert-warning {
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  color: #92400e;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.alert-warning a {
+  color: #92400e;
+  font-weight: 600;
+  margin-left: 6px;
+}

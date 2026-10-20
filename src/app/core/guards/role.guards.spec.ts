@@ -56,17 +56,18 @@ describe('guards', () => {
       expect(run()).toBeTrue();
     });
 
-    it('should allow admins', () => {
+    it('should block admins', () => {
       setToken('admin');
-      expect(run()).toBeTrue();
+      const result = run();
+      expect(result instanceof UrlTree).toBeTrue();
+      expect((result as UrlTree).toString()).toBe('/campagnes');
     });
 
     it('should block associations', () => {
       setToken('association');
-      const router = TestBed.inject(Router);
-      spyOn(router, 'navigate');
-      expect(run()).toBeFalse();
-      expect(router.navigate).toHaveBeenCalledWith(['/association-reports']);
+      const result = run();
+      expect(result instanceof UrlTree).toBeTrue();
+      expect((result as UrlTree).toString()).toBe('/association-reports');
     });
   });
 });

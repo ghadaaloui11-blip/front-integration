@@ -17,14 +17,22 @@ export const citoyenGuard: CanActivateFn = () => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
+  const role = auth.getRole();
+
   if (!auth.getToken()) {
     return router.createUrlTree(['/login']);
   }
-  if (auth.getRole() !== 'association') {
+
+  if (role === 'citoyen') {
     return true;
   }
-  router.navigate(['/association-reports']);
-  return false;
+
+  if (role === 'association') {
+    return router.createUrlTree(['/association-reports']);
+  }
+
+  // Admin
+  return router.createUrlTree(['/campagnes']);
 };
 
 export const authGuard: CanActivateFn = () => {

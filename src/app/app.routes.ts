@@ -30,10 +30,10 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/campagnes/mes-campagnes/mes-campagnes').then(m => m.MesCampagnesComponent),
   },
-  // Don (connecté uniquement). Doit rester AVANT 'campagnes/:id'
+  // Don (citoyen uniquement). Doit rester AVANT 'campagnes/:id'
   {
     path: 'campagnes/:id/don',
-    canActivate: [authGuard],
+    canActivate: [citoyenGuard],
     loadComponent: () =>
       import('./features/campagnes/don/don').then(m => m.DonComponent),
   },

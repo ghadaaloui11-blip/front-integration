@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+  import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Avancement, CampagneService } from '../../../core/services/campagne.service';
@@ -20,6 +20,7 @@ export class CampagneDetailComponent implements OnInit {
   success = signal('');
 
   isAssociation = this.auth.getRole() === 'association';
+  peutDonner = !this.auth.getRole() || this.auth.getRole() === 'citoyen';
 
   libelle = '';
   montant: number | null = null;
