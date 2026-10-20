@@ -1,23 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, OnDestroy, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SignalementService } from '../../../../core/services/signalement.service';
+const TAILLE_PHOTO_MAX = 10 * 1024 * 1024;
 @Component({
   selector: 'app-report',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './report.component.html'})
-export class CreateReportComponent {
+  templateUrl: './report.component.html',
+  styleUrl: './report.component.css'})
+export class CreateReportComponent implements OnDestroy {
   description = '';
   latitude = '';
   longitude = '';
   estAnonyme = false;
   selectedFile: File | null = null;
+  photoPreview: string | null = null;
   message = '';
   erreur = '';
   envoi = false;
 
+  private photoInput = viewChild<ElementRef<HTMLInputElement>>('photoInput');
+
   constructor(private signalementService: SignalementService) {}
+
+  ngOnDestroy() {
+    this.revoquerApercu();
+  }
 
   // Récupérer la géolocalisation GPS du navigateur
   obtenirGPS() {
@@ -36,10 +45,38 @@ export class CreateReportComponent {
     }
   }
 
+  retirerGPS() {
+    this.latitude = '';
+    this.longitude = '';
+  }
+
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
+    const fichier = input.files?.[0] ?? null;
+    this.revoquerApercu();
+
+    if (fichier && fichier.size > TAILLE_PHOTO_MAX) {
+      this.erreur = 'La photo ne doit pas dépasser 10 Mo.';
+      this.selectedFile = null;
+      input.value = '';
+      return;
+    }
+
+    this.selectedFile = fichier;
+    this.photoPreview = fichier ? URL.createObjectURL(fichier) : null;
+  }
+
+  retirerPhoto() {
+    this.selectedFile = null;
+    this.revoquerApercu();
+    const input = this.photoInput();
+    if (input) input.nativeElement.value = '';
+  }
+
+  private revoquerApercu() {
+    if (this.photoPreview) {
+      URL.revokeObjectURL(this.photoPreview);
+      this.photoPreview = null;
     }
   }
 
@@ -82,6 +119,6 @@ export class CreateReportComponent {
     this.latitude = '';
     this.longitude = '';
     this.estAnonyme = false;
-    this.selectedFile = null;
+    this.retirerPhoto();
   }
 }

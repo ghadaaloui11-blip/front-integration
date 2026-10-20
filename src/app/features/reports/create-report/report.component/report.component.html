@@ -1,27 +1,83 @@
-<div class="report-container">
-  <h2>Créer un Signalement</h2>
-  <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-    <div>
-      <label>Description :</label>
-      <textarea [(ngModel)]="description" name="description" required></textarea>
+<div class="page">
+  <h1 class="page-title">Créer un signalement</h1>
+  <p class="page-sub">Décrivez le problème, joignez une photo et précisez l'emplacement.</p>
+
+  <form class="card-box" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <div class="field">
+      <label for="description">Description <span class="req">*</span></label>
+      <textarea
+        id="description"
+        name="description"
+        rows="5"
+        required
+        placeholder="Ex. : dépôt d'ordures devant l'école primaire, odeur très forte."
+        [(ngModel)]="description"
+      ></textarea>
     </div>
-    <div>
-      <button type="button" (click)="obtenirGPS()">📍 Utiliser ma position GPS</button>
-      <p>Lat: {{ latitude }} | Lon: {{ longitude }}</p>
+
+    <div class="field">
+      <label>Localisation <span class="opt">(optionnel)</span></label>
+      <div class="gps-row">
+        <button type="button" class="btn-ghost" (click)="obtenirGPS()">
+          Utiliser ma position GPS
+        </button>
+
+        @if (latitude && longitude) {
+          <span class="gps-badge">
+            Lat {{ latitude }} · Lon {{ longitude }}
+            <button
+              type="button"
+              class="gps-clear"
+              (click)="retirerGPS()"
+              title="Effacer la position"
+            >
+              ×
+            </button>
+          </span>
+        } @else {
+          <span class="gps-empty">Aucune position sélectionnée</span>
+        }
+      </div>
     </div>
-    <div>
-      <label>Photo :</label>
-      <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+
+    <div class="field">
+      <label for="photo">Photo <span class="opt">(optionnel)</span></label>
+      <input
+        #photoInput
+        id="photo"
+        class="photo-input"
+        type="file"
+        accept="image/jpeg,image/png"
+        (change)="onFileSelected($event)"
+      />
+
+      @if (photoPreview) {
+        <div class="photo-preview">
+          <img [src]="photoPreview" alt="Aperçu de la photo sélectionnée" />
+          <button type="button" class="btn-link" (click)="retirerPhoto()">
+            Retirer la photo
+          </button>
+        </div>
+      }
     </div>
-    <div>
-      <label>
-        <input type="checkbox" [(ngModel)]="estAnonyme" name="estAnonyme" /> Rester anonyme
-      </label>
-    </div>
-    <button type="submit" [disabled]="envoi">
-      {{ envoi ? 'Envoi en cours...' : 'Envoyer le signalement' }}
+
+    <label class="check-row">
+      <input type="checkbox" name="estAnonyme" [(ngModel)]="estAnonyme" />
+      <span>
+        <strong>Rester anonyme</strong>
+        <small>Votre nom ne sera pas visible par l'association.</small>
+      </span>
+    </label>
+
+    @if (erreur) {
+      <div class="alert alert-error">{{ erreur }}</div>
+    }
+    @if (message) {
+      <div class="alert alert-success">{{ message }}</div>
+    }
+
+    <button type="submit" class="btn-main" [disabled]="envoi">
+      {{ envoi ? 'Envoi en cours…' : 'Envoyer le signalement' }}
     </button>
-    <p class="success" *ngIf="message">{{ message }}</p>
-    <p class="error" *ngIf="erreur">{{ erreur }}</p>
   </form>
 </div>
