@@ -37,7 +37,7 @@
         <strong>{{ r.montant | number: '1.2-2' }} TND</strong>
       </div>
 
-      <div class="receipt-statut">{{ r.statut }}</div>
+      <div class="receipt-statut">{{ statutDonLabel(r.statut) }}</div>
 
       <div class="receipt-actions no-print">
         <button type="button" class="btn-main" (click)="imprimer()">Imprimer / Télécharger PDF</button>
@@ -73,6 +73,9 @@
     }
 
     <div class="card-box">
+      @if (campagneTerminee) {
+        <div class="alert-error">Cette campagne est terminée : les dons ne sont plus acceptés.</div>
+      }
       <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
         <!-- Montants prédéfinis -->
         <div class="field">
@@ -133,7 +136,7 @@
           <div class="alert-error">{{ error() }}</div>
         }
 
-        <button type="submit" class="btn-main" [disabled]="loading()">
+        <button type="submit" class="btn-main" [disabled]="loading() || campagneTerminee">
           @if (loading()) {
             Traitement...
           } @else {

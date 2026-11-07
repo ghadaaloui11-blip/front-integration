@@ -1,0 +1,117 @@
+<h1 class="title">Signalements publics</h1>
+<p class="sub">Suivez les situations signalées par la communauté et l'avancement de leur traitement.</p>
+
+@if (loading()) { <p class="sub">Chargement...</p> }
+@if (error()) { <div class="alert-error">{{ error() }}</div> }
+
+<!-- Filtres par statut -->
+<div class="filtres">
+  @for (f of filtres; track f.valeur) {
+    <button
+      type="button"
+      class="filtre"
+      [class.actif]="filtreActif() === f.valeur"
+      (click)="definirFiltre(f.valeur)">
+      {{ f.label }}
+    </button>
+  }
+</div>
+
+<div class="card-box">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Signalement</th>
+        <th>Statut</th>
+        <th>Association responsable</th>
+        <th>Soumis</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (r of reports(); track r.id) {
+        <tr>
+          <td class="bold">
+            {{ titreDe(r) }}
+            @if (r.est_anonyme) { <span class="muted">(anonyme)</span> }
+          </td>
+          <td>
+            <span [class]="'statut-badge ' + classeStatut(r.statut)">{{ labelStatut(r.statut) }}</span>
+          </td>
+          <td>
+            @if (r.nom_association) {
+              {{ r.nom_association }}
+            } @else {
+              <span class="muted">En attente d'une association</span>
+            }
+          </td>
+          <td class="muted">{{ tempsEcoule(r.created_at) }}</td>
+          <td><a class="voir" (click)="selected = r">Voir ›</a></td>
+        </tr>
+      } @empty {
+        @if (!loading()) {
+          <tr><td colspan="5" class="muted">Aucun signalement.</td></tr>
+        }
+      }
+    </tbody>
+  </table>
+</div>
+
+@if (selected) {
+  <div class="card-box detail">
+    <div class="detail-head">
+      <h3 class="detail-title">{{ titreDe(selected) }}</h3>
+      <a class="voir" (click)="selected = null">Fermer</a>
+    </div>
+
+    @if (photoUrl(selected); as photo) {
+      <img class="detail-photo" [src]="photo" alt="Photo du signalement" />
+    }
+
+    <p class="detail-text">{{ selected.description }}</p>
+
+    <div class="detail-infos">
+      @if (lieuDe(selected)) {
+        <p><span class="info-label">Lieu :</span> {{ lieuDe(selected) }}</p>
+      }
+      <p>
+        <span class="info-label">Statut :</span>
+        <span [class]="'statut-badge ' + classeStatut(selected.statut)">{{ labelStatut(selected.statut) }}</span>
+      </p>
+      <p>
+        <span class="info-label">Association :</span>
+        @if (selected.nom_association) {
+          {{ selected.nom_association }}
+        } @else {
+          <span class="muted">En attente d'une association</span>
+        }
+      </p>
+      @if (selected.created_at) {
+        <p><span class="info-label">Soumis le :</span> {{ formaterDate(selected.created_at) }}</p>
+      }
+      @if (selected.date_prise_en_charge) {
+        <p><span class="info-label">Prise en charge le :</span> {{ formaterDate(selected.date_prise_en_charge) }}</p>
+      }
+      @if (selected.date_resolution) {
+        <p><span class="info-label">Résolu le :</span> {{ formaterDate(selected.date_resolution) }}</p>
+      }
+    </div>
+
+    @if (selected.historique?.length) {
+      <div class="historique">
+        <p class="info-label">Historique du traitement</p>
+        <ol class="timeline">
+          @for (h of selected.historique; track $index) {
+            <li>
+              <span [class]="'statut-badge ' + classeStatut(h.statut)">{{ labelStatut(h.statut) }}</span>
+              <span class="muted">
+                — {{ formaterDate(h.date) }}
+                @if (h.nom_association) { · {{ h.nom_association }} }
+              </span>
+            </li>
+          }
+        </ol>
+      </div>
+    }
+  </div>
+}

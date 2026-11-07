@@ -1,0 +1,68 @@
+<h1 class="title">Mes signalements</h1>
+<p class="sub">Suivez l'état d'avancement de vos signalements.</p>
+
+@if (loading()) { <p class="sub">Chargement...</p> }
+@if (error()) { <div class="alert-error">{{ error() }}</div> }
+
+@if (!loading() && reports().length === 0) {
+  <div class="card-box vide">
+    <p class="detail-text">Vous n'avez déposé aucun signalement pour le moment.</p>
+    <a class="cta" routerLink="/signalement">Créer un signalement</a>
+  </div>
+}
+
+@for (r of reports(); track r.id) {
+  <div class="card-box">
+    <div class="detail-head">
+      <h3 class="detail-title">
+        {{ titreDe(r) }}
+        @if (r.est_anonyme) { <span class="muted">(anonyme)</span> }
+      </h3>
+      <span [class]="'statut-badge ' + classeStatut(r.statut)">{{ labelStatut(r.statut) }}</span>
+    </div>
+
+    @if (photoUrl(r); as photo) {
+      <img class="detail-photo" [src]="photo" alt="Photo du signalement" />
+    }
+
+    <p class="detail-text">{{ r.description }}</p>
+
+    <div class="detail-infos">
+      @if (r.latitude != null && r.longitude != null) {
+        <p><span class="info-label">Lieu :</span> {{ r.latitude }}, {{ r.longitude }}</p>
+      }
+      @if (r.created_at) {
+        <p><span class="info-label">Soumis le :</span> {{ formaterDate(r.created_at) }}</p>
+      }
+      @if (r.nom_association) {
+        <p>
+          <span class="info-label">Pris en charge par :</span>
+          {{ r.nom_association }}
+          @if (r.date_prise_en_charge) { — {{ formaterDate(r.date_prise_en_charge) }} }
+        </p>
+      } @else {
+        <p class="attente">En attente d'une association — publié publiquement, une association peut choisir de le prendre en charge.</p>
+      }
+      @if (r.date_resolution) {
+        <p><span class="info-label">Résolu le :</span> {{ formaterDate(r.date_resolution) }}</p>
+      }
+    </div>
+
+    @if (r.historique?.length) {
+      <div class="historique">
+        <p class="info-label">Historique du traitement</p>
+        <ol class="timeline">
+          @for (h of r.historique; track $index) {
+            <li>
+              <span [class]="'statut-badge ' + classeStatut(h.statut)">{{ labelStatut(h.statut) }}</span>
+              <span class="muted">
+                — {{ formaterDate(h.date) }}
+                @if (h.nom_association) { · {{ h.nom_association }} }
+              </span>
+            </li>
+          }
+        </ol>
+      </div>
+    }
+  </div>
+}

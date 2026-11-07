@@ -38,6 +38,7 @@ export interface StatutValidation {
 export class AssociationService {
   private http = inject(HttpClient);
   private api = `${inject(API_BASE)}/api/associations`;
+  private apiBase = inject(API_BASE);
 
   // ─── US02 : Association ──────────────────────────────────────────────────
 
@@ -80,6 +81,13 @@ export class AssociationService {
   /** Valider ou refuser une association (admin) */
   validerAssociation(id: number, statut: 'approuve' | 'refuse', commentaire?: string): Observable<unknown> {
     return this.http.patch(`${this.api}/${id}/validation`, { statut, commentaire });
+  }
+  /** Télécharge un document légal en blob (l'intercepteur ajoute le JWT).
+   *  Évite le token en query string, qui fuyait dans les logs et l'historique. */
+  telechargerDocument(id: number): Observable<Blob> {
+    return this.http.get(`${this.apiBase}/api/documents/${id}/file`, {
+      responseType: 'blob',
+    });
   }
 }
 

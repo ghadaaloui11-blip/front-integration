@@ -1,51 +1,194 @@
-<h1 class="title">Signalements reçus</h1>
-<p class="sub">Situations signalées par la communauté.</p>
+<h1 class="title">Signalements</h1>
+<p class="sub">Consultez les situations publiées, choisissez celles que vous voulez traiter.</p>
 
-@if (loading()) { <p class="sub">Chargement...</p> }
 @if (error()) { <div class="alert-error">{{ error() }}</div> }
 
-<div class="card-box">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Signalement</th>
-        <th>Catégorie</th>
-        <th>Lieu</th>
-        <th>Reçu</th>
-        <th>Statut</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (r of reports(); track r.id) {
-        <tr>
-          <td class="bold">{{ r.titre }}</td>
-          <td>
-            @if (r.categorie) {
-              <span [class]="'badge ' + r.classe">{{ r.categorie }}</span>
-            } @else {
-              <span class="muted">-</span>
-            }
-          </td>
-          <td>{{ r.lieu || '-' }}@if (r.anonyme) { (anonyme) }</td>
-          <td class="muted">{{ tempsEcoule(r.date) }}</td>
-          <td><span class="statut">{{ r.statut }}</span></td>
-          <td><a class="voir" (click)="selected = r">Voir ›</a></td>
-        </tr>
-      } @empty {
-        @if (!loading()) {
-          <tr><td colspan="6" class="muted">Aucun signalement.</td></tr>
-        }
-      }
-    </tbody>
-  </table>
+@if (message()) {
+  <div class="alert-success">{{ message() }}</div>
+}
+@if (erreurAction()) {
+  <div class="alert-error">{{ erreurAction() }}</div>
+}
+
+<!-- Onglets : disponibles (US32) / mes prises en charge (US33) -->
+<div class="onglets">
+  <button
+    type="button"
+    [class.actif]="onglet() === 'disponibles'"
+    (click)="definirOnglet('disponibles')">
+    Signalements publiés
+  </button>
+  <button
+    type="button"
+    [class.actif]="onglet() === 'mes'"
+    (click)="definirOnglet('mes')">
+    Mes prises en charge
+  </button>
 </div>
+
+@if (onglet() === 'disponibles') {
+  <div class="card-box">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Signalement</th>
+          <th>Statut</th>
+          <th>Responsable</th>
+          <th>Soumis</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of disponibles(); track r.id) {
+          <tr>
+            <td class="bold">
+              {{ titreDe(r) }}
+              @if (r.est_anonyme) { <span class="muted">(anonyme)</span> }
+            </td>
+            <td>
+              <span [class]="'statut-badge ' + classeStatut(r.statut)">{{ labelStatut(r.statut) }}</span>
+            </td>
+            <td>
+              @if (r.nom_association) {
+                {{ r.nom_association }}
+              } @else {
+                <span class="attente">En attente</span>
+              }
+            </td>
+            <td class="muted">{{ tempsEcoule(r.created_at) }}</td>
+            <td class="cell-actions">
+              @if (!r.association_id && r.statut === 'recu') {
+                <button
+                  type="button"
+                  class="btn-action"
+                  [disabled]="actionEnCours() === r.id"
+                  (click)="prendreEnCharge(r)">
+                  {{ actionEnCours() === r.id ? 'Enregistrement...' : 'Prendre en charge' }}
+                </button>
+              }
+              <a class="voir" (click)="selected = r">Voir ›</a>
+            </td>
+          </tr>
+        } @empty {
+          @if (!chargementDisponibles()) {
+            <tr><td colspan="5" class="muted">Aucun signalement publié.</td></tr>
+          }
+        }
+      </tbody>
+    </table>
+    @if (chargementDisponibles()) { <p class="muted">Chargement...</p> }
+  </div>
+}
+
+@if (onglet() === 'mes') {
+  <div class="card-box">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Signalement</th>
+          <th>Statut</th>
+          <th>Pris en charge le</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of prisesEnCharge(); track r.id) {
+          <tr>
+            <td class="bold">
+              {{ titreDe(r) }}
+              @if (r.est_anonyme) { <span class="muted">(anonyme)</span> }
+            </td>
+            <td>
+              <span [class]="'statut-badge ' + classeStatut(r.statut)">{{ labelStatut(r.statut) }}</span>
+            </td>
+            <td class="muted">{{ formaterDate(r.date_prise_en_charge) || '-' }}</td>
+            <td class="cell-actions">
+              @if (r.statut === 'en_cours') {
+                <button
+                  type="button"
+                  class="btn-action resoudre"
+                  [disabled]="actionEnCours() === r.id"
+                  (click)="resoudre(r)">
+                  {{ actionEnCours() === r.id ? 'Enregistrement...' : 'Marquer résolu' }}
+                </button>
+              } @else if (r.statut === 'resolu') {
+                <button
+                  type="button"
+                  class="btn-action rouvrir"
+                  [disabled]="actionEnCours() === r.id"
+                  (click)="rouvrir(r)">
+                  {{ actionEnCours() === r.id ? 'Enregistrement...' : 'Rouvrir' }}
+                </button>
+              }
+              <a class="voir" (click)="selected = r">Voir ›</a>
+            </td>
+          </tr>
+        } @empty {
+          @if (!chargementMes()) {
+            <tr>
+              <td colspan="4" class="muted">
+                Vous n'avez pris la responsabilité d'aucun signalement. Ouvrez l'onglet
+                « Signalements publiés » et décidez de ceux que vous souhaitez traiter.
+              </td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+    @if (chargementMes()) { <p class="muted">Chargement...</p> }
+  </div>
+}
 
 @if (selected) {
   <div class="card-box detail">
-    <h3 class="detail-title">{{ selected.titre }}</h3>
+    <div class="detail-head">
+      <h3 class="detail-title">
+        {{ titreDe(selected) }}
+        @if (selected.est_anonyme) { <span class="muted">(anonyme)</span> }
+      </h3>
+      <a class="voir" (click)="selected = null">Fermer</a>
+    </div>
+
+    @if (photoUrl(selected); as photo) {
+      <img class="detail-photo" [src]="photo" alt="Photo du signalement" />
+    }
+
     <p class="detail-text">{{ selected.description }}</p>
-    <p class="muted">Lieu : {{ selected.lieu || '-' }}</p>
-    <a class="voir" (click)="selected = null">Fermer</a>
+
+    <div class="detail-infos">
+      @if (lieuDe(selected)) {
+        <p><span class="info-label">Lieu :</span> {{ lieuDe(selected) }}</p>
+      }
+      <p>
+        <span class="info-label">Statut :</span>
+        <span [class]="'statut-badge ' + classeStatut(selected.statut)">{{ labelStatut(selected.statut) }}</span>
+      </p>
+      @if (selected.nom_association) {
+        <p><span class="info-label">Responsable :</span> {{ selected.nom_association }}</p>
+      }
+      @if (selected.date_prise_en_charge) {
+        <p><span class="info-label">Prise en charge le :</span> {{ formaterDate(selected.date_prise_en_charge) }}</p>
+      }
+      @if (selected.date_resolution) {
+        <p><span class="info-label">Résolu le :</span> {{ formaterDate(selected.date_resolution) }}</p>
+      }
+    </div>
+
+    @if (selected.historique?.length) {
+      <div class="historique">
+        <p class="info-label">Historique du traitement</p>
+        <ol class="timeline">
+          @for (h of selected.historique; track $index) {
+            <li>
+              <span [class]="'statut-badge ' + classeStatut(h.statut)">{{ labelStatut(h.statut) }}</span>
+              <span class="muted">
+                — {{ formaterDate(h.date) }}
+                @if (h.nom_association) { · {{ h.nom_association }} }
+              </span>
+            </li>
+          }
+        </ol>
+      </div>
+    }
   </div>
 }

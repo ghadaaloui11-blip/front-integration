@@ -7,8 +7,6 @@ import {
   DocumentAdmin,
   statutLabel,
 } from '../../../core/services/association.service';
-import { API_BASE } from '../../../core/config/api-base.token';
-import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-admin-associations',
@@ -19,8 +17,6 @@ import { AuthService } from '../../../core/services/auth.service';
 })
 export class AdminAssociationsComponent implements OnInit {
   private service = inject(AssociationService);
-  private apiBase = inject(API_BASE);
-  private auth = inject(AuthService);
 
   associations = signal<AssociationAdmin[]>([]);
   loading = signal(true);
@@ -127,12 +123,19 @@ export class AdminAssociationsComponent implements OnInit {
     return statutLabel(s);
   }
 
-  /** Lien de telechargement authentifie : un <a href> ne peut pas porter
-   *  d'entete Authorization, le token passe donc en query string. */
-  getDocUrl(doc: DocumentAdmin): string {
-    const token = this.auth.getToken();
-    const suffixe = token ? `?token=${encodeURIComponent(token)}` : '';
-    return `${this.apiBase}/api/documents/${doc.id}/file${suffixe}`;
+  /** Téléchargement authentifié en blob : pas de token dans l'URL. */
+  telechargerDoc(doc: DocumentAdmin) {
+    this.service.telechargerDocument(doc.id).subscribe({
+      next: (blob) => {
+        const url = URL.createObjectURL(blob);
+        const lien = document.createElement('a');
+        lien.href = url;
+        lien.download = doc.nom_original;
+        lien.click();
+        URL.revokeObjectURL(url);
+      },
+      error: () => this.error.set('Impossible de télécharger le document.'),
+    });
   }
 
   getDocIcon(nom: string): string {

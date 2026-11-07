@@ -38,6 +38,14 @@ export class DonComponent implements OnInit {
     return Number(this.route.snapshot.paramMap.get('id'));
   }
 
+  get campagneTerminee(): boolean {
+    return this.campagne()?.statut === 'terminee';
+  }
+
+  statutDonLabel(statut: string): string {
+    return statut === 'enregistre' ? 'Don enregistré (paiement simulé)' : statut;
+  }
+
   ngOnInit() {
     const id = this.campagneId;
     if (!Number.isFinite(id)) {
@@ -56,6 +64,10 @@ export class DonComponent implements OnInit {
 
   submit() {
     this.error.set('');
+    if (this.campagneTerminee) {
+      this.error.set('Cette campagne est terminée : les dons ne sont plus acceptés.');
+      return;
+    }
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;

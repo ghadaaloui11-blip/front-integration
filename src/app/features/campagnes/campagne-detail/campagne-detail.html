@@ -35,11 +35,17 @@
 
         @if (isAssociation) {
           <h3 class="section">Déclarer une utilisation</h3>
-          <div class="form-line">
-            <input [(ngModel)]="libelle" placeholder="Libellé" />
-            <input [(ngModel)]="montant" type="number" placeholder="Montant" />
-          </div>
-          <button type="button" class="btn-main" (click)="ajouterUtilisation()">Enregistrer</button>
+          @if (d.statut === 'terminee') {
+            <p class="reste">Campagne terminée : aucune utilisation ne peut être déclarée.</p>
+          } @else {
+            <div class="form-line">
+              <input [(ngModel)]="libelle" placeholder="Libellé" />
+              <input [(ngModel)]="montant" type="number" placeholder="Montant" />
+            </div>
+            <button type="button" class="btn-main" [disabled]="envoi()" (click)="ajouterUtilisation()">
+              {{ envoi() ? 'Enregistrement…' : 'Enregistrer' }}
+            </button>
+          }
         }
       </div>
     </div>
@@ -69,7 +75,11 @@
         <p class="reste">Reste à collecter : {{ d.montant_restant }} TND</p>
 
         @if (peutDonner) {
-          <a class="btn-main btn-link" [routerLink]="['/campagnes', campagneId, 'don']">Faire un don</a>
+          @if (d.statut === 'terminee') {
+            <p class="reste">Campagne terminée : les dons ne sont plus acceptés.</p>
+          } @else {
+            <a class="btn-main btn-link" [routerLink]="['/campagnes', campagneId, 'don']">Faire un don</a>
+          }
         }
       </div>
     </div>

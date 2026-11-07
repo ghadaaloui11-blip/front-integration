@@ -9,6 +9,7 @@
 
       <nav class="menu">
         <a routerLink="/campagnes" routerLinkActive="active">Campagnes</a>
+        <a routerLink="/signalements-publics" routerLinkActive="active">Signalements publics</a>
 
         @if (auth.getRole() === 'admin') {
           <a routerLink="/admin/associations" routerLinkActive="active">Gestion associations</a>
@@ -20,6 +21,7 @@
           <a routerLink="/mes-documents" routerLinkActive="active">Mes documents</a>
         } @else if (auth.getRole() !== 'admin') {
           <a routerLink="/signalement" routerLinkActive="active">Nouveau signalement</a>
+          <a routerLink="/mes-signalements" routerLinkActive="active">Mes signalements</a>
         }
       </nav>
 
@@ -28,10 +30,6 @@
 
     <!-- Contenu -->
     <div class="main">
-      <header class="topbar">
-        <input class="search" placeholder="Rechercher une campagne..." />
-      </header>
-
       <main class="content">
         <router-outlet />
       </main>

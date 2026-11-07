@@ -1,0 +1,179 @@
+.title {
+  color: #1f4e79;
+  font-size: 34px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.sub {
+  color: #64748b;
+  margin: 0 0 24px 0;
+  font-size: 17px;
+}
+
+/* Filtres par statut */
+.filtres {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.filtre {
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #334155;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filtre.actif {
+  background: #1f4e79;
+  border-color: #1f4e79;
+  color: #ffffff;
+}
+
+/* Carte + tableau */
+.card-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px 28px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  text-align: left;
+  color: #64748b;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.table td {
+  padding: 18px 8px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 17px;
+  color: #0f172a;
+}
+
+.table tr:last-child td {
+  border-bottom: 0;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.muted {
+  color: #64748b;
+  font-size: 15px;
+}
+
+/* Badges de statut (partages visuellement avec les autres vues) */
+.statut-badge {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 14px;
+  border: 1px solid #fcd34d;
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.statut-badge.statut-en-cours {
+  border-color: #93c5fd;
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.statut-badge.statut-resolu {
+  border-color: #86efac;
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.voir {
+  color: #1f4e79;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Détail */
+.detail {
+  margin-top: 24px;
+}
+
+.detail-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.detail-title {
+  color: #1f4e79;
+  font-size: 22px;
+  margin: 0 0 10px 0;
+}
+
+.detail-photo {
+  max-width: 320px;
+  max-height: 220px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  object-fit: cover;
+  margin: 0 0 14px 0;
+  display: block;
+}
+
+.detail-text {
+  color: #0f172a;
+  margin: 0 0 14px 0;
+  line-height: 1.5;
+}
+
+.detail-infos p {
+  margin: 4px 0;
+}
+
+.info-label {
+  color: #64748b;
+  font-size: 15px;
+}
+
+.alert-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+
+/* Journal de statut (US06/US33) */
+.historique {
+  margin-top: 16px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 12px;
+}
+
+.timeline {
+  list-style: none;
+  margin: 8px 0 0 0;
+  padding: 0;
+}
+
+.timeline li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 6px 0;
+}

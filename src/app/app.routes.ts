@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './features/auth/login/login.component/login.component';
 import { InscriptionComponent } from './features/auth/inscription/inscription';
 import { CreateReportComponent } from './features/reports/create-report/report.component/report.component';
+import { PublicReportsComponent } from './features/reports/public-reports/public-reports';
+import { MesSignalementsComponent } from './features/reports/mes-signalements/mes-signalements';
 import { associationGuard, citoyenGuard, adminGuard, authGuard } from './core/guards/role.guards';
 
 export const routes: Routes = [
@@ -10,6 +12,12 @@ export const routes: Routes = [
 
   // US05 : création de signalement (citoyen seulement)
   { path: 'signalement', component: CreateReportComponent, canActivate: [citoyenGuard] },
+
+  // US06/US32 : consultation PUBLIQUE des signalements (aucun guard)
+  { path: 'signalements-publics', component: PublicReportsComponent },
+
+  // US06 : suivi du statut de mes signalements (citoyen seulement)
+  { path: 'mes-signalements', component: MesSignalementsComponent, canActivate: [citoyenGuard] },
 
   // US10 : consultation (publique)
   {

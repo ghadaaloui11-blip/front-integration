@@ -24,6 +24,7 @@ export class CampagneDetailComponent implements OnInit {
 
   libelle = '';
   montant: number | null = null;
+  envoi = signal(false);
 
   get campagneId(): number {
     return Number(this.route.snapshot.paramMap.get('id'));
@@ -45,20 +46,26 @@ export class CampagneDetailComponent implements OnInit {
   }
 
   ajouterUtilisation() {
+    if (this.envoi()) return;
     this.error.set('');
     this.success.set('');
     if (!this.libelle || !this.montant) {
       this.error.set('Libellé et montant obligatoires.');
       return;
     }
+    this.envoi.set(true);
     this.service.addUtilisation(this.campagneId, { libelle: this.libelle, montant: this.montant }).subscribe({
       next: () => {
         this.success.set('Utilisation enregistrée.');
         this.libelle = '';
         this.montant = null;
+        this.envoi.set(false);
         this.load();
       },
-      error: (e) => this.error.set(e.error?.erreur ?? e.error?.message ?? 'Erreur lors de l\'enregistrement.'),
+      error: (e) => {
+        this.error.set(e.error?.erreur ?? e.error?.message ?? 'Erreur lors de l\'enregistrement.');
+        this.envoi.set(false);
+      },
     });
   }
 }

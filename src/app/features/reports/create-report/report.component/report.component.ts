@@ -89,6 +89,21 @@ export class CreateReportComponent implements OnDestroy {
       return;
     }
 
+    // Coordonnees optionnelles mais, si presentes, numeriques et bornees.
+    const coordonneeValide = (valeur: string, min: number, max: number): boolean => {
+      if (!valeur) return true;
+      const nombre = Number(valeur);
+      return Number.isFinite(nombre) && nombre >= min && nombre <= max;
+    };
+    if (!coordonneeValide(this.latitude, -90, 90)) {
+      this.erreur = 'La latitude doit être un nombre entre -90 et 90.';
+      return;
+    }
+    if (!coordonneeValide(this.longitude, -180, 180)) {
+      this.erreur = 'La longitude doit être un nombre entre -180 et 180.';
+      return;
+    }
+
     const formData = new FormData();
     formData.append('description', this.description.trim());
     if (this.latitude) formData.append('latitude', this.latitude);

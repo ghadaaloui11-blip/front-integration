@@ -2,6 +2,18 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.2.
 
+## Configuration de l'API
+
+L'URL du backend est définie dans `src/environments/environment.ts`
+(`http://localhost:5000` par défaut). Le build `production` utilise
+`src/environments/environment.production.ts` (`apiBase: ''` → même origine,
+à servir derrière un reverse proxy). Pour un déploiement sur un autre domaine,
+définir `window.__API_BASE__` dans le HTML — aucun rebuild n'est nécessaire :
+
+```html
+<script>window.__API_BASE__ = 'https://api.example.com';</script>
+```
+
 ## Development server
 
 To start a local development server, run:

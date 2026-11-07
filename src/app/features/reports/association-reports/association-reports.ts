@@ -1,19 +1,21 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { Signalement, SignalementService } from '../../../core/services/signalement.service';
+import { API_BASE } from '../../../core/config/api-base.token';
+import {
+  Signalement,
+  SignalementService,
+  classeStatut,
+  labelStatut,
+} from '../../../core/services/signalement.service';
 
-/** Signalement normalisé pour l'affichage. */
-export interface SignalementFormate {
-  id: number;
-  titre: string;
-  description: string;
-  categorie: string;
-  classe: string;
-  lieu: string;
-  date: string;
-  statut: string;
-  anonyme: boolean;
-}
-
+/**
+ * US07 / US32 / US33 : espace association.
+ *  - Onglet « Disponibles » : tous les signalements publiés, avec la
+ *    possibilité de prendre explicitement en charge un signalement « Reçu ».
+ *  - Onglet « Mes prises en charge » : signalements dont l'association est
+ *    responsable, avec mise à jour du statut (en_cours -> resolu).
+ * Aucune affectation automatique : seule une action explicite de
+ * l'association crée la responsabilité.
+ */
 @Component({
   selector: 'app-association-reports',
   imports: [],
@@ -22,55 +24,157 @@ export interface SignalementFormate {
 })
 export class AssociationReportsComponent implements OnInit {
   private signalements = inject(SignalementService);
+  private apiBase = inject(API_BASE);
 
-  reports = signal<SignalementFormate[]>([]);
-  loading = signal(true);
+  onglet = signal<'disponibles' | 'mes'>('disponibles');
+
+  disponibles = signal<Signalement[]>([]);
+  prisesEnCharge = signal<Signalement[]>([]);
+
+  chargementDisponibles = signal(true);
+  chargementMes = signal(true);
   error = signal('');
 
-  selected: SignalementFormate | null = null;
+  // Retour utilisateur après une action (US32/US33)
+  message = signal('');
+  erreurAction = signal('');
+  actionEnCours = signal<number | null>(null);
+
+  selected: Signalement | null = null;
+
+  // Exposés pour le template
+  labelStatut = labelStatut;
+  classeStatut = classeStatut;
 
   ngOnInit() {
-    this.signalements.lister().subscribe({
+    this.recharger();
+  }
+
+  recharger() {
+    this.error.set('');
+    this.chargementDisponibles.set(true);
+    this.chargementMes.set(true);
+    this.selected = null;
+
+    this.signalements.listerPublic().subscribe({
       next: (data) => {
-        this.reports.set(data.map((s) => this.preparer(s)));
-        this.loading.set(false);
+        this.disponibles.set(data);
+        this.chargementDisponibles.set(false);
       },
       error: (e) => {
         this.error.set(e.error?.erreur ?? e.error?.message ?? 'Impossible de charger les signalements.');
-        this.loading.set(false);
+        this.chargementDisponibles.set(false);
+      },
+    });
+
+    this.signalements.listerPrisesEnCharge().subscribe({
+      next: (data) => {
+        this.prisesEnCharge.set(data);
+        this.chargementMes.set(false);
+      },
+      error: () => {
+        // Un chargement vide reste acceptable ; l'onglet affichera l'état vide.
+        this.prisesEnCharge.set([]);
+        this.chargementMes.set(false);
       },
     });
   }
 
-  // Met les champs au même format, quel que soit le nom de colonne
-  preparer(s: Signalement): SignalementFormate {
-    let lieu = s.adresse || s.lieu || '';
-    if (!lieu && s.latitude && s.longitude) {
-      lieu = `${s.latitude}, ${s.longitude}`;
-    }
-
-    return {
-      id: s.id,
-      titre: s.titre || s.description || `Signalement #${s.id}`,
-      description: s.description || '',
-      categorie: s.categorie || '',
-      classe: this.classeCategorie(s.categorie),
-      lieu: lieu,
-      date: s.created_at || s.date_creation || s.date_signalement || '',
-      statut: s.statut || 'Reçu',
-      anonyme: !!(s.anonyme ?? s.est_anonyme),
-    };
+  definirOnglet(onglet: 'disponibles' | 'mes') {
+    this.onglet.set(onglet);
   }
 
-  classeCategorie(categorie?: string): string {
-    const c = (categorie || '').toLowerCase();
-    if (c.includes('sant')) return 'sante';
-    if (c.includes('urgen')) return 'urgence';
-    if (c.includes('social')) return 'social';
+  /** US32 : prise en charge explicite d'un signalement disponible. */
+  prendreEnCharge(s: Signalement) {
+    if (this.actionEnCours() !== null) return;
+    this.actionEnCours.set(s.id);
+    this.message.set('');
+    this.erreurAction.set('');
+
+    this.signalements.prendreEnCharge(s.id).subscribe({
+      next: (reponse) => {
+        this.message.set(`Signalement #${s.id} pris en charge — statut passé à « ${labelStatut(reponse.signalement.statut)} ».`);
+        this.actionEnCours.set(null);
+        this.recharger();
+      },
+      error: (e) => {
+        this.erreurAction.set(
+          e.error?.erreur ?? 'Impossible de prendre en charge ce signalement.'
+        );
+        this.actionEnCours.set(null);
+        // Un concurrent a pu revendiquer le signalement entre-temps : on rafraîchit.
+        this.recharger();
+      },
+    });
+  }
+
+  /** US33 : l'association responsable résout son signalement. */
+  resoudre(s: Signalement) {
+    if (this.actionEnCours() !== null) return;
+    this.actionEnCours.set(s.id);
+    this.message.set('');
+    this.erreurAction.set('');
+
+    this.signalements.changerStatut(s.id, 'resolu').subscribe({
+      next: () => {
+        this.message.set(`Signalement #${s.id} marqué comme résolu. Les citoyens voient le nouveau statut.`);
+        this.actionEnCours.set(null);
+        this.recharger();
+      },
+      error: (e) => {
+        this.erreurAction.set(
+          e.error?.erreur ?? 'Impossible de mettre à jour le statut du signalement.'
+        );
+        this.actionEnCours.set(null);
+        this.recharger();
+      },
+    });
+  }
+
+  /** US33 : réouverture d'un signalement résolu (la situation n'est pas réglée). */
+  rouvrir(s: Signalement) {
+    if (this.actionEnCours() !== null) return;
+    this.actionEnCours.set(s.id);
+    this.message.set('');
+    this.erreurAction.set('');
+
+    this.signalements.changerStatut(s.id, 'en_cours').subscribe({
+      next: () => {
+        this.message.set(`Signalement #${s.id} rouvert — statut passé à « En cours ».`);
+        this.actionEnCours.set(null);
+        this.recharger();
+      },
+      error: (e) => {
+        this.erreurAction.set(
+          e.error?.erreur ?? 'Impossible de rouvrir ce signalement.'
+        );
+        this.actionEnCours.set(null);
+        this.recharger();
+      },
+    });
+  }
+
+  titreDe(s: Signalement): string {
+    return s.titre || s.description || `Signalement #${s.id}`;
+  }
+
+  photoUrl(s: Signalement): string | null {
+    return s.photo ? `${this.apiBase}/${s.photo}` : null;
+  }
+
+  lieuDe(s: Signalement): string {
+    if (s.adresse || s.lieu) return s.adresse || s.lieu || '';
+    if (s.latitude != null && s.longitude != null) return `${s.latitude}, ${s.longitude}`;
     return '';
   }
 
-  tempsEcoule(date: string): string {
+  formaterDate(date?: string | null): string {
+    if (!date) return '';
+    const d = new Date(date);
+    return isNaN(d.getTime()) ? '' : d.toLocaleString('fr-FR');
+  }
+
+  tempsEcoule(date?: string | null): string {
     if (!date) return '';
     const diff = Date.now() - new Date(date).getTime();
     const heures = Math.floor(diff / 3600000);
