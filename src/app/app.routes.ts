@@ -18,6 +18,13 @@ export const routes: Routes = [
 
   // US06 : suivi du statut de mes signalements (citoyen seulement)
   { path: 'mes-signalements', component: MesSignalementsComponent, canActivate: [citoyenGuard] },
+  // Modifier un signalement (citoyen seulement)
+  {
+    path: 'signalement/edit/:id',
+    canActivate: [citoyenGuard],
+    loadComponent: () =>
+      import('./features/reports/edit-report/edit-report.component').then(m => m.EditReportComponent),
+  },
 
   // US10 : consultation (publique)
   {
@@ -37,6 +44,13 @@ export const routes: Routes = [
     canActivate: [associationGuard],
     loadComponent: () =>
       import('./features/campagnes/mes-campagnes/mes-campagnes').then(m => m.MesCampagnesComponent),
+  },
+  // Modifier une campagne (association seulement)
+  {
+    path: 'campagnes/edit/:id',
+    canActivate: [associationGuard],
+    loadComponent: () =>
+      import('./features/campagnes/edit-campaign/edit-campaign.component').then(m => m.EditCampaignComponent),
   },
   // Don (citoyen uniquement). Doit rester AVANT 'campagnes/:id'
   {

@@ -120,4 +120,22 @@ export class SignalementService {
       { statut }
     );
   }
+
+  /** Obtenir un signalement par ID (pour édition) */
+  getSignalement(id: number): Observable<Signalement> {
+    return this.http.get<Signalement>(`${this.apiSignalement}/${id}`);
+  }
+
+  /** Mettre à jour un signalement */
+  updateSignalement(id: number, formData: FormData): Observable<{ signalement: Signalement }> {
+    return this.http.patch<{ signalement: Signalement }>(
+      `${this.apiSignalement}/${id}`,
+      formData
+    );
+  }
+
+  /** Supprimer un signalement */
+  deleteSignalement(id: number): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(`${this.apiSignalement}/${id}`);
+  }
 }

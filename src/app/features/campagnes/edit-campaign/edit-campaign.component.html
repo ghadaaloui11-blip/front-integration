@@ -1,0 +1,96 @@
+<div class="edit-campaign-container">
+  <div class="header">
+    <h1>Modifier ma campagne</h1>
+    <p>Modifiez les informations de votre campagne ci-dessous</p>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Chargement en cours...</p>
+  </div>
+
+  <div *ngIf="error" class="error">
+    <p>{{ error }}</p>
+  </div>
+
+  <div *ngIf="!isLoading && !error" class="form-container">
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="titre">Titre de la campagne *</label>
+        <input 
+          id="titre" 
+          type="text" 
+          formControlName="titre" 
+          placeholder="Entrez le titre de votre campagne"
+        >
+        <div *ngIf="editForm.controls['titre'].invalid && (editForm.controls['titre'].dirty || editForm.controls['titre'].touched)" class="error-message">
+          <p *ngIf="editForm.controls['titre'].errors?.['required']">Le titre est obligatoire</p>
+          <p *ngIf="editForm.controls['titre'].errors?.['minlength']">Le titre doit contenir au moins 3 caractères</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description *</label>
+        <textarea 
+          id="description" 
+          formControlName="description" 
+          rows="6" 
+          placeholder="Décrivez votre campagne en détail..."
+        ></textarea>
+        <div *ngIf="editForm.controls['description'].invalid && (editForm.controls['description'].dirty || editForm.controls['description'].touched)" class="error-message">
+          <p *ngIf="editForm.controls['description'].errors?.['required']">La description est obligatoire</p>
+          <p *ngIf="editForm.controls['description'].errors?.['minlength']">La description doit contenir au moins 10 caractères</p>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="objectif_montant">Objectif de collecte (TND) *</label>
+          <input 
+            id="objectif_montant" 
+            type="number" 
+            step="0.01"
+            formControlName="objectif_montant" 
+            placeholder="0.00"
+          >
+          <div *ngIf="editForm.controls['objectif_montant'].invalid && (editForm.controls['objectif_montant'].dirty || editForm.controls['objectif_montant'].touched)" class="error-message">
+            <p *ngIf="editForm.controls['objectif_montant'].errors?.['required']">L'objectif est obligatoire</p>
+            <p *ngIf="editForm.controls['objectif_montant'].errors?.['min']">L'objectif doit être supérieur à 0</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="date_debut">Date de début *</label>
+          <input 
+            id="date_debut" 
+            type="date" 
+            formControlName="date_debut"
+          >
+          <div *ngIf="editForm.controls['date_debut'].invalid && (editForm.controls['date_debut'].dirty || editForm.controls['date_debut'].touched)" class="error-message">
+            <p *ngIf="editForm.controls['date_debut'].errors?.['required']">La date de début est obligatoire</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="date_fin">Date de fin *</label>
+          <input 
+            id="date_fin" 
+            type="date" 
+            formControlName="date_fin"
+          >
+          <div *ngIf="editForm.controls['date_fin'].invalid && (editForm.controls['date_fin'].dirty || editForm.controls['date_fin'].touched)" class="error-message">
+            <p *ngIf="editForm.controls['date_fin'].errors?.['required']">La date de fin est obligatoire</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" (click)="onCancel()" class="btn btn-secondary">Annuler</button>
+        <button type="button" (click)="onDelete()" class="btn btn-danger">Supprimer</button>
+        <button type="submit" [disabled]="editForm.invalid" class="btn btn-primary">Enregistrer les modifications</button>
+      </div>
+    </form>
+  </div>
+</div>

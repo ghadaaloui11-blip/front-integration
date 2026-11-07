@@ -1,0 +1,14 @@
+<div class="notification-container">
+  @for (notification of notifications; track notification.id) {
+    <div 
+      class="notification notification-{{ notification.type }} notification-{{ notification.state }}"
+      [id]="'notification-' + notification.id"
+    >
+      <div class="notification-content">
+        <span class="notification-icon">{{ getIcon(notification.type) }}</span>
+        <span class="notification-message">{{ notification.message }}</span>
+        <button class="notification-close" (click)="remove(notification.id)">&times;</button>
+      </div>
+    </div>
+  }
+</div>

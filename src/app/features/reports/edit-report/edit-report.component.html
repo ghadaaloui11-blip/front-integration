@@ -1,0 +1,80 @@
+<div class="edit-report-container">
+  <div class="header">
+    <h1>Modifier mon signalement</h1>
+    <p>Modifiez les informations de votre signalement ci-dessous</p>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Chargement en cours...</p>
+  </div>
+
+  <div *ngIf="error" class="error">
+    <p>{{ error }}</p>
+  </div>
+
+  <div *ngIf="!isLoading && !error" class="form-container">
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="description">Description *</label>
+        <textarea 
+          id="description" 
+          formControlName="description" 
+          rows="6" 
+          placeholder="Décrivez le problème de manière détaillée..."
+        ></textarea>
+        <div *ngIf="editForm.controls['description'].invalid && (editForm.controls['description'].dirty || editForm.controls['description'].touched)" class="error-message">
+          <p *ngIf="editForm.controls['description'].errors?.['required']">La description est obligatoire</p>
+          <p *ngIf="editForm.controls['description'].errors?.['minlength']">La description doit contenir au moins 10 caractères</p>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="latitude">Latitude</label>
+          <input 
+            id="latitude" 
+            type="number" 
+            step="any"
+            formControlName="latitude" 
+            placeholder="-90 à 90"
+          >
+          <div *ngIf="editForm.controls['latitude'].invalid && (editForm.controls['latitude'].dirty || editForm.controls['latitude'].touched)" class="error-message">
+            <p *ngIf="editForm.controls['latitude'].errors?.['min'] || editForm.controls['latitude'].errors?.['max']">La latitude doit être entre -90 et 90</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="longitude">Longitude</label>
+          <input 
+            id="longitude" 
+            type="number" 
+            step="any"
+            formControlName="longitude" 
+            placeholder="-180 à 180"
+          >
+          <div *ngIf="editForm.controls['longitude'].invalid && (editForm.controls['longitude'].dirty || editForm.controls['longitude'].touched)" class="error-message">
+            <p *ngIf="editForm.controls['longitude'].errors?.['min'] || editForm.controls['longitude'].errors?.['max']">La longitude doit être entre -180 et 180</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="checkbox-group">
+          <input 
+            id="est_anonyme" 
+            type="checkbox" 
+            formControlName="est_anonyme"
+          >
+          <label for="est_anonyme">Rester anonyme</label>
+        </div>
+        <p class="help-text">Si coché, votre identité ne sera pas révélée</p>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" (click)="onCancel()" class="btn btn-secondary">Annuler</button>
+        <button type="submit" [disabled]="editForm.invalid" class="btn btn-primary">Enregistrer les modifications</button>
+      </div>
+    </form>
+  </div>
+</div>

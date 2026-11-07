@@ -73,6 +73,18 @@ export class CampagneService {
   addUtilisation(id: number, data: { libelle: string; montant: number }): Observable<unknown> {
     return this.http.post(`${this.api}/${id}/utilisation`, data);
   }
+
+  getOne(id: number): Observable<Campagne> {
+    return this.http.get<Campagne>(`${this.api}/${id}`);
+  }
+
+  update(id: number, data: Partial<Campagne>): Observable<unknown> {
+    return this.http.patch(`${this.api}/${id}`, data);
+  }
+
+  delete(id: number): Observable<unknown> {
+    return this.http.delete(`${this.api}/${id}`);
+  }
 }
 
 /** Pourcentage collecté (0–100), protégé contre la division par zéro. */

@@ -48,6 +48,10 @@
       }
     </div>
 
+    <div class="detail-actions">
+      <a [routerLink]="'/signalement/edit/' + r.id" class="btn btn-edit">Modifier</a>
+    </div>
+
     @if (r.historique?.length) {
       <div class="historique">
         <p class="info-label">Historique du traitement</p>

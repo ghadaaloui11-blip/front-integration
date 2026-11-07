@@ -128,3 +128,26 @@
   gap: 8px;
   margin: 6px 0;
 }
+
+.detail-actions {
+  margin-top: 16px;
+  text-align: right;
+}
+
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-edit {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #2563eb;
+}
