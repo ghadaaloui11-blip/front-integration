@@ -1,0 +1,70 @@
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.sous-titre {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.recherche {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.recherche input {
+  flex: 1;
+  min-width: 220px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.recherche button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #2e7d32;
+  color: white;
+  cursor: pointer;
+}
+
+.recherche button.secondaire {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.carte {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.carte h3 {
+  margin: 0 0 8px;
+}
+
+.carte p {
+  margin: 4px 0;
+  color: #555;
+}
+
+.info {
+  color: #666;
+}
+
+.erreur {
+  color: #c62828;
+}

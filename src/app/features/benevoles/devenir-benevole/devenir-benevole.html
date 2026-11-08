@@ -1,0 +1,85 @@
+<div class="page">
+  <h1>Devenir bénévole</h1>
+  <p class="sous-titre">
+    Donnez un peu de votre temps pour aider les associations près de chez vous.
+  </p>
+
+  @if (loading()) {
+    <p class="info">Chargement...</p>
+  } @else {
+
+    @if (success()) {
+      <p class="succes">{{ success() }}</p>
+    }
+
+    @if (!enEdition()) {
+      <!-- Mode affichage (déjà bénévole) -->
+      <div class="carte">
+        <div class="ligne">
+          <span class="label">Compétences</span>
+          <span class="valeur">{{ competences }}</span>
+        </div>
+        <div class="ligne">
+          <span class="label">Disponibilités</span>
+          <span class="valeur">{{ disponibilites }}</span>
+        </div>
+        <div class="ligne">
+          <span class="label">Ville</span>
+          <span class="valeur">{{ ville }}</span>
+        </div>
+        <div class="ligne">
+          <span class="label">Motivation</span>
+          <span class="valeur">{{ motivation || '-' }}</span>
+        </div>
+
+        <button type="button" class="principal" (click)="modifier()">Modifier</button>
+      </div>
+    } @else {
+      <!-- Mode formulaire (inscription ou modification) -->
+      <div class="formulaire">
+        <label>Compétences</label>
+        <textarea
+          [(ngModel)]="competences"
+          rows="3"
+          placeholder="Ex : cuisine, informatique, conduite..."
+        ></textarea>
+
+        <label>Disponibilités</label>
+        <select [(ngModel)]="disponibilites">
+          @for (d of disponibilitesListe; track d) {
+            <option [value]="d">{{ d }}</option>
+          }
+        </select>
+
+        <label>Ville</label>
+        <input type="text" [(ngModel)]="ville" placeholder="Ex : Tunis" />
+
+        <label>Motivation (optionnel)</label>
+        <textarea
+          [(ngModel)]="motivation"
+          rows="3"
+          placeholder="Pourquoi souhaitez-vous devenir bénévole ?"
+        ></textarea>
+
+        @if (error()) {
+          <p class="erreur">{{ error() }}</p>
+        }
+
+        <div class="boutons">
+          <button type="button" class="principal" (click)="enregistrer()" [disabled]="envoi()">
+            @if (dejaInscrit()) {
+              {{ envoi() ? 'Enregistrement...' : 'Enregistrer' }}
+            } @else {
+              {{ envoi() ? 'Envoi...' : "Je m'inscris" }}
+            }
+          </button>
+          @if (dejaInscrit()) {
+            <button type="button" class="secondaire" (click)="annuler()" [disabled]="envoi()">
+              Annuler
+            </button>
+          }
+        </div>
+      </div>
+    }
+  }
+</div>

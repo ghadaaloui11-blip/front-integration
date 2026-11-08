@@ -33,8 +33,14 @@
     <button type="submit" [disabled]="loginForm.invalid || envoi">
       {{ envoi ? 'Connexion...' : 'Se connecter' }}
     </button>
-    <p class="error" *ngIf="erreur">{{ erreur }}</p>
   </form>
+
+  <div class="separator">ou</div>
+  <div id="google-btn" class="google-btn-container"></div>
+
+  @if (erreur) {
+    <p class="error">{{ erreur }}</p>
+  }
 
   <p class="signup-link">Pas encore de compte ? <a routerLink="/inscription">S'inscrire</a></p>
 </div>

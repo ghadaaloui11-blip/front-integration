@@ -1,41 +1,49 @@
 @if (isAuthPage()) {
-  <router-outlet />
+<router-outlet />
 } @else {
-  <div class="layout">
+<div class="layout">
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="logo">♥ MennaFina</div>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">♥ MennaFina</div>
 
-      <nav class="menu">
-        <a routerLink="/campagnes" routerLinkActive="active">Campagnes</a>
-        <a routerLink="/evenements" routerLinkActive="active">Événements solidaires</a>
-        <a routerLink="/signalements-publics" routerLinkActive="active">Signalements publics</a>
+    <nav class="menu">
+      <a routerLink="/campagnes" routerLinkActive="active">Campagnes</a>
+      <a routerLink="/associations" routerLinkActive="active">Associations</a>
+      <a routerLink="/evenements" routerLinkActive="active">Événements solidaires</a>
+      <a routerLink="/signalements-publics" routerLinkActive="active">Signalements publics</a>
 
-        @if (auth.getRole() === 'admin') {
-          <a routerLink="/admin/associations" routerLinkActive="active">Gestion associations</a>
-        }
+      @if (auth.getRole() === 'admin') {
+      <a routerLink="/admin/associations" routerLinkActive="active">Gestion associations</a>
+      }
 
-        @if (auth.getRole() === 'association') {
-          <a routerLink="/mes-campagnes" routerLinkActive="active">Mes campagnes</a>
-          <a routerLink="/association-reports" routerLinkActive="active">Signalements</a>
-          <a routerLink="/mes-documents" routerLinkActive="active">Mes documents</a>
-          <a routerLink="/mes-evenements" routerLinkActive="active">Mes événements</a>
-        } @else if (auth.getRole() !== 'admin') {
-          <a routerLink="/signalement" routerLinkActive="active">Nouveau signalement</a>
-          <a routerLink="/mes-signalements" routerLinkActive="active">Mes signalements</a>
-        }
-      </nav>
+      @if (auth.getRole() === 'association') {
+      <a routerLink="/mes-campagnes" routerLinkActive="active">Mes campagnes</a>
+      <a routerLink="/association-reports" routerLinkActive="active">Signalements</a>
+      <a routerLink="/demandes-recues" routerLinkActive="active">Demandes d'aide</a>
+      <a routerLink="/mes-documents" routerLinkActive="active">Mes documents</a>
+      <a routerLink="/mes-evenements" routerLinkActive="active">Mes événements</a>
+      } @else if (auth.getRole() !== 'admin') {
+      <a routerLink="/signalement" routerLinkActive="active">Nouveau signalement</a>
+      <a routerLink="/mes-signalements" routerLinkActive="active">Mes signalements</a>
+      <a routerLink="/demander-aide" routerLinkActive="active">Demander de l'aide</a>
+      <a routerLink="/devenir-benevole" routerLinkActive="active">Devenir bénévole</a>
+      }
 
-      <a class="logout" (click)="logout()">Se déconnecter</a>
-    </aside>
+      @if (auth.getRole()) {
+      <a routerLink="/profil" routerLinkActive="active">Mon profil</a>
+      }
+    </nav>
 
-    <!-- Contenu -->
-    <div class="main">
-      <main class="content">
-        <router-outlet />
-      </main>
-    </div>
+    <a class="logout" (click)="logout()">Se déconnecter</a>
+  </aside>
 
+  <!-- Contenu -->
+  <div class="main">
+    <main class="content">
+      <router-outlet />
+    </main>
   </div>
+
+</div>
 }

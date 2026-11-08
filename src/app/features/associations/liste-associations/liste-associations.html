@@ -1,0 +1,41 @@
+<div class="page">
+  <h1>Nos associations</h1>
+  <p class="sous-titre">Associations validées qui agissent près de chez vous.</p>
+
+  <div class="recherche">
+    <input
+      type="text"
+      [(ngModel)]="recherche"
+      (keyup.enter)="charger()"
+      placeholder="Rechercher par nom ou ville"
+    />
+    <button type="button" (click)="charger()">Rechercher</button>
+    <button type="button" class="secondaire" (click)="reinitialiser()">Effacer</button>
+  </div>
+
+  @if (loading()) {
+    <p class="info">Chargement...</p>
+  }
+
+  @if (error()) {
+    <p class="erreur">{{ error() }}</p>
+  }
+
+  @if (!loading() && !error() && associations().length === 0) {
+    <p class="info">Aucune association trouvée.</p>
+  }
+
+  <div class="grille">
+    @for (a of associations(); track a.id) {
+      <div class="carte">
+        <h3>{{ a.nom_association }}</h3>
+        @if (a.adresse) {
+          <p>📍 {{ a.adresse }}</p>
+        }
+        @if (a.telephone) {
+          <p>📞 {{ a.telephone }}</p>
+        }
+      </div>
+    }
+  </div>
+</div>

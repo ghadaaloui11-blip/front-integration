@@ -1,0 +1,100 @@
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.sous-titre {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.liste {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.carte {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.entete h3 {
+  margin: 0;
+}
+
+.description {
+  margin: 12px 0;
+}
+
+.detail {
+  margin: 4px 0;
+  color: #555;
+}
+
+.badge {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.badge.recue {
+  background: #fff3cd;
+  color: #8a6d00;
+}
+
+.badge.acceptee {
+  background: #d4edda;
+  color: #1b5e20;
+}
+
+.badge.refusee {
+  background: #f8d7da;
+  color: #b71c1c;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.accepter {
+  background: #2e7d32;
+}
+
+.refuser {
+  background: #c62828;
+}
+
+.info {
+  color: #666;
+}
+
+.erreur {
+  color: #c62828;
+}
+
+.succes {
+  color: #2e7d32;
+  font-weight: 600;
+}

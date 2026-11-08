@@ -47,6 +47,11 @@ export class AuthService {
     return this.http.post<ReponseAuth>(`${this.apiUrl}/connexion`, credentials);
   }
 
+  /** Connexion via Google : on envoie l'idToken au backend (POST /api/auth/google). */
+  loginAvecGoogle(idToken: string): Observable<ReponseAuth> {
+    return this.http.post<ReponseAuth>(`${this.apiUrl}/google`, { idToken });
+  }
+
   sauvegarderToken(token: string): void {
     localStorage.setItem('token', token);
   }
@@ -58,6 +63,7 @@ export class AuthService {
   deconnecter(): void {
     localStorage.removeItem('token');
   }
+
   getRole(): string | null {
     return this.decodePayload()?.role ?? null;
   }

@@ -1,0 +1,105 @@
+.page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.sous-titre {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.carte,
+.formulaire {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.formulaire {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ligne {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.label {
+  font-weight: 600;
+  color: #555;
+}
+
+.valeur {
+  color: #222;
+  text-align: right;
+}
+
+.formulaire label {
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.formulaire input,
+.formulaire select,
+.formulaire textarea {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.boutons {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+button {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button.principal {
+  flex: 1;
+  background: #2e7d32;
+  color: white;
+}
+
+.carte button.principal {
+  width: 100%;
+  margin-top: 16px;
+}
+
+button.secondaire {
+  background: #e0e0e0;
+  color: #333;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.info {
+  color: #666;
+}
+
+.erreur {
+  color: #c62828;
+}
+
+.succes {
+  color: #2e7d32;
+  font-weight: 600;
+  margin-bottom: 12px;
+}

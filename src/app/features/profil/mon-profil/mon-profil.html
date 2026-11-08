@@ -1,0 +1,65 @@
+<div class="page">
+  <h1>Mon profil</h1>
+  <p class="sous-titre">Rôle : <strong>{{ labelRole() }}</strong></p>
+
+  @if (loading()) {
+    <p class="info">Chargement...</p>
+  } @else {
+
+    @if (success()) {
+      <p class="succes">{{ success() }}</p>
+    }
+
+    @if (!enEdition()) {
+      <!-- Mode affichage -->
+      <div class="carte">
+        <div class="ligne">
+          <span class="label">Nom</span>
+          <span class="valeur">{{ nom }}</span>
+        </div>
+        <div class="ligne">
+          <span class="label">Prénom</span>
+          <span class="valeur">{{ prenom }}</span>
+        </div>
+        <div class="ligne">
+          <span class="label">Email</span>
+          <span class="valeur">{{ email }}</span>
+        </div>
+        <div class="ligne">
+          <span class="label">Téléphone</span>
+          <span class="valeur">{{ telephone || '-' }}</span>
+        </div>
+
+        <button type="button" class="principal" (click)="modifier()">Modifier</button>
+      </div>
+    } @else {
+      <!-- Mode modification -->
+      <div class="formulaire">
+        <label>Nom</label>
+        <input type="text" [(ngModel)]="nom" />
+
+        <label>Prénom</label>
+        <input type="text" [(ngModel)]="prenom" />
+
+        <label>Email</label>
+        <input type="email" [(ngModel)]="email" />
+
+        <label>Téléphone</label>
+        <input type="text" [(ngModel)]="telephone" placeholder="Ex : 12345678" />
+
+        @if (error()) {
+          <p class="erreur">{{ error() }}</p>
+        }
+
+        <div class="boutons">
+          <button type="button" class="principal" (click)="enregistrer()" [disabled]="envoi()">
+            {{ envoi() ? 'Enregistrement...' : 'Enregistrer' }}
+          </button>
+          <button type="button" class="secondaire" (click)="annuler()" [disabled]="envoi()">
+            Annuler
+          </button>
+        </div>
+      </div>
+    }
+  }
+</div>

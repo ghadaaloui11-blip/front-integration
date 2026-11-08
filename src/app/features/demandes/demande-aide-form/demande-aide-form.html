@@ -1,0 +1,47 @@
+<div class="page">
+  <h1>Demander de l'aide</h1>
+  <p class="sous-titre">
+    Décrivez votre besoin. Votre demande reste confidentielle : seule l'association concernée la voit.
+  </p>
+
+  <div class="formulaire">
+    <label>Type d'aide</label>
+    <select [(ngModel)]="categorie">
+      @for (c of categories; track c.value) {
+        <option [value]="c.value">{{ c.label }}</option>
+      }
+    </select>
+
+    <label>Description du besoin</label>
+    <textarea
+      [(ngModel)]="description"
+      rows="5"
+      placeholder="Expliquez votre situation (10 caractères minimum)"
+    ></textarea>
+
+    <label>Ville</label>
+    <input type="text" [(ngModel)]="ville" placeholder="Ex : Tunis" />
+
+    <label>Téléphone (optionnel)</label>
+    <input type="text" [(ngModel)]="telephone" placeholder="Ex : 12345678" />
+
+    <label>Association (optionnel)</label>
+    <select [(ngModel)]="associationId">
+      <option [ngValue]="null">Toutes les associations</option>
+      @for (a of associations(); track a.id) {
+        <option [ngValue]="a.id">{{ a.nom_association }}</option>
+      }
+    </select>
+
+    @if (error()) {
+      <p class="erreur">{{ error() }}</p>
+    }
+    @if (success()) {
+      <p class="succes">{{ success() }}</p>
+    }
+
+    <button type="button" (click)="envoyer()" [disabled]="envoi()">
+      {{ envoi() ? 'Envoi...' : 'Envoyer ma demande' }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="page">
+  <h1>Demandes d'aide</h1>
+  <p class="sous-titre">Demandes confidentielles envoyées par les citoyens.</p>
+
+  @if (loading()) {
+    <p class="info">Chargement...</p>
+  }
+
+  @if (error()) {
+    <p class="erreur">{{ error() }}</p>
+  }
+
+  @if (success()) {
+    <p class="succes">{{ success() }}</p>
+  }
+
+  @if (!loading() && !error() && demandes().length === 0) {
+    <p class="info">Aucune demande pour le moment.</p>
+  }
+
+  <div class="liste">
+    @for (d of demandes(); track d.id) {
+      <div class="carte">
+        <div class="entete">
+          <h3>{{ labelCategorie(d.categorie) }}</h3>
+          <span class="badge" [class]="'badge ' + d.statut">{{ labelStatut(d.statut) }}</span>
+        </div>
+
+        <p class="description">{{ d.description }}</p>
+
+        <p class="detail">📍 {{ d.ville }}</p>
+        @if (d.telephone) {
+          <p class="detail">📞 {{ d.telephone }}</p>
+        }
+        <p class="detail">🕒 {{ d.created_at | date: 'dd/MM/yyyy HH:mm' }}</p>
+
+        @if (d.statut === 'recue') {
+          <div class="actions">
+            <button type="button" class="accepter" (click)="changer(d.id, 'acceptee')">Accepter</button>
+            <button type="button" class="refuser" (click)="changer(d.id, 'refusee')">Refuser</button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

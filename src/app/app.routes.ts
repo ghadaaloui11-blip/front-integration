@@ -113,8 +113,46 @@ export const routes: Routes = [
       import('./features/events/mes-evenements/mes-evenements').then(m => m.MesEvenementsComponent),
   },
 
+  // Sprint 2 - Membre 4 : liste publique des associations
+  {
+    path: 'associations',
+    loadComponent: () =>
+      import('./features/associations/liste-associations/liste-associations').then(m => m.ListeAssociationsComponent),
+  },
+
+  // Sprint 2 - Membre 4 : US28 demande d'aide (citoyen)
+  {
+    path: 'demander-aide',
+    loadComponent: () =>
+      import('./features/demandes/demande-aide-form/demande-aide-form').then(m => m.DemandeAideFormComponent),
+  },
+
+  // Sprint 2 - Membre 4 : US28 demandes reçues (association)
+  {
+    path: 'demandes-recues',
+    canActivate: [associationGuard],
+    loadComponent: () =>
+      import('./features/demandes/demandes-recues/demandes-recues').then(m => m.DemandesRecuesComponent),
+  },
+
+  // Sprint 2 - Membre 4 : US04 profil (tous les utilisateurs connectés)
+  {
+    path: 'profil',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/profil/mon-profil/mon-profil').then(m => m.MonProfilComponent),
+  },
+
+  // Sprint 2 - Membre 4 : US14 bénévole (citoyen)
+  {
+    path: 'devenir-benevole',
+    canActivate: [citoyenGuard],
+    loadComponent: () =>
+      import('./features/benevoles/devenir-benevole/devenir-benevole').then(m => m.DevenirBenevoleComponent),
+  },
+
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 
-  // 404 : toute route inconnue renvoie vers les campagnes
+  // 404 : toute route inconnue renvoie vers les campagnes (TOUJOURS en dernier)
   { path: '**', redirectTo: 'campagnes' },
 ];
