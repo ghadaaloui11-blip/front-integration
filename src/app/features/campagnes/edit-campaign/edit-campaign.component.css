@@ -10,7 +10,7 @@
 }
 
 .header h1 {
-  color: #2c3e50;
+  color: var(--pastel-green-dark, #3B6B52);
   margin-bottom: 10px;
 }
 
@@ -31,7 +31,7 @@
   width: 40px;
   height: 40px;
   border: 4px solid #f3f3f3;
-  border-top: 4px solid #3498db;
+  border-top: 4px solid var(--pastel-pink-main, #F48FB1);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 20px;
@@ -75,7 +75,7 @@ label {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--pastel-green-dark, #3B6B52);
 }
 
 input, textarea {
@@ -89,7 +89,7 @@ input, textarea {
 
 input:focus, textarea:focus {
   outline: none;
-  border-color: #3498db;
+  border-color: var(--pastel-pink-main, #F48FB1);
   box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
 }
 
@@ -122,12 +122,12 @@ textarea {
 }
 
 .btn-primary {
-  background-color: #3498db;
+  background-color: var(--pastel-pink-main, #F48FB1);
   color: white;
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #2980b9;
+  background-color: var(--pastel-pink-hover, #EC407A);
 }
 
 .btn-primary:disabled {

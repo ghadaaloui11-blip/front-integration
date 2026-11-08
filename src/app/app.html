@@ -5,10 +5,11 @@
 
     <!-- Sidebar -->
     <aside class="sidebar">
-      <div class="logo">♥ Solidarité</div>
+      <div class="logo">♥ MennaFina</div>
 
       <nav class="menu">
         <a routerLink="/campagnes" routerLinkActive="active">Campagnes</a>
+        <a routerLink="/evenements" routerLinkActive="active">Événements solidaires</a>
         <a routerLink="/signalements-publics" routerLinkActive="active">Signalements publics</a>
 
         @if (auth.getRole() === 'admin') {
@@ -19,6 +20,7 @@
           <a routerLink="/mes-campagnes" routerLinkActive="active">Mes campagnes</a>
           <a routerLink="/association-reports" routerLinkActive="active">Signalements</a>
           <a routerLink="/mes-documents" routerLinkActive="active">Mes documents</a>
+          <a routerLink="/mes-evenements" routerLinkActive="active">Mes événements</a>
         } @else if (auth.getRole() !== 'admin') {
           <a routerLink="/signalement" routerLinkActive="active">Nouveau signalement</a>
           <a routerLink="/mes-signalements" routerLinkActive="active">Mes signalements</a>

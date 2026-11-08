@@ -42,9 +42,9 @@
 }
 
 .filter-btn.active {
-  background: #1f4e79;
+  background: var(--pastel-green-main, #68B088);
   color: #fff;
-  border-color: #1f4e79;
+  border-color: var(--pastel-green-main, #68B088);
   font-weight: 600;
 }
 
@@ -126,7 +126,7 @@
 }
 
 .btn-review {
-  background: #1f4e79;
+  background: var(--pastel-green-main, #68B088);
   color: #fff;
   border: none;
   border-radius: 7px;

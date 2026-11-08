@@ -1,0 +1,178 @@
+<div class="header-container">
+  <div>
+    <h1 class="title">Mes événements</h1>
+    <p class="sub">Gérez vos actions solidaires et suivez les candidatures de vos bénévoles.</p>
+  </div>
+  <a routerLink="/evenements/nouveau" class="btn-create">+ Publier un nouvel événement</a>
+</div>
+
+@if (successMsg()) {
+  <div class="success-banner">{{ successMsg() }}</div>
+}
+@if (error()) {
+  <div class="error-msg">{{ error() }}</div>
+}
+
+@if (loading()) {
+  <div class="state-msg">Chargement de vos événements...</div>
+} @else if (evenements().length === 0) {
+  <div class="empty-state">
+    <p>Vous n'avez pas encore publié d'événement.</p>
+    <a routerLink="/evenements/nouveau" class="btn-create">Créer votre premier événement</a>
+  </div>
+} @else {
+  <!-- Liste des événements créés par l'association -->
+  <div class="events-table-wrapper">
+    <table class="events-table">
+      <thead>
+        <tr>
+          <th>Événement</th>
+          <th>Date &amp; Lieu</th>
+          <th>Catégorie</th>
+          <th>Bénévoles confirmés</th>
+          <th>En attente</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (ev of evenements(); track ev.id) {
+          <tr>
+            <td>
+              <strong>{{ ev.titre }}</strong>
+            </td>
+            <td>
+              <div class="date-txt">{{ formatDate(ev.date_evenement) }}</div>
+              <div class="place-txt">{{ ev.ville }} - {{ ev.lieu }}</div>
+            </td>
+            <td>
+              <span class="badge-cat">{{ ev.categorie }}</span>
+            </td>
+            <td>
+              <span class="badge-count confirmed">{{ ev.nb_inscrits_acceptes }} / {{ ev.places_disponibles }}</span>
+            </td>
+            <td>
+              @if (ev.nb_inscrits_attente > 0) {
+                <span class="badge-count pending">{{ ev.nb_inscrits_attente }} en attente</span>
+              } @else {
+                <span class="text-muted">0</span>
+              }
+            </td>
+            <td>
+              <span class="badge-status" [class]="ev.statut">{{ ev.statut }}</span>
+            </td>
+            <td class="action-cell">
+              <button
+                class="btn-action participants"
+                (click)="ouvrirParticipants(ev)"
+              >
+                👥 Gérer les candidats ({{ ev.nb_inscrits_attente }})
+              </button>
+              @if (ev.statut === 'publie') {
+                <button
+                  class="btn-action cancel"
+                  title="Annuler l'événement"
+                  (click)="annulerEvenement(ev)"
+                >
+                  ✕
+                </button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+<!-- Modal / Panneau de gestion des participants (US18 & US35) -->
+@if (selectedEvent(); as currentEvent) {
+  <div class="modal-backdrop" (click)="fermerParticipants()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <div>
+          <h2>Participants &amp; Candidatures</h2>
+          <p class="modal-sub">
+            Pour l'événement : <strong>{{ currentEvent.titre }}</strong> ({{ currentEvent.nb_inscrits_acceptes }} / {{ currentEvent.places_disponibles }} places)
+          </p>
+        </div>
+        <button class="btn-close" (click)="fermerParticipants()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        @if (loadingParticipants()) {
+          <div class="state-msg">Chargement des participants...</div>
+        } @else if (participants().length === 0) {
+          <div class="empty-state-modal">
+            <p>Aucun citoyen n'a encore postulé à cet événement.</p>
+          </div>
+        } @else {
+          <div class="participants-list">
+            @for (p of participants(); track p.inscription_id) {
+              <div class="participant-card" [class]="p.statut">
+                <div class="participant-info">
+                  <div class="participant-name">
+                    <strong>{{ p.prenom ? p.prenom + ' ' + p.nom : p.nom }}</strong>
+                    <span class="badge-status" [class]="p.statut">{{ p.statut }}</span>
+                  </div>
+                  <div class="participant-contact">
+                    <span>✉ {{ p.email }}</span>
+                    @if (p.telephone) {
+                      <span>📞 {{ p.telephone }}</span>
+                    }
+                    <span class="date-ins">Inscrit le : {{ formatDate(p.date_inscription) }}</span>
+                  </div>
+                  @if (p.message_motivation) {
+                    <div class="motivation-box">
+                      <em>"{{ p.message_motivation }}"</em>
+                    </div>
+                  }
+                </div>
+
+                <!-- Actions Accepter / Refuser (US35) -->
+                <div class="participant-actions">
+                  @if (p.statut === 'en_attente') {
+                    <button
+                      class="btn-accept"
+                      [disabled]="participantActionLoading() === p.inscription_id || currentEvent.places_restantes <= 0"
+                      (click)="changerStatutParticipant(p.inscription_id, 'accepte')"
+                    >
+                      ✓ Accepter
+                    </button>
+                    <button
+                      class="btn-reject"
+                      [disabled]="participantActionLoading() === p.inscription_id"
+                      (click)="changerStatutParticipant(p.inscription_id, 'refuse')"
+                    >
+                      ✕ Refuser
+                    </button>
+                  } @else if (p.statut === 'accepte') {
+                    <button
+                      class="btn-reject"
+                      [disabled]="participantActionLoading() === p.inscription_id"
+                      (click)="changerStatutParticipant(p.inscription_id, 'refuse')"
+                    >
+                      ✕ Rétrograder en refusé
+                    </button>
+                  } @else if (p.statut === 'refuse') {
+                    <button
+                      class="btn-accept"
+                      [disabled]="participantActionLoading() === p.inscription_id || currentEvent.places_restantes <= 0"
+                      (click)="changerStatutParticipant(p.inscription_id, 'accepte')"
+                    >
+                      ✓ Repêcher (Accepter)
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-close-modal" (click)="fermerParticipants()">Fermer</button>
+      </div>
+    </div>
+  </div>
+}

@@ -1,12 +1,12 @@
 .title {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   font-size: 34px;
   font-weight: 700;
   margin: 0 0 4px 0;
 }
 
 .title2 {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   font-size: 24px;
   font-weight: 700;
   margin: 40px 0 14px 0;
@@ -35,12 +35,12 @@
   border-radius: 8px;
   padding: 12px 18px;
   font-size: 16px;
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   cursor: pointer;
 }
 
 .tab.active {
-  background: #1f4e79;
+  background: var(--pastel-green-main, #68B088);
   color: #ffffff;
   font-weight: 600;
 }
@@ -64,8 +64,8 @@
 }
 
 .card-camp:hover {
-  border-color: #1f4e79;
-  box-shadow: 0 4px 14px rgba(31, 78, 121, 0.12);
+  border-color: var(--pastel-green-main, #68B088);
+  box-shadow: 0 4px 14px rgba(104, 176, 136, 0.12);
 }
 
 .photo {

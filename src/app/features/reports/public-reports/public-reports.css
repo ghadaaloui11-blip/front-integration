@@ -1,5 +1,5 @@
 .title {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   font-size: 34px;
   font-weight: 700;
   margin: 0 0 4px 0;
@@ -30,8 +30,8 @@
 }
 
 .filtre.actif {
-  background: #1f4e79;
-  border-color: #1f4e79;
+  background: var(--pastel-green-main, #68B088);
+  border-color: var(--pastel-green-main, #68B088);
   color: #ffffff;
 }
 
@@ -90,7 +90,7 @@
 
 .statut-badge.statut-en-cours {
   border-color: #93c5fd;
-  background: #dbeafe;
+  background: var(--pastel-pink-light, #FCE4EC);
   color: #1d4ed8;
 }
 
@@ -101,7 +101,7 @@
 }
 
 .voir {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   text-decoration: underline;
   cursor: pointer;
 }
@@ -119,7 +119,7 @@
 }
 
 .detail-title {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   font-size: 22px;
   margin: 0 0 10px 0;
 }

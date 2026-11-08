@@ -3,7 +3,7 @@
 }
 
 .page-title {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   font-size: 32px;
   font-weight: 700;
   margin: 0 0 4px 0;
@@ -60,9 +60,9 @@
 }
 
 .field textarea:focus {
-  border-color: #1f4e79;
+  border-color: var(--pastel-green-main, #68B088);
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(31, 78, 121, 0.15);
+  box-shadow: 0 0 0 3px rgba(104, 176, 136, 0.15);
 }
 
 .gps-row {
@@ -74,7 +74,7 @@
 
 .btn-ghost {
   background: #eef4fa;
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   border: 1px solid #cfe0f0;
   border-radius: 10px;
   padding: 11px 16px;
@@ -133,11 +133,11 @@
 }
 
 .photo-input:hover {
-  border-color: #1f4e79;
+  border-color: var(--pastel-green-main, #68B088);
 }
 
 .photo-input::file-selector-button {
-  background: #1f4e79;
+  background: var(--pastel-green-main, #68B088);
   color: #ffffff;
   border: 0;
   border-radius: 8px;
@@ -194,7 +194,7 @@
   width: 18px;
   height: 18px;
   margin: 2px 0 0 0;
-  accent-color: #1f4e79;
+  accent-color: var(--pastel-green-main, #68B088);
   flex-shrink: 0;
 }
 
@@ -231,7 +231,7 @@
 
 .btn-main {
   width: 100%;
-  background: #1f4e79;
+  background: var(--pastel-green-main, #68B088);
   color: #ffffff;
   border: 0;
   border-radius: 10px;

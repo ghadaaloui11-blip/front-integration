@@ -1,0 +1,116 @@
+<div class="page">
+  <div class="header-action">
+    <a routerLink="/mes-evenements" class="btn-back">&larr; Retour à mes événements</a>
+  </div>
+
+  <h1 class="page-title">Publier une action solidaire</h1>
+  <p class="page-sub">Mobilisez des bénévoles et citoyens autour de vos actions sur le terrain.</p>
+
+  @if (error()) {
+    <div class="error-msg">{{ error() }}</div>
+  }
+
+  <div class="card-box">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <div class="field">
+        <label for="titre">Titre de l'action / événement *</label>
+        <input
+          id="titre"
+          type="text"
+          formControlName="titre"
+          placeholder="Ex: Distribution de repas chauds aux sans-abri"
+        />
+        @if (form.controls.titre.touched && form.controls.titre.invalid) {
+          <span class="field-error">Le titre est requis (minimum 3 caractères).</span>
+        }
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="categorie">Catégorie *</label>
+          <select id="categorie" formControlName="categorie">
+            @for (cat of categories; track cat) {
+              <option [value]="cat">{{ cat }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="date_evenement">Date et heure de début *</label>
+          <input
+            id="date_evenement"
+            type="datetime-local"
+            formControlName="date_evenement"
+          />
+          @if (form.controls.date_evenement.touched && form.controls.date_evenement.invalid) {
+            <span class="field-error">La date et l'heure sont requises.</span>
+          }
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="ville">Ville *</label>
+          <input
+            id="ville"
+            type="text"
+            formControlName="ville"
+            placeholder="Ex: Tunis, Paris, Lyon..."
+          />
+          @if (form.controls.ville.touched && form.controls.ville.invalid) {
+            <span class="field-error">La ville est requise.</span>
+          }
+        </div>
+
+        <div class="field">
+          <label for="lieu">Lieu / Adresse précise *</label>
+          <input
+            id="lieu"
+            type="text"
+            formControlName="lieu"
+            placeholder="Ex: Place de la République, devant la gare"
+          />
+          @if (form.controls.lieu.touched && form.controls.lieu.invalid) {
+            <span class="field-error">L'adresse est requise.</span>
+          }
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="places_disponibles">Nombre maximal de places / bénévoles requis *</label>
+        <input
+          id="places_disponibles"
+          type="number"
+          min="1"
+          formControlName="places_disponibles"
+          placeholder="Ex: 10"
+        />
+        @if (form.controls.places_disponibles.touched && form.controls.places_disponibles.invalid) {
+          <span class="field-error">Au moins 1 place doit être ouverte.</span>
+        }
+      </div>
+
+      <div class="field">
+        <label for="description">Description détaillée &amp; Consignes pour les bénévoles *</label>
+        <textarea
+          id="description"
+          rows="5"
+          formControlName="description"
+          placeholder="Décrivez les objectifs de la mission, le déroulement, le matériel nécessaire et les compétences recherchées..."
+        ></textarea>
+        @if (form.controls.description.touched && form.controls.description.invalid) {
+          <span class="field-error">Une description d'au moins 10 caractères est requise.</span>
+        }
+      </div>
+
+      <div class="actions">
+        <button type="button" routerLink="/mes-evenements" class="btn-cancel">Annuler</button>
+        <button type="submit" [disabled]="loading()" class="btn-submit">
+          {{ loading() ? 'Publication en cours...' : 'Publier l\'événement' }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

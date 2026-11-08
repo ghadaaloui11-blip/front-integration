@@ -1,0 +1,113 @@
+<div class="header-container">
+  <div>
+    <h1 class="title">Événements solidaires</h1>
+    <p class="sub">Participez à des actions sur le terrain ou proposez votre engagement bénévole.</p>
+  </div>
+  @if (auth.getRole() === 'association') {
+    <a routerLink="/evenements/nouveau" class="btn-create">+ Publier un événement</a>
+  }
+</div>
+
+<!-- Filtres (US17) -->
+<div class="filters-card">
+  <div class="filter-group">
+    <label>Recherche par mot-clé</label>
+    <input
+      type="text"
+      placeholder="Titre, description..."
+      [(ngModel)]="filtres.search"
+      (keyup.enter)="chargerEvenements()"
+    />
+  </div>
+
+  <div class="filter-group">
+    <label>Ville</label>
+    <input
+      type="text"
+      placeholder="Ex: Paris, Lyon, Tunis..."
+      [(ngModel)]="filtres.ville"
+      (keyup.enter)="chargerEvenements()"
+    />
+  </div>
+
+  <div class="filter-group">
+    <label>Catégorie</label>
+    <select [(ngModel)]="filtres.categorie" (change)="chargerEvenements()">
+      @for (cat of categories; track cat) {
+        <option [value]="cat">{{ cat }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label>Date</label>
+    <input
+      type="date"
+      [(ngModel)]="filtres.date"
+      (change)="chargerEvenements()"
+    />
+  </div>
+
+  <div class="filter-actions">
+    <button class="btn-filter" (click)="chargerEvenements()">Filtrer</button>
+    <button class="btn-reset" (click)="reinitialiserFiltres()">Réinitialiser</button>
+  </div>
+</div>
+
+<!-- États : Chargement / Erreur -->
+@if (loading()) {
+  <div class="state-msg">Chargement des événements...</div>
+} @else if (error()) {
+  <div class="error-msg">{{ error() }}</div>
+} @else if (evenements().length === 0) {
+  <div class="empty-state">
+    <p>Aucun événement ne correspond à vos critères de recherche.</p>
+    <button class="btn-reset" (click)="reinitialiserFiltres()">Effacer les filtres</button>
+  </div>
+} @else {
+  <!-- Grille des événements -->
+  <div class="grid">
+    @for (event of evenements(); track event.id) {
+      <div class="card-event">
+        <div class="card-header">
+          <span class="badge-cat">{{ event.categorie }}</span>
+          @if (event.places_restantes <= 0) {
+            <span class="badge-status full">Complet</span>
+          } @else {
+            <span class="badge-status available">{{ event.places_restantes }} place{{ event.places_restantes > 1 ? 's' : '' }} restante{{ event.places_restantes > 1 ? 's' : '' }}</span>
+          }
+        </div>
+
+        <h3 class="card-title">{{ event.titre }}</h3>
+
+        <div class="asso-info">
+          <span class="icon">🏢</span>
+          <span>Organisé par : <strong>{{ event.association_nom || 'Association partenaire' }}</strong></span>
+        </div>
+
+        <p class="desc">{{ event.description }}</p>
+
+        <div class="details-list">
+          <div class="detail-item">
+            <span class="icon">📅</span>
+            <span>{{ formatDate(event.date_evenement) }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="icon">📍</span>
+            <span>{{ event.lieu }}, <strong>{{ event.ville }}</strong></span>
+          </div>
+          <div class="detail-item">
+            <span class="icon">👥</span>
+            <span>{{ event.nb_inscrits_acceptes }} / {{ event.places_disponibles }} bénévoles confirmés</span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <a [routerLink]="['/evenements', event.id]" class="btn-view">
+            Voir le détail &amp; Participer &rarr;
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+}

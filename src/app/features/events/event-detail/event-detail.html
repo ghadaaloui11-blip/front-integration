@@ -1,0 +1,140 @@
+<div class="page">
+  <div class="header-action">
+    <a routerLink="/evenements" class="btn-back">&larr; Retour aux événements</a>
+  </div>
+
+  @if (loading()) {
+    <div class="state-msg">Chargement des informations de l'événement...</div>
+  } @else if (error() && !event()) {
+    <div class="error-msg">{{ error() }}</div>
+  } @else if (event(); as ev) {
+
+    @if (successMsg()) {
+      <div class="success-banner">{{ successMsg() }}</div>
+    }
+    @if (error()) {
+      <div class="error-msg">{{ error() }}</div>
+    }
+
+    <!-- Statut d'inscription du citoyen si déjà inscrit -->
+    @if (ev.statut_mon_inscription) {
+      <div class="registration-status-card" [class]="ev.statut_mon_inscription">
+        <div class="status-icon">
+          @if (ev.statut_mon_inscription === 'accepte') { ✅ }
+          @else if (ev.statut_mon_inscription === 'refuse') { ❌ }
+          @else if (ev.statut_mon_inscription === 'en_attente') { ⏳ }
+        </div>
+        <div class="status-content">
+          <h4>
+            @if (ev.statut_mon_inscription === 'accepte') { Candidature acceptée ! }
+            @else if (ev.statut_mon_inscription === 'refuse') { Candidature non retenue }
+            @else if (ev.statut_mon_inscription === 'en_attente') { Candidature en attente d'examen }
+          </h4>
+          <p>
+            @if (ev.statut_mon_inscription === 'accepte') {
+              Votre participation est validée par l'association. Merci pour votre engagement solidaire !
+            } @else if (ev.statut_mon_inscription === 'refuse') {
+              L'association n'a pas pu valider votre participation pour cet événement.
+            } @else if (ev.statut_mon_inscription === 'en_attente') {
+              L'association organisatrice examine actuellement votre demande d'inscription. Vous recevrez une réponse prochainement.
+            }
+          </p>
+          @if (ev.statut_mon_inscription !== 'refuse') {
+            <button class="btn-cancel-reg" [disabled]="submitting()" (click)="annulerInscription()">
+              Se désister / Annuler mon inscription
+            </button>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Fiche principale de l'événement -->
+    <div class="main-card">
+      <div class="event-meta-top">
+        <span class="badge-cat">{{ ev.categorie }}</span>
+        @if (ev.places_restantes <= 0) {
+          <span class="badge-status full">Complet</span>
+        } @else {
+          <span class="badge-status available">{{ ev.places_restantes }} place{{ ev.places_restantes > 1 ? 's' : '' }} disponible{{ ev.places_restantes > 1 ? 's' : '' }}</span>
+        }
+      </div>
+
+      <h1 class="event-title">{{ ev.titre }}</h1>
+
+      <div class="organizer-box">
+        <div class="organizer-avatar">🏢</div>
+        <div class="organizer-details">
+          <span class="label">Organisé par</span>
+          <span class="name">{{ ev.association_nom || 'Association partenaire' }}</span>
+          @if (ev.association_email) {
+            <span class="contact">✉ {{ ev.association_email }}</span>
+          }
+        </div>
+      </div>
+
+      <hr class="separator" />
+
+      <div class="grid-details">
+        <div class="info-block">
+          <span class="icon">📅</span>
+          <div>
+            <strong>Date &amp; Heure</strong>
+            <p>{{ formatDate(ev.date_evenement) }}</p>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <span class="icon">📍</span>
+          <div>
+            <strong>Lieu &amp; Ville</strong>
+            <p>{{ ev.lieu }}, {{ ev.ville }}</p>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <span class="icon">👥</span>
+          <div>
+            <strong>Participation</strong>
+            <p>{{ ev.nb_inscrits_acceptes }} / {{ ev.places_disponibles }} bénévoles confirmés</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-desc">
+        <h3>Description de la mission</h3>
+        <p class="description-text">{{ ev.description }}</p>
+      </div>
+
+      <hr class="separator" />
+
+      <!-- Section Inscription Citoyen (US34) -->
+      @if (auth.getRole() === 'citoyen' && !ev.statut_mon_inscription) {
+        <div class="participation-box">
+          <h3>Rejoindre cette action solidaire</h3>
+          <p class="sub-help">Indiquez votre motivation ou vos disponibilités particulières pour l'association :</p>
+
+          <textarea
+            [(ngModel)]="messageMotivation"
+            rows="3"
+            placeholder="Ex: Bonjour, je suis disponible tout l'après-midi pour aider à la distribution et au rangement..."
+          ></textarea>
+
+          <button
+            class="btn-participate"
+            [disabled]="submitting() || ev.places_restantes <= 0"
+            (click)="participer()"
+          >
+            {{ ev.places_restantes <= 0 ? 'Événement complet' : (submitting() ? 'Envoi...' : 'Je m\'inscris comme bénévole') }}
+          </button>
+        </div>
+      } @else if (!auth.getToken()) {
+        <div class="login-prompt">
+          <p>Vous souhaitez participer à cet événement solidaire ?</p>
+          <a routerLink="/login" class="btn-login">Connectez-vous pour postuler</a>
+        </div>
+      }
+
+    </div>
+
+  }
+</div>

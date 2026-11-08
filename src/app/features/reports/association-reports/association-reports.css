@@ -1,5 +1,5 @@
 .title {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   font-size: 34px;
   font-weight: 700;
   margin: 0 0 4px 0;
@@ -60,8 +60,8 @@
   padding: 4px 14px;
   font-size: 14px;
   background: #ffffff;
-  border: 1px solid #1f4e79;
-  color: #1f4e79;
+  border: 1px solid var(--pastel-green-main, #68B088);
+  color: var(--pastel-green-main, #68B088);
 }
 
 .badge.social {
@@ -91,7 +91,7 @@
 }
 
 .voir {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   text-decoration: underline;
   cursor: pointer;
 }
@@ -102,7 +102,7 @@
 }
 
 .detail-title {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   font-size: 22px;
   margin: 0 0 10px 0;
 }
@@ -149,8 +149,8 @@
 }
 
 .onglets button.actif {
-  background: #1f4e79;
-  border-color: #1f4e79;
+  background: var(--pastel-green-main, #68B088);
+  border-color: var(--pastel-green-main, #68B088);
   color: #ffffff;
 }
 
@@ -161,8 +161,8 @@
 }
 
 .btn-action {
-  background: #1f4e79;
-  border: 1px solid #1f4e79;
+  background: var(--pastel-green-main, #68B088);
+  border: 1px solid var(--pastel-green-main, #68B088);
   color: #ffffff;
   border-radius: 10px;
   padding: 7px 15px;
@@ -198,7 +198,7 @@
 
 .statut-badge.statut-en-cours {
   border-color: #93c5fd;
-  background: #dbeafe;
+  background: var(--pastel-pink-light, #FCE4EC);
   color: #1d4ed8;
 }
 

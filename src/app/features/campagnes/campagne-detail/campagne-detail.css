@@ -1,5 +1,5 @@
 .back {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   text-decoration: underline;
   display: inline-block;
   margin-bottom: 14px;
@@ -36,7 +36,7 @@
 }
 
 .title {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   font-size: 34px;
   margin: 0 0 6px 0;
 }
@@ -90,7 +90,7 @@
 }
 
 .num {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   font-size: 26px;
   font-weight: 700;
 }
@@ -123,14 +123,14 @@
 }
 
 .form-line input:focus {
-  border-color: #1f4e79;
+  border-color: var(--pastel-green-main, #68B088);
 }
 
 /* Boutons */
 .btn-main {
   display: block;
   width: 100%;
-  background: #1f4e79;
+  background: var(--pastel-green-main, #68B088);
   color: #ffffff;
   border: 0;
   border-radius: 10px;

@@ -1,3 +1,33 @@
+:root {
+  /* Pastel Greens */
+  --pastel-green-main: #68B088;
+  --pastel-green-hover: #559B74;
+  --pastel-green-light: #D4EDDA;
+  --pastel-green-subtle: #F0FDF4;
+  --pastel-green-border: #A7F3D0;
+  --pastel-green-dark: #3B6B52;
+
+  /* Pastel Pinks */
+  --pastel-pink-main: #F48FB1;
+  --pastel-pink-hover: #EC407A;
+  --pastel-pink-light: #FCE4EC;
+  --pastel-pink-subtle: #FFF5F7;
+  --pastel-pink-border: #F8BBD0;
+  --pastel-pink-dark: #C2185B;
+
+  /* Neutrals */
+  --text-main: #2D3748;
+  --text-muted: #718096;
+  --bg-main: #FAF9F6;
+  --card-bg: #FFFFFF;
+  --border-color: #E2E8F0;
+
+  /* Statuts pastel */
+  --status-ok: #48BB78;
+  --status-pending: #ED8936;
+  --status-refused: #E53E3E;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -9,7 +39,8 @@ body {
   width: 100%;
   min-height: 100vh;
   font-family: Arial, sans-serif;
-  background-color: #f1f5f9;
+  background-color: var(--bg-main);
+  color: var(--text-main);
 }
 
 app-root {
@@ -22,12 +53,13 @@ app-root {
 .auth-container,
 .inscription-container,
 .report-container {
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background: var(--card-bg);
+  padding: 32px;
+  border-radius: 16px;
+  border: 1px solid var(--pastel-pink-border);
+  box-shadow: 0 8px 24px rgba(244, 143, 177, 0.08);
   width: 100%;
-  max-width: 450px;
+  max-width: 460px;
 }
 
 .auth-container,
@@ -39,14 +71,15 @@ app-root {
 .inscription-container h2,
 .report-container h2 {
   text-align: center;
-  color: #2c3e50;
+  color: var(--pastel-green-dark);
   margin-bottom: 25px;
+  font-size: 26px;
 }
 
 .auth-container .form-group,
 .inscription-container .form-group,
 .report-container .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 16px;
   display: flex;
   flex-direction: column;
 }
@@ -55,8 +88,8 @@ app-root {
 .inscription-container label,
 .report-container label {
   font-weight: 600;
-  margin-bottom: 5px;
-  color: #34495e;
+  margin-bottom: 6px;
+  color: var(--text-main);
   font-size: 14px;
 }
 
@@ -69,10 +102,13 @@ app-root {
 .report-container input,
 .report-container select,
 .report-container textarea {
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  padding: 11px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
   font-size: 14px;
+  background: #ffffff;
+  color: var(--text-main);
+  transition: all 0.2s;
 }
 
 .auth-container input:focus,
@@ -85,51 +121,55 @@ app-root {
 .report-container select:focus,
 .report-container textarea:focus {
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+  border-color: var(--pastel-pink-main);
+  box-shadow: 0 0 0 3px rgba(244, 143, 177, 0.25);
 }
 
 .auth-container button[type='submit'],
 .inscription-container button[type='submit'],
 .report-container button[type='submit'] {
   width: 100%;
-  padding: 12px;
-  background-color: #3498db;
+  padding: 13px;
+  background-color: var(--pastel-pink-main);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 12px;
+  transition: all 0.2s;
 }
 
 .auth-container button[type='submit']:hover:not(:disabled),
 .inscription-container button[type='submit']:hover:not(:disabled),
 .report-container button[type='submit']:hover:not(:disabled) {
-  background-color: #2980b9;
+  background-color: var(--pastel-pink-hover);
+  box-shadow: 0 4px 12px rgba(236, 64, 122, 0.25);
 }
 
 .auth-container button[type='submit']:disabled,
 .inscription-container button[type='submit']:disabled,
 .report-container button[type='submit']:disabled {
-  background-color: #bdc3c7;
+  background-color: #f1f5f9;
+  color: var(--text-muted);
   cursor: not-allowed;
 }
 
 .auth-container .error,
 .inscription-container .error,
 .report-container .error {
-  color: #e74c3c;
+  color: var(--status-refused);
   font-size: 12px;
   margin-top: 4px;
 }
 
 .report-container .success {
-  background-color: #d5f5e3;
-  color: #1e8449;
+  background-color: var(--pastel-green-light);
+  color: var(--pastel-green-dark);
+  border: 1px solid var(--pastel-green-border);
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 8px;
   text-align: center;
   font-size: 14px;
   margin-top: 15px;
@@ -138,10 +178,11 @@ app-root {
 .auth-container .error-global,
 .inscription-container .error-global,
 .report-container .error-global {
-  background-color: #fadbd8;
-  color: #c0392b;
+  background-color: var(--pastel-pink-light);
+  color: var(--pastel-pink-dark);
+  border: 1px solid var(--pastel-pink-border);
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 8px;
   text-align: center;
   font-size: 14px;
   margin-bottom: 15px;
@@ -153,13 +194,13 @@ app-root {
   text-align: center;
   margin-top: 20px;
   font-size: 14px;
-  color: #7f8c8d;
+  color: var(--text-muted);
 }
 
 .auth-container a,
 .inscription-container a,
 .report-container a {
-  color: #3498db;
+  color: var(--pastel-green-main);
   text-decoration: none;
   font-weight: 600;
 }
@@ -167,6 +208,7 @@ app-root {
 .auth-container a:hover,
 .inscription-container a:hover,
 .report-container a:hover {
+  color: var(--pastel-pink-hover);
   text-decoration: underline;
 }
 

@@ -89,6 +89,30 @@ export const routes: Routes = [
       import('./features/associations/admin-associations/admin-associations').then(m => m.AdminAssociationsComponent),
   },
 
+  // Sprint 2 - Membre 2 : Événements et participation (US16, US17, US18, US34, US35)
+  {
+    path: 'evenements',
+    loadComponent: () =>
+      import('./features/events/event-list/event-list').then(m => m.EventListComponent),
+  },
+  {
+    path: 'evenements/nouveau',
+    canActivate: [associationGuard],
+    loadComponent: () =>
+      import('./features/events/event-create/event-create').then(m => m.EventCreateComponent),
+  },
+  {
+    path: 'evenements/:id',
+    loadComponent: () =>
+      import('./features/events/event-detail/event-detail').then(m => m.EventDetailComponent),
+  },
+  {
+    path: 'mes-evenements',
+    canActivate: [associationGuard],
+    loadComponent: () =>
+      import('./features/events/mes-evenements/mes-evenements').then(m => m.MesEvenementsComponent),
+  },
+
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 
   // 404 : toute route inconnue renvoie vers les campagnes

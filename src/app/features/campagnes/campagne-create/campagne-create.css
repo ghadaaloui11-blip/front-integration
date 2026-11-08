@@ -3,7 +3,7 @@
 }
 
 .page-title {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   font-size: 32px;
   font-weight: 700;
   margin: 0 0 4px 0;
@@ -53,9 +53,9 @@
 
 .field input:focus,
 .field textarea:focus {
-  border-color: #1f4e79;
+  border-color: var(--pastel-green-main, #68B088);
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(31, 78, 121, 0.15);
+  box-shadow: 0 0 0 3px rgba(104, 176, 136, 0.15);
 }
 
 .field textarea {
@@ -92,7 +92,7 @@
 /* Bouton */
 .btn-main {
   width: 100%;
-  background: #1f4e79;
+  background: var(--pastel-green-main, #68B088);
   color: #ffffff;
   border: 0;
   border-radius: 10px;

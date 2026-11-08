@@ -1,0 +1,386 @@
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.title {
+  color: var(--pastel-green-dark);
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.sub {
+  color: var(--text-muted);
+  margin: 0;
+  font-size: 16px;
+}
+
+.btn-create {
+  background: var(--pastel-pink-main);
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.2s;
+  display: inline-block;
+  box-shadow: 0 4px 10px rgba(244, 143, 177, 0.2);
+}
+
+.btn-create:hover {
+  background: var(--pastel-pink-hover);
+  box-shadow: 0 6px 14px rgba(236, 64, 122, 0.3);
+}
+
+.success-banner {
+  background: var(--pastel-green-light);
+  color: var(--pastel-green-dark);
+  border: 1px solid var(--pastel-green-border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.error-msg {
+  background: var(--pastel-pink-light);
+  color: var(--status-refused);
+  border: 1px solid var(--pastel-pink-border);
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+/* Tableau */
+.events-table-wrapper {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  overflow-x: auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.events-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.events-table th {
+  background: var(--bg-main);
+  color: var(--text-main);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.events-table td {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 14px;
+  color: var(--text-main);
+  vertical-align: middle;
+}
+
+.date-txt {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.place-txt {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.badge-cat {
+  background: var(--pastel-pink-light);
+  color: var(--pastel-pink-dark);
+  border: 1px solid var(--pastel-pink-border);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.badge-count {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.badge-count.confirmed {
+  background: var(--pastel-green-light);
+  color: var(--pastel-green-dark);
+  border: 1px solid var(--pastel-green-border);
+}
+
+.badge-count.pending {
+  background: #fffbeb;
+  color: var(--status-pending);
+  border: 1px solid #fef3c7;
+}
+
+.badge-status {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: capitalize;
+}
+
+.badge-status.publie,
+.badge-status.accepte {
+  background: var(--pastel-green-light);
+  color: var(--pastel-green-dark);
+  border: 1px solid var(--pastel-green-border);
+}
+
+.badge-status.en_attente {
+  background: #fffbeb;
+  color: var(--status-pending);
+}
+
+.badge-status.refuse,
+.badge-status.annule {
+  background: var(--pastel-pink-light);
+  color: var(--status-refused);
+  border: 1px solid var(--pastel-pink-border);
+}
+
+.action-cell {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-action.participants {
+  background: var(--pastel-green-light);
+  color: var(--pastel-green-dark);
+  border: 1px solid var(--pastel-green-border);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-action.participants:hover {
+  background: var(--pastel-green-main);
+  color: #ffffff;
+}
+
+.btn-action.cancel {
+  background: var(--pastel-pink-light);
+  color: var(--status-refused);
+  border: 1px solid var(--pastel-pink-border);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-action.cancel:hover {
+  background: var(--pastel-pink-border);
+}
+
+/* Modal Participants (US18 / US35) */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(45, 55, 72, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  background: #ffffff;
+  border-radius: 16px;
+  max-width: 720px;
+  width: 100%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
+}
+
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.modal-header h2 {
+  margin: 0 0 4px 0;
+  font-size: 22px;
+  color: var(--pastel-green-dark);
+}
+
+.modal-sub {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.participants-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.participant-card {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg-main);
+}
+
+.participant-card.en_attente {
+  border-left: 4px solid var(--status-pending);
+}
+
+.participant-card.accepte {
+  border-left: 4px solid var(--pastel-green-main);
+}
+
+.participant-card.refuse {
+  border-left: 4px solid var(--status-refused);
+}
+
+.participant-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.participant-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.participant-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.date-ins {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.motivation-box {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--text-main);
+  background: #ffffff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px dashed var(--border-color);
+}
+
+.participant-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-accept {
+  background: var(--pastel-green-main);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-accept:hover:not(:disabled) {
+  background: var(--pastel-green-hover);
+}
+
+.btn-reject {
+  background: var(--pastel-pink-light);
+  color: var(--status-refused);
+  border: 1px solid var(--pastel-pink-border);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-reject:hover:not(:disabled) {
+  background: var(--pastel-pink-border);
+}
+
+.btn-accept:disabled,
+.btn-reject:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-close-modal {
+  background: #f1f5f9;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  padding: 8px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.empty-state,
+.empty-state-modal {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+}

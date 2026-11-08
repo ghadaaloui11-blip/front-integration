@@ -3,7 +3,7 @@
 }
 
 .page-title {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   font-size: 32px;
   font-weight: 700;
   margin: 0 0 4px 0;
@@ -16,7 +16,7 @@
 
 .back {
   display: inline-block;
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   text-decoration: none;
   font-weight: 600;
   margin-bottom: 16px;
@@ -45,7 +45,7 @@
 }
 
 .summary-item .num {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   font-size: 22px;
   font-weight: 700;
 }
@@ -86,9 +86,9 @@
 
 .field input:focus,
 .field textarea:focus {
-  border-color: #1f4e79;
+  border-color: var(--pastel-green-main, #68B088);
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(31, 78, 121, 0.15);
+  box-shadow: 0 0 0 3px rgba(104, 176, 136, 0.15);
 }
 
 .field textarea {
@@ -110,17 +110,17 @@
   padding: 10px 20px;
   font-size: 15px;
   font-weight: 600;
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   cursor: pointer;
 }
 
 .chip:hover {
-  border-color: #1f4e79;
+  border-color: var(--pastel-green-main, #68B088);
 }
 
 .chip.active {
-  background: #1f4e79;
-  border-color: #1f4e79;
+  background: var(--pastel-green-main, #68B088);
+  border-color: var(--pastel-green-main, #68B088);
   color: #ffffff;
 }
 
@@ -138,7 +138,7 @@
 .field.check input[type='checkbox'] {
   width: 18px;
   height: 18px;
-  accent-color: #1f4e79;
+  accent-color: var(--pastel-green-main, #68B088);
 }
 
 /* Erreurs */
@@ -164,7 +164,7 @@
 /* Bouton */
 .btn-main {
   width: 100%;
-  background: #1f4e79;
+  background: var(--pastel-green-main, #68B088);
   color: #ffffff;
   border: 0;
   border-radius: 10px;
@@ -207,7 +207,7 @@
 }
 
 .receipt-logo {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   font-size: 22px;
   font-weight: 700;
 }
@@ -252,7 +252,7 @@
 }
 
 .receipt-total strong {
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   font-size: 22px;
 }
 
@@ -276,7 +276,7 @@
 
 .receipt-actions .btn-link {
   text-align: center;
-  color: #1f4e79;
+  color: var(--pastel-green-main, #68B088);
   font-weight: 600;
   text-decoration: none;
 }
