@@ -2,23 +2,32 @@ import { Component, ElementRef, OnDestroy, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SignalementService } from '../../../../core/services/signalement.service';
+
 const TAILLE_PHOTO_MAX = 10 * 1024 * 1024;
+
+const CATEGORIES = ['Environnement', 'Infrastructure', 'Santé', 'Éducation', 'Social', 'Urgence', 'Autre'];
+
 @Component({
   selector: 'app-report',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './report.component.html',
-  styleUrl: './report.component.css'})
+  styleUrl: './report.component.css',
+})
 export class CreateReportComponent implements OnDestroy {
+  titre       = '';
+  categorie   = 'Autre';
   description = '';
-  latitude = '';
-  longitude = '';
-  estAnonyme = false;
+  latitude    = '';
+  longitude   = '';
+  estAnonyme  = false;
   selectedFile: File | null = null;
   photoPreview: string | null = null;
   message = '';
-  erreur = '';
-  envoi = false;
+  erreur  = '';
+  envoi   = false;
+
+  categories = CATEGORIES;
 
   private photoInput = viewChild<ElementRef<HTMLInputElement>>('photoInput');
 
@@ -28,17 +37,14 @@ export class CreateReportComponent implements OnDestroy {
     this.revoquerApercu();
   }
 
-  // Récupérer la géolocalisation GPS du navigateur
   obtenirGPS() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.latitude = position.coords.latitude.toString();
-          this.longitude = position.coords.longitude.toString();
+        (pos) => {
+          this.latitude  = pos.coords.latitude.toString();
+          this.longitude = pos.coords.longitude.toString();
         },
-        () => {
-          this.erreur = 'Impossible de récupérer la géolocalisation.';
-        }
+        () => { this.erreur = 'Impossible de récupérer la géolocalisation.'; }
       );
     } else {
       this.erreur = "La géolocalisation n'est pas supportée par votre navigateur.";
@@ -46,24 +52,24 @@ export class CreateReportComponent implements OnDestroy {
   }
 
   retirerGPS() {
-    this.latitude = '';
+    this.latitude  = '';
     this.longitude = '';
   }
 
   onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
+    const input   = event.target as HTMLInputElement;
     const fichier = input.files?.[0] ?? null;
     this.revoquerApercu();
 
     if (fichier && fichier.size > TAILLE_PHOTO_MAX) {
-      this.erreur = 'La photo ne doit pas dépasser 10 Mo.';
+      this.erreur      = 'La photo ne doit pas dépasser 10 Mo.';
       this.selectedFile = null;
-      input.value = '';
+      input.value       = '';
       return;
     }
 
-    this.selectedFile = fichier;
-    this.photoPreview = fichier ? URL.createObjectURL(fichier) : null;
+    this.selectedFile  = fichier;
+    this.photoPreview  = fichier ? URL.createObjectURL(fichier) : null;
   }
 
   retirerPhoto() {
@@ -83,57 +89,64 @@ export class CreateReportComponent implements OnDestroy {
   onSubmit() {
     if (this.envoi) return;
     this.message = '';
-    this.erreur = '';
+    this.erreur  = '';
+
+    // Validations côté client
+    if (!this.titre.trim() || this.titre.trim().length < 5) {
+      this.erreur = 'Le titre est obligatoire (5 caractères minimum).';
+      return;
+    }
     if (!this.description.trim()) {
       this.erreur = 'La description est obligatoire.';
       return;
     }
 
-    // Coordonnees optionnelles mais, si presentes, numeriques et bornees.
-    const coordonneeValide = (valeur: string, min: number, max: number): boolean => {
-      if (!valeur) return true;
-      const nombre = Number(valeur);
-      return Number.isFinite(nombre) && nombre >= min && nombre <= max;
+    const coordValide = (v: string, min: number, max: number) => {
+      if (!v) return true;
+      const n = Number(v);
+      return Number.isFinite(n) && n >= min && n <= max;
     };
-    if (!coordonneeValide(this.latitude, -90, 90)) {
+    if (!coordValide(this.latitude, -90, 90)) {
       this.erreur = 'La latitude doit être un nombre entre -90 et 90.';
       return;
     }
-    if (!coordonneeValide(this.longitude, -180, 180)) {
+    if (!coordValide(this.longitude, -180, 180)) {
       this.erreur = 'La longitude doit être un nombre entre -180 et 180.';
       return;
     }
 
     const formData = new FormData();
+    formData.append('titre',       this.titre.trim());
+    formData.append('categorie',   this.categorie);
     formData.append('description', this.description.trim());
-    if (this.latitude) formData.append('latitude', this.latitude);
-    if (this.longitude) formData.append('longitude', this.longitude);
     formData.append('est_anonyme', String(this.estAnonyme));
-    if (this.selectedFile) {
-      formData.append('photo', this.selectedFile);
-    }
+    if (this.latitude)    formData.append('latitude',  this.latitude);
+    if (this.longitude)   formData.append('longitude', this.longitude);
+    if (this.selectedFile) formData.append('photo',    this.selectedFile);
 
     this.envoi = true;
     this.signalementService.creerSignalement(formData).subscribe({
       next: () => {
         this.message = 'Signalement créé avec succès !';
-        this.erreur = '';
+        this.erreur  = '';
         this.reset();
-        this.envoi = false;
+        this.envoi   = false;
       },
       error: (err) => {
-        this.erreur = err.error?.erreur ?? err.error?.message ?? "Erreur lors de l'envoi.";
+        this.erreur  = err.error?.erreur ?? err.error?.message ?? "Erreur lors de la création du signalement.";
         this.message = '';
-        this.envoi = false;
-      }
+        this.envoi   = false;
+      },
     });
   }
 
   private reset() {
+    this.titre       = '';
+    this.categorie   = 'Autre';
     this.description = '';
-    this.latitude = '';
-    this.longitude = '';
-    this.estAnonyme = false;
+    this.latitude    = '';
+    this.longitude   = '';
+    this.estAnonyme  = false;
     this.retirerPhoto();
   }
 }

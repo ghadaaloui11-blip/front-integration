@@ -1,0 +1,70 @@
+<div class="page-header">
+  <div>
+    <h1 class="title">Mes dons</h1>
+    <p class="sub">Historique de toutes vos contributions financières.</p>
+  </div>
+  <a routerLink="/campagnes" class="btn-explore">Découvrir des campagnes →</a>
+</div>
+
+<!-- Résumé -->
+@if (!loading() && dons().length > 0) {
+  <div class="summary-bar">
+    <div class="summary-item">
+      <span class="summary-num">{{ totalDonne() | number:'1.0-2' }} TND</span>
+      <span class="summary-label">Total donné</span>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-item">
+      <span class="summary-num">{{ dons().length }}</span>
+      <span class="summary-label">Don{{ dons().length > 1 ? 's' : '' }} effectué{{ dons().length > 1 ? 's' : '' }}</span>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-item">
+      <span class="summary-num">{{ nbCampagnes() }}</span>
+      <span class="summary-label">Campagne{{ nbCampagnes() > 1 ? 's' : '' }} soutenue{{ nbCampagnes() > 1 ? 's' : '' }}</span>
+    </div>
+  </div>
+}
+
+<!-- États -->
+@if (loading()) {
+  <div class="state-msg">Chargement de vos dons...</div>
+} @else if (error()) {
+  <div class="alert-error">{{ error() }}</div>
+} @else if (dons().length === 0) {
+  <div class="empty-state">
+    <div class="empty-icon">💚</div>
+    <h3>Vous n'avez pas encore fait de don</h3>
+    <p>Découvrez les campagnes en cours et soutenez une cause qui vous tient à cœur.</p>
+    <a routerLink="/campagnes" class="btn-explore">Voir les campagnes</a>
+  </div>
+} @else {
+  <!-- Liste des dons -->
+  <div class="dons-list">
+    @for (don of dons(); track don.id) {
+      <div class="don-card">
+        <div class="don-left">
+          <div class="don-icon">💰</div>
+          <div class="don-info">
+            <a [routerLink]="['/campagnes', don.campagne_id]" class="don-campagne">
+              {{ don.campagne_titre }}
+            </a>
+            <span class="don-asso">{{ don.association_nom }}</span>
+            @if (don.message) {
+              <span class="don-message">"{{ don.message }}"</span>
+            }
+          </div>
+        </div>
+
+        <div class="don-right">
+          <span class="don-montant">{{ don.montant | number:'1.0-2' }} TND</span>
+          <span class="don-date">{{ formatDate(don.date) }}</span>
+          <span class="don-ref">{{ don.reference }}</span>
+          @if (don.est_anonyme) {
+            <span class="badge-anon">Anonyme</span>
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

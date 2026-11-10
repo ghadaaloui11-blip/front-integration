@@ -1,49 +1,86 @@
 @if (isAuthPage()) {
-<router-outlet />
-} @else {
-<div class="layout">
+  <!-- Pages login / inscription : pleine page, sans chrome -->
+  <router-outlet />
 
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="logo">♥ MennaFina</div>
+} @else if (isAccueilPage()) {
+  <!-- Page d'accueil : gérée par son propre composant (navbar + footer inclus) -->
+  <router-outlet />
 
-    <nav class="menu">
-      <a routerLink="/campagnes" routerLinkActive="active">Campagnes</a>
-      <a routerLink="/associations" routerLinkActive="active">Associations</a>
-      <a routerLink="/evenements" routerLinkActive="active">Événements solidaires</a>
-      <a routerLink="/signalements-publics" routerLinkActive="active">Signalements publics</a>
+} @else if (isVisiteur()) {
+  <!-- Visiteur non connecté : navbar légère + contenu pleine largeur, sans sidebar -->
+  <div class="visitor-layout">
 
-      @if (auth.getRole() === 'admin') {
-      <a routerLink="/admin/associations" routerLinkActive="active">Gestion associations</a>
-      }
+    <header class="visitor-header">
+      <a routerLink="/accueil" class="visitor-logo">🌿 MennaFina</a>
 
-      @if (auth.getRole() === 'association') {
-      <a routerLink="/mes-campagnes" routerLinkActive="active">Mes campagnes</a>
-      <a routerLink="/association-reports" routerLinkActive="active">Signalements</a>
-      <a routerLink="/demandes-recues" routerLinkActive="active">Demandes d'aide</a>
-      <a routerLink="/mes-documents" routerLinkActive="active">Mes documents</a>
-      <a routerLink="/mes-evenements" routerLinkActive="active">Mes événements</a>
-      } @else if (auth.getRole() !== 'admin') {
-      <a routerLink="/signalement" routerLinkActive="active">Nouveau signalement</a>
-      <a routerLink="/mes-signalements" routerLinkActive="active">Mes signalements</a>
-      <a routerLink="/demander-aide" routerLinkActive="active">Demander de l'aide</a>
-      <a routerLink="/devenir-benevole" routerLinkActive="active">Devenir bénévole</a>
-      }
+      <nav class="visitor-nav">
+        <a routerLink="/campagnes"           routerLinkActive="visitor-active" class="visitor-link">Campagnes</a>
+        <a routerLink="/associations"         routerLinkActive="visitor-active" class="visitor-link">Associations</a>
+        <a routerLink="/evenements"           routerLinkActive="visitor-active" class="visitor-link">Événements</a>
+        <a routerLink="/signalements-publics" routerLinkActive="visitor-active" class="visitor-link">Signalements</a>
+      </nav>
 
-      @if (auth.getRole()) {
-      <a routerLink="/profil" routerLinkActive="active">Mon profil</a>
-      }
-    </nav>
+      <div class="visitor-actions">
+        <a routerLink="/login"       class="visitor-btn-login">Connexion</a>
+        <a routerLink="/inscription" class="visitor-btn-signup">S'inscrire</a>
+      </div>
+    </header>
 
-    <a class="logout" (click)="logout()">Se déconnecter</a>
-  </aside>
-
-  <!-- Contenu -->
-  <div class="main">
-    <main class="content">
+    <main class="visitor-main">
       <router-outlet />
     </main>
+
+    <footer class="visitor-footer">
+      <p>&copy; 2025 MennaFina — Plateforme de Solidarité 🌍💚</p>
+    </footer>
+
   </div>
 
-</div>
+} @else {
+  <!-- Utilisateur connecté : layout avec sidebar -->
+  <div class="layout">
+
+    <aside class="sidebar">
+      <div class="logo">♥ MennaFina</div>
+
+      <nav class="menu">
+        <a routerLink="/campagnes"           routerLinkActive="active">Campagnes</a>
+        <a routerLink="/associations"         routerLinkActive="active">Associations</a>
+        <a routerLink="/evenements"           routerLinkActive="active">Événements solidaires</a>
+        <a routerLink="/signalements-publics" routerLinkActive="active">Signalements publics</a>
+
+        @if (auth.getRole() === 'admin') {
+          <a routerLink="/admin/associations" routerLinkActive="active">Gestion associations</a>
+        }
+
+        @if (auth.getRole() === 'association') {
+          <a routerLink="/mes-campagnes"      routerLinkActive="active">Mes campagnes</a>
+          <a routerLink="/association-reports" routerLinkActive="active">Signalements</a>
+          <a routerLink="/demandes-recues"    routerLinkActive="active">Demandes d'aide</a>
+          <a routerLink="/mes-documents"      routerLinkActive="active">Mes documents</a>
+          <a routerLink="/mes-evenements"     routerLinkActive="active">Mes événements</a>
+        } @else if (auth.getRole() !== 'admin') {
+          <a routerLink="/signalement"        routerLinkActive="active">Nouveau signalement</a>
+          <a routerLink="/mes-signalements"   routerLinkActive="active">Mes signalements</a>
+          <a routerLink="/demander-aide"      routerLinkActive="active">Demander de l'aide</a>
+          <a routerLink="/devenir-benevole"   routerLinkActive="active">Devenir bénévole</a>
+          <a routerLink="/mes-dons"           routerLinkActive="active">Mes dons</a>
+          <a routerLink="/dons-nature"        routerLinkActive="active">Dons en nature</a>
+        }
+
+        @if (auth.getRole()) {
+          <a routerLink="/profil" routerLinkActive="active">Mon profil</a>
+        }
+      </nav>
+
+      <a class="logout" (click)="logout()">Se déconnecter</a>
+    </aside>
+
+    <div class="main">
+      <main class="content">
+        <router-outlet />
+      </main>
+    </div>
+
+  </div>
 }

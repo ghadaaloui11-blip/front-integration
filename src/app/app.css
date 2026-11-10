@@ -104,3 +104,129 @@
 .content {
   padding: 40px;
 }
+
+/* ══════════════════════════════════════════
+   LAYOUT VISITEUR (non connecté, hors accueil)
+══════════════════════════════════════════ */
+.visitor-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-main);
+}
+
+.visitor-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #fff;
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+}
+
+.visitor-logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--pastel-green-dark);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.visitor-nav {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.visitor-link {
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 7px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.visitor-link:hover {
+  background: var(--pastel-green-subtle);
+  color: var(--pastel-green-dark);
+}
+
+.visitor-link.visitor-active {
+  background: var(--pastel-green-light);
+  color: var(--pastel-green-dark);
+  font-weight: 600;
+}
+
+.visitor-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.visitor-btn-login {
+  color: var(--pastel-green-dark);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border: 1.5px solid var(--pastel-green-border);
+  border-radius: 8px;
+  transition: all 0.15s;
+}
+.visitor-btn-login:hover {
+  background: var(--pastel-green-light);
+}
+
+.visitor-btn-signup {
+  background: var(--pastel-green-main);
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+.visitor-btn-signup:hover {
+  background: var(--pastel-green-hover);
+}
+
+.visitor-main {
+  flex: 1;
+  padding: 40px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.visitor-footer {
+  background: var(--pastel-green-dark);
+  color: rgba(255,255,255,0.85);
+  text-align: center;
+  padding: 18px 32px;
+  font-size: 13px;
+}
+
+.visitor-footer p {
+  margin: 0;
+}
+
+@media (max-width: 700px) {
+  .visitor-header {
+    padding: 10px 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .visitor-nav { display: none; }
+  .visitor-main { padding: 24px 16px; }
+}

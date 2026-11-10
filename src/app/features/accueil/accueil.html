@@ -1,0 +1,236 @@
+<div class="accueil-wrapper">
+
+  <!-- ── Navbar ── -->
+  <header class="accueil-header">
+    <div class="nav-logo">🌿 MennaFina</div>
+
+    <nav class="nav-links">
+      <a routerLink="/campagnes"          class="nav-link">Campagnes</a>
+      <a routerLink="/associations"        class="nav-link">Associations</a>
+      <a routerLink="/evenements"          class="nav-link">Événements</a>
+      <a routerLink="/signalements-publics" class="nav-link">Signalements</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a routerLink="/login"       class="nav-login">Connexion</a>
+      <a routerLink="/inscription" class="nav-signup">S'inscrire</a>
+    </div>
+  </header>
+
+  <!-- ── Contenu principal ── -->
+  <main class="accueil-main">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">♥ Plateforme de Solidarité</div>
+        <h1 class="hero-title">
+          Ensemble,<br>
+          <span class="hero-accent">construisons</span><br>
+          un monde solidaire
+        </h1>
+        <p class="hero-sub">
+          Rejoignez notre communauté de citoyens et d'associations engagés.
+          Soutenez des causes, signalez des situations, participez à des événements.
+        </p>
+        <div class="hero-actions">
+          <a routerLink="/inscription" class="btn-primary">Créer un compte gratuitement</a>
+          <a routerLink="/campagnes"   class="btn-secondary">Explorer sans compte</a>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-circle"></div>
+        <div class="bubble bubble-1">🤝</div>
+        <div class="bubble bubble-2">💚</div>
+        <div class="bubble bubble-3">🌱</div>
+        <div class="bubble bubble-4">❤️</div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-num">{{ stats().campagnes }}</span>
+        <span class="stat-label">Campagnes actives</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">{{ stats().evenements }}</span>
+        <span class="stat-label">Événements à venir</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">{{ stats().signalements }}</span>
+        <span class="stat-label">Signalements publiés</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">{{ stats().associations }}</span>
+        <span class="stat-label">Associations partenaires</span>
+      </div>
+    </section>
+
+    <!-- COMMENT ÇA MARCHE -->
+    <section class="section-how">
+      <div class="section-header">
+        <h2 class="section-title">Comment ça marche ?</h2>
+        <p class="section-sub">En 3 étapes simples, agissez pour votre communauté.</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-icon">📝</div>
+          <div class="step-num">01</div>
+          <h3 class="step-title">Créez votre compte</h3>
+          <p class="step-desc">Inscrivez-vous en tant que citoyen ou association. C'est gratuit et rapide.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-card">
+          <div class="step-icon">🔍</div>
+          <div class="step-num">02</div>
+          <h3 class="step-title">Explorez la plateforme</h3>
+          <p class="step-desc">Consultez les campagnes, événements et signalements près de chez vous.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-card">
+          <div class="step-icon">🌟</div>
+          <div class="step-num">03</div>
+          <h3 class="step-title">Agissez ensemble</h3>
+          <p class="step-desc">Faites un don, participez à un événement ou signalez une situation urgente.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAMPAGNES -->
+    <section class="section-preview">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Campagnes de dons</h2>
+          <p class="section-sub">Soutenez des causes qui vous tiennent à cœur.</p>
+        </div>
+        <a routerLink="/campagnes" class="btn-see-all">Toutes les campagnes →</a>
+      </div>
+
+      @if (campagnes().length === 0) {
+        <div class="empty-preview">Aucune campagne disponible pour le moment.</div>
+      } @else {
+        <div class="cards-row">
+          @for (c of campagnes(); track c.id) {
+            <a class="card-preview camp-card" [routerLink]="['/campagnes', c.id]">
+              <div class="card-icon-header camp-header">💰</div>
+              <div class="card-preview-body">
+                <h3 class="card-preview-title">{{ c.titre }}</h3>
+                <p class="card-preview-meta">{{ c.association_nom }}</p>
+                <p class="card-preview-desc">{{ c.description }}</p>
+                <div class="progress-wrap">
+                  <div class="progress-bar">
+                    <div class="progress-fill" [style.width.%]="pourcentage(c)"></div>
+                  </div>
+                  <div class="progress-info">
+                    <span class="progress-pct">{{ pourcentage(c) }}%</span>
+                    <span class="progress-amount">{{ c.montant_collecte | number }} / {{ c.objectif_montant | number }} TND</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          }
+        </div>
+      }
+    </section>
+
+    <!-- ÉVÉNEMENTS -->
+    <section class="section-preview section-alt">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Événements solidaires</h2>
+          <p class="section-sub">Participez à des actions sur le terrain.</p>
+        </div>
+        <a routerLink="/evenements" class="btn-see-all">Tous les événements →</a>
+      </div>
+
+      @if (evenements().length === 0) {
+        <div class="empty-preview">Aucun événement à venir pour le moment.</div>
+      } @else {
+        <div class="cards-row">
+          @for (e of evenements(); track e.id) {
+            <a class="card-preview event-card" [routerLink]="['/evenements', e.id]">
+              <div class="card-icon-header event-header">📅</div>
+              <div class="card-preview-body">
+                <div class="card-tags">
+                  <span class="tag-cat">{{ e.categorie }}</span>
+                  @if (e.places_restantes > 0) {
+                    <span class="tag-places">{{ e.places_restantes }} place(s)</span>
+                  } @else {
+                    <span class="tag-full">Complet</span>
+                  }
+                </div>
+                <h3 class="card-preview-title">{{ e.titre }}</h3>
+                <p class="card-preview-meta">📍 {{ e.lieu }}, {{ e.ville }}</p>
+                <p class="card-preview-meta">🗓 {{ formatDate(e.date_evenement) }}</p>
+              </div>
+            </a>
+          }
+        </div>
+      }
+    </section>
+
+    <!-- SIGNALEMENTS -->
+    <section class="section-preview">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Signalements récents</h2>
+          <p class="section-sub">Situations signalées par les citoyens.</p>
+        </div>
+        <a routerLink="/signalements-publics" class="btn-see-all">Tous les signalements →</a>
+      </div>
+
+      @if (signalements().length === 0) {
+        <div class="empty-preview">Aucun signalement disponible pour le moment.</div>
+      } @else {
+        <div class="cards-row">
+          @for (s of signalements(); track s.id) {
+            <div class="card-preview signal-card">
+              <div class="card-icon-header signal-header">🚨</div>
+              <div class="card-preview-body">
+                <div class="card-tags">
+                  <span [class]="'tag-statut ' + classeStatut(s.statut)">{{ labelStatut(s.statut) }}</span>
+                  @if (s.categorie) {
+                    <span class="tag-cat">{{ s.categorie }}</span>
+                  }
+                </div>
+                <h3 class="card-preview-title">{{ s.titre || ('Signalement #' + s.id) }}</h3>
+                <p class="card-preview-desc">{{ s.description }}</p>
+                <p class="card-preview-meta">🗓 {{ formatDate(s.created_at || '') }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </section>
+
+    <!-- CTA -->
+    <section class="section-cta">
+      <div class="cta-card">
+        <div class="cta-icon">🌍</div>
+        <h2 class="cta-title">Prêt à faire la différence ?</h2>
+        <p class="cta-sub">
+          Rejoignez des milliers de citoyens et d'associations qui agissent ensemble chaque jour.
+        </p>
+        <div class="cta-actions">
+          <a routerLink="/inscription" class="btn-primary">Rejoindre la communauté</a>
+          <a routerLink="/campagnes"   class="btn-outline">Explorer sans compte</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="accueil-footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Plateforme MennaFina — Tous droits réservés.</p>
+      <p>Construire ensemble un monde plus solidaire 🌍💚</p>
+    </div>
+  </footer>
+
+</div>

@@ -151,8 +151,31 @@ export const routes: Routes = [
       import('./features/benevoles/devenir-benevole/devenir-benevole').then(m => m.DevenirBenevoleComponent),
   },
 
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  // US31 : historique des dons du citoyen
+  {
+    path: 'mes-dons',
+    canActivate: [citoyenGuard],
+    loadComponent: () =>
+      import('./features/campagnes/mes-dons/mes-dons').then(m => m.MesDonsComponent),
+  },
+
+  // US13 : dons en nature (citoyen)
+  {
+    path: 'dons-nature',
+    canActivate: [citoyenGuard],
+    loadComponent: () =>
+      import('./features/dons-nature/dons-nature').then(m => m.DonsNatureComponent),
+  },
+
+  { path: '', redirectTo: 'accueil', pathMatch: 'full' },
+
+  // Page d'accueil publique
+  {
+    path: 'accueil',
+    loadComponent: () =>
+      import('./features/accueil/accueil').then(m => m.AccueilComponent),
+  },
 
   // 404 : toute route inconnue renvoie vers les campagnes (TOUJOURS en dernier)
-  { path: '**', redirectTo: 'campagnes' },
+  { path: '**', redirectTo: 'accueil' },
 ];

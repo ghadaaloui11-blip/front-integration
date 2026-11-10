@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from './core/services/auth.service';
-// import { NotificationContainerComponent } from './core/components/notification-container/notification-container.component';
 
 @Component({
   selector: 'app-root',
@@ -18,8 +17,17 @@ export class AppComponent {
     return url.startsWith('/login') || url.startsWith('/inscription');
   }
 
+  isAccueilPage(): boolean {
+    return this.router.url === '/accueil' || this.router.url === '/';
+  }
+
+  /** Visiteur non connecté : pas de sidebar, layout pleine page avec navbar accueil */
+  isVisiteur(): boolean {
+    return !this.auth.getToken();
+  }
+
   logout() {
     this.auth.deconnecter();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/accueil']);
   }
 }

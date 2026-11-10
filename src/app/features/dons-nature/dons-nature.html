@@ -1,0 +1,125 @@
+<div class="page-header">
+  <div>
+    <h1 class="title">Dons en nature</h1>
+    <p class="sub">Proposez des vêtements, de la nourriture ou du matériel à une association.</p>
+  </div>
+  @if (!showForm()) {
+    <button class="btn-main" (click)="ouvrirFormulaire()">+ Proposer un don</button>
+  }
+</div>
+
+<!-- Messages globaux -->
+@if (success()) {
+  <div class="alert-success">{{ success() }}</div>
+}
+@if (error()) {
+  <div class="alert-error">{{ error() }}</div>
+}
+
+<!-- Formulaire de proposition -->
+@if (showForm()) {
+  <div class="form-card">
+    <h2 class="form-title">Proposer un don en nature</h2>
+
+    @if (errorForm()) {
+      <div class="alert-error">{{ errorForm() }}</div>
+    }
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Type de don <span class="required">*</span></label>
+        <select [(ngModel)]="type_don">
+          @for (t of typesDon; track t) {
+            <option [value]="t">{{ t }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Ville <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="ville" placeholder="Ex : Tunis, Sfax, Sousse..." />
+      </div>
+
+      <div class="form-group full">
+        <label>Description <span class="required">*</span></label>
+        <textarea
+          [(ngModel)]="description"
+          rows="3"
+          placeholder="Décrivez le contenu du don (état, quantité approximative, conditions...)">
+        </textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Quantité <span class="optional">(facultatif)</span></label>
+        <input type="text" [(ngModel)]="quantite" placeholder="Ex : 5 sacs, 10 kg..." />
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-main" (click)="soumettre()" [disabled]="envoi()">
+        {{ envoi() ? 'Envoi...' : 'Soumettre le don' }}
+      </button>
+      <button class="btn-cancel" (click)="fermerFormulaire()">Annuler</button>
+    </div>
+  </div>
+}
+
+<!-- Mes propositions -->
+@if (loading()) {
+  <div class="state-msg">Chargement...</div>
+} @else if (dons().length === 0 && !showForm()) {
+  <div class="empty-state">
+    <div class="empty-icon">📦</div>
+    <h3>Aucun don proposé pour le moment</h3>
+    <p>Proposez des articles dont vous n'avez plus besoin à des associations qui en ont besoin.</p>
+    <button class="btn-main" (click)="ouvrirFormulaire()">Proposer mon premier don</button>
+  </div>
+} @else if (dons().length > 0) {
+  <h2 class="section-title">Mes propositions ({{ dons().length }})</h2>
+  <div class="dons-list">
+    @for (don of dons(); track don.id) {
+      <div class="don-card">
+        <div class="don-top">
+          <div class="don-left">
+            <div class="don-type-icon">📦</div>
+            <div class="don-info">
+              <span class="don-type">{{ don.type_don }}</span>
+              @if (don.quantite) {
+                <span class="don-quantite">{{ don.quantite }}</span>
+              }
+              <span class="don-ville">📍 {{ don.ville }}</span>
+              <span class="don-date">{{ formatDate(don.created_at) }}</span>
+            </div>
+          </div>
+          <div class="don-right">
+            <span [class]="'badge-statut ' + classeStatut(don.statut)">{{ labelStatut(don.statut) }}</span>
+            @if (don.statut === 'propose') {
+              <button class="btn-annuler" (click)="annuler(don.id)">Annuler</button>
+            }
+          </div>
+        </div>
+
+        <p class="don-desc">{{ don.description }}</p>
+
+        @if (don.statut === 'accepte' && (don.date_collecte || don.lieu_collecte || don.nom_association)) {
+          <div class="collecte-info">
+            <strong>✅ Accepté par {{ don.nom_association }}</strong>
+            @if (don.date_collecte) {
+              <span>🗓 Collecte le {{ formatDate(don.date_collecte) }}</span>
+            }
+            @if (don.lieu_collecte) {
+              <span>📍 {{ don.lieu_collecte }}</span>
+            }
+            @if (don.commentaire) {
+              <span class="don-message">"{{ don.commentaire }}"</span>
+            }
+          </div>
+        }
+
+        @if ((don.statut === 'refuse' || don.statut === 'annule') && don.commentaire) {
+          <div class="refuse-info">{{ don.commentaire }}</div>
+        }
+      </div>
+    }
+  </div>
+}
