@@ -1,0 +1,225 @@
+<div class="dash">
+
+  <!-- En-tête -->
+  <div class="entete">
+    <div>
+      <h1>Tableau de bord</h1>
+      <p class="date">{{ dateDuJour }}</p>
+    </div>
+    <button class="bouton-actu" (click)="actualiser()">
+      {{ chargement ? 'Chargement...' : '↻ Actualiser' }}
+    </button>
+  </div>
+
+  @if (erreur) {
+    <p class="erreur">{{ erreur }}</p>
+  }
+
+  @if (stats) {
+
+    <!-- KPI -->
+    <div class="kpis">
+      <div class="kpi">
+        <div class="kpi-icone c-vert">👥</div>
+        <div>
+          <div class="kpi-chiffre">{{ stats.utilisateurs.total }}</div>
+          <div class="kpi-texte">Utilisateurs</div>
+          <div class="kpi-sous">Comptes inscrits</div>
+        </div>
+      </div>
+
+      <div class="kpi">
+        <div class="kpi-icone c-bleu">🙋</div>
+        <div>
+          <div class="kpi-chiffre">{{ stats.benevoles }}</div>
+          <div class="kpi-texte">Bénévoles</div>
+          <div class="kpi-sous">Prêts à aider</div>
+        </div>
+      </div>
+
+      <div class="kpi">
+        <div class="kpi-icone c-orange">📢</div>
+        <div>
+          <div class="kpi-chiffre">{{ total(stats.signalements) }}</div>
+          <div class="kpi-texte">Signalements</div>
+          <div class="kpi-sous">Tous statuts</div>
+        </div>
+      </div>
+
+      <div class="kpi">
+        <div class="kpi-icone c-violet">🤝</div>
+        <div>
+          <div class="kpi-chiffre">{{ total(stats.demandesAide) }}</div>
+          <div class="kpi-texte">Demandes d'aide</div>
+          <div class="kpi-sous">Tous statuts</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI supplémentaires : campagnes, dons, événements, inscriptions -->
+    <div class="kpis">
+      <div class="kpi">
+        <div class="kpi-icone c-vert">🎯</div>
+        <div>
+          <div class="kpi-chiffre">{{ stats.campagnes ?? 0 }}</div>
+          <div class="kpi-texte">Campagnes</div>
+          <div class="kpi-sous">Toutes campagnes</div>
+        </div>
+      </div>
+
+      <div class="kpi">
+        <div class="kpi-icone c-orange">💝</div>
+        <div>
+          <div class="kpi-chiffre">{{ stats.dons ?? 0 }}</div>
+          <div class="kpi-texte">Dons</div>
+          <div class="kpi-sous">Dons effectués</div>
+        </div>
+      </div>
+
+      <div class="kpi">
+        <div class="kpi-icone c-bleu">📅</div>
+        <div>
+          <div class="kpi-chiffre">{{ stats.evenements ?? 0 }}</div>
+          <div class="kpi-texte">Événements</div>
+          <div class="kpi-sous">Tous événements</div>
+        </div>
+      </div>
+
+      <div class="kpi">
+        <div class="kpi-icone c-violet">✋</div>
+        <div>
+          <div class="kpi-chiffre">{{ stats.inscriptions ?? 0 }}</div>
+          <div class="kpi-texte">Inscriptions</div>
+          <div class="kpi-sous">Aux événements</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Donut + statuts -->
+    <div class="ligne">
+
+      <div class="bloc">
+        <div class="bloc-titre"><h3>Répartition des utilisateurs</h3></div>
+        <div class="donut-zone">
+          <div class="donut" [style.background]="donut()">
+            <div class="donut-trou">
+              <strong>{{ stats.utilisateurs.total }}</strong>
+              <span>total</span>
+            </div>
+          </div>
+          <div class="legende">
+            @for (r of stats.utilisateurs.parRole; track r.role) {
+              <div class="legende-ligne">
+                <span class="point" [style.background]="couleurRole(r.role)"></span>
+                <span class="legende-nom">{{ r.role }}</span>
+                <strong>{{ r.total }}</strong>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      @for (b of blocs; track b.titre) {
+        <div class="bloc">
+          <div class="bloc-titre">
+            <h3>{{ b.icone }} {{ b.titre }}</h3>
+            <span class="compteur">{{ total(b.lignes) }}</span>
+          </div>
+
+          @if (b.lignes.length === 0) {
+            <p class="vide">Aucune donnée</p>
+          }
+
+          @for (l of b.lignes; track l.statut) {
+            <div class="stat">
+              <div class="stat-haut">
+                <span>{{ libelle(l.statut) }}</span>
+                <strong>{{ l.total }} ({{ pourcentage(l.total, b.lignes) }}%)</strong>
+              </div>
+              <div class="barre">
+                <div
+                  class="remplissage {{ couleur(l.statut) }}"
+                  [style.width.%]="pourcentage(l.total, b.lignes)"
+                ></div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Utilisateurs -->
+  <div class="bloc">
+    <div class="bloc-titre"><h3>Utilisateurs</h3></div>
+
+    <div class="recherche">
+      <input
+        type="text"
+        class="champ"
+        [(ngModel)]="recherche"
+        placeholder="Rechercher (nom, prénom, email)"
+        (keyup.enter)="rechercher()"
+      />
+      <button class="bouton" (click)="rechercher()">Rechercher</button>
+    </div>
+
+    <div class="tableau">
+      <table class="liste">
+        <thead>
+          <tr>
+            <th>Utilisateur</th>
+            <th>Email</th>
+            <th>ID</th>
+            <th>Rôle</th>
+            <th>Statut</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (u of utilisateurs; track u.id) {
+            <tr [class.ligne-inactive]="u.actif === false">
+              <td>
+                <div class="user">
+                  <span class="avatar" [style.background]="couleurRole(u.role)">{{ initiales(u) }}</span>
+                  <span class="user-nom">{{ u.prenom }} {{ u.nom }}</span>
+                </div>
+              </td>
+              <td>{{ u.email }}</td>
+              <td>#{{ u.id }}</td>
+              <td><span class="pastille role-{{ u.role }}">{{ u.role }}</span></td>
+              <td>
+                <span class="pastille" [class.statut-inactif]="u.actif === false" [class.statut-actif]="u.actif !== false">
+                  {{ u.actif === false ? 'Désactivé' : 'Actif' }}
+                </span>
+              </td>
+              <td>
+                @if (u.role !== 'admin') {
+                  <button
+                    class="bouton-statut"
+                    [class.reactiver]="u.actif === false"
+                    [disabled]="enCours === u.id"
+                    (click)="basculerStatut(u)"
+                  >
+                    {{ u.actif === false ? 'Réactiver' : 'Désactiver' }}
+                  </button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (utilisateurs.length === 0) {
+      <p class="vide">Aucun utilisateur trouvé</p>
+    }
+
+    <div class="pagination">
+      <button class="bouton" (click)="pagePrecedente()" [disabled]="page === 1">Précédent</button>
+      <span>Page {{ page }}</span>
+      <button class="bouton" (click)="pageSuivante()" [disabled]="utilisateurs.length < 10">Suivant</button>
+    </div>
+  </div>
+
+</div>

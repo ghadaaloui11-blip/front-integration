@@ -150,7 +150,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/benevoles/devenir-benevole/devenir-benevole').then(m => m.DevenirBenevoleComponent),
   },
-
+  // US22 : tableau de bord admin
+  {
+    path: 'admin/dashboard',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./features/admin/dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent),
+  },
   // US31 : historique des dons du citoyen
   {
     path: 'mes-dons',

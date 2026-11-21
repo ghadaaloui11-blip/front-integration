@@ -1,0 +1,30 @@
+<div class="nc">
+  <button class="nc-bell" (click)="toggle()">
+    <span class="nc-icon">🔔</span>
+    <span class="nc-text">Notifications</span>
+    @if (service.nonLues() > 0) {
+      <span class="nc-badge">{{ service.nonLues() }}</span>
+    }
+  </button>
+
+  @if (ouvert) {
+    <div class="nc-panel">
+      <div class="nc-head">
+        <strong>Notifications</strong>
+        <button class="nc-link" (click)="toutLire()">Tout marquer lu</button>
+      </div>
+
+      @if (liste.length === 0) {
+        <p class="nc-empty">Aucune notification</p>
+      }
+
+      @for (n of liste; track n.id) {
+        <div class="nc-item" [class.nc-nonlue]="!n.lue" (click)="lire(n)">
+          <div class="nc-titre">{{ n.titre }}</div>
+          <div class="nc-msg">{{ n.message }}</div>
+          <div class="nc-date">{{ n.date_creation | date: 'dd/MM/yyyy HH:mm' }}</div>
+        </div>
+      }
+    </div>
+  }
+</div>

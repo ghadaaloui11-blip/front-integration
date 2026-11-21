@@ -43,6 +43,10 @@
     <aside class="sidebar">
       <div class="logo">♥ MennaFina</div>
 
+      @if (auth.getRole()) {
+        <app-notification-center></app-notification-center>
+      }
+
       <nav class="menu">
         <a routerLink="/campagnes"           routerLinkActive="active">Campagnes</a>
         <a routerLink="/associations"         routerLinkActive="active">Associations</a>
@@ -50,6 +54,7 @@
         <a routerLink="/signalements-publics" routerLinkActive="active">Signalements publics</a>
 
         @if (auth.getRole() === 'admin') {
+          <a routerLink="/admin/dashboard"    routerLinkActive="active">Tableau de bord</a>
           <a routerLink="/admin/associations" routerLinkActive="active">Gestion associations</a>
         }
 

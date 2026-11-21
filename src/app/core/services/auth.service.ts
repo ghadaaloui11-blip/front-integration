@@ -24,7 +24,6 @@ export interface ReponseAuth {
   token: string;
 }
 
-/** Claims utiles du JWT (décodés côté client, le backend reste la source de vérité). */
 export interface JwtPayload {
   role?: string;
   nom?: string;
