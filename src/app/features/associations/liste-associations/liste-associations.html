@@ -2,16 +2,11 @@
   <h1>Nos associations</h1>
   <p class="sous-titre">Associations validées qui agissent près de chez vous.</p>
 
-  <div class="recherche">
-    <input
-      type="text"
-      [(ngModel)]="recherche"
-      (keyup.enter)="charger()"
-      placeholder="Rechercher par nom ou ville"
-    />
-    <button type="button" (click)="charger()">Rechercher</button>
-    <button type="button" class="secondaire" (click)="reinitialiser()">Effacer</button>
-  </div>
+  <app-filter-bar
+    [categories]="categories"
+    [showDates]="false"
+    (filtresChange)="appliquerFiltres($event)"
+  />
 
   @if (loading()) {
     <p class="info">Chargement...</p>
@@ -29,11 +24,14 @@
     @for (a of associations(); track a.id) {
       <div class="carte">
         <h3>{{ a.nom_association }}</h3>
+        @if (a.categorie) {
+          <p class="badge">{{ a.categorie }}</p>
+        }
+        @if (a.ville) {
+          <p>🏙️ {{ a.ville }}</p>
+        }
         @if (a.adresse) {
           <p>📍 {{ a.adresse }}</p>
-        }
-        @if (a.telephone) {
-          <p>📞 {{ a.telephone }}</p>
         }
       </div>
     }

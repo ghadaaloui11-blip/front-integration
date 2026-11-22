@@ -32,6 +32,45 @@
 
         <button type="button" class="principal" (click)="modifier()">Modifier</button>
       </div>
+
+      <!-- US24 : engagement (citoyens uniquement) -->
+      @if (estCitoyen()) {
+        <section class="engagement" aria-label="Mon engagement">
+          <h2>Mon engagement</h2>
+          @if (engagement(); as eng) {
+            <div class="solde">
+              <span class="points">{{ eng.solde }}</span>
+              <span class="points-label">points · {{ eng.actions }} action(s)</span>
+            </div>
+
+            @if (eng.badges.length) {
+              <h3>Badges obtenus</h3>
+              <ul class="badges">
+                @for (badge of eng.badges; track badge.code) {
+                  <li class="badge obtenu" [title]="badge.description">
+                    <span class="icone">{{ badge.icone }}</span>
+                    <span>{{ badge.nom }}</span>
+                  </li>
+                }
+              </ul>
+            }
+
+            @if (eng.badges_restants.length) {
+              <h3>Badges à débloquer</h3>
+              <ul class="badges">
+                @for (badge of eng.badges_restants; track badge.code) {
+                  <li class="badge verrouille" [title]="badge.description">
+                    <span class="icone">{{ badge.icone }}</span>
+                    <span>{{ badge.nom }}</span>
+                  </li>
+                }
+              </ul>
+            }
+          } @else {
+            <p class="info">Engagement indisponible pour le moment.</p>
+          }
+        </section>
+      }
     } @else {
       <!-- Mode modification -->
       <div class="formulaire">

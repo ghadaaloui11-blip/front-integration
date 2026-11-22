@@ -173,6 +173,33 @@ export const routes: Routes = [
       import('./features/dons-nature/dons-nature').then(m => m.DonsNatureComponent),
   },
 
+  // US37 : historique prive des activites (utilisateur connecte)
+  {
+    path: 'mes-activites',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/activites/mes-activites/mes-activites').then(m => m.MesActivitesComponent),
+  },
+
+  // US26 : catalog des defis (public) et mes participations (citoyen).
+  // 'mes-defis' DOIT rester avant 'defis/:id' pour ne pas etre capture comme id.
+  {
+    path: 'defis',
+    loadComponent: () =>
+      import('./features/defis/defi-list/defi-list').then(m => m.DefiListComponent),
+  },
+  {
+    path: 'mes-defis',
+    canActivate: [citoyenGuard],
+    loadComponent: () =>
+      import('./features/defis/mes-defis/mes-defis').then(m => m.MesDefisComponent),
+  },
+  {
+    path: 'defis/:id',
+    loadComponent: () =>
+      import('./features/defis/defi-detail/defi-detail').then(m => m.DefiDetailComponent),
+  },
+
   { path: '', redirectTo: 'accueil', pathMatch: 'full' },
 
   // Page d'accueil publique

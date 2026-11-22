@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SignalementService, Signalement } from '../../../core/services/signalement.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CATEGORIES_SIGNALEMENT } from '../../../core/constants/categories';
 
 @Component({
   selector: 'app-edit-report',
@@ -12,6 +13,8 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./edit-report.component.css']
 })
 export class EditReportComponent implements OnInit {
+  readonly categories = CATEGORIES_SIGNALEMENT;
+
   reportId!: number;
   report!: Signalement;
   editForm!: FormGroup;
@@ -33,6 +36,8 @@ export class EditReportComponent implements OnInit {
 
   initForm(): void {
     this.editForm = this.fb.group({
+      titre: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(200)]],
+      categorie: ['Autre', [Validators.required]],
       description: ['', [Validators.required, Validators.minLength(10)]],
       latitude: ['', [Validators.min(-90), Validators.max(90)]],
       longitude: ['', [Validators.min(-180), Validators.max(180)]],
@@ -46,6 +51,8 @@ export class EditReportComponent implements OnInit {
       next: (report) => {
         this.report = report;
         this.editForm.patchValue({
+          titre: report.titre || '',
+          categorie: report.categorie || 'Autre',
           description: report.description || '',
           latitude: report.latitude || '',
           longitude: report.longitude || '',
@@ -69,6 +76,8 @@ export class EditReportComponent implements OnInit {
     this.isLoading = true;
     
     const formData = new FormData();
+    formData.append('titre', this.editForm.value.titre);
+    formData.append('categorie', this.editForm.value.categorie);
     formData.append('description', this.editForm.value.description);
     formData.append('latitude', this.editForm.value.latitude?.toString() || '');
     formData.append('longitude', this.editForm.value.longitude?.toString() || '');

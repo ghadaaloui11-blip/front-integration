@@ -1,0 +1,38 @@
+.partage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 0;
+}
+
+.label {
+  font-weight: 600;
+  color: #555;
+  margin-right: 4px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 11px;
+  border: 1px solid #cfcfd4;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  text-decoration: none;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #f3f7f4;
+  border-color: #0d6b52;
+}
+
+.message {
+  color: #0d6b52;
+  font-size: 13px;
+  font-weight: 600;
+}

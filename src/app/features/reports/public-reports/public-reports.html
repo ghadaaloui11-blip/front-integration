@@ -17,6 +17,13 @@
   }
 </div>
 
+<!-- US38 : filtres combines ville / categorie / dates / recherche -->
+<app-filter-bar
+  [categories]="categories"
+  [showStatut]="false"
+  (filtresChange)="appliquerFiltres($event)"
+/>
+
 <div class="card-box">
   <table class="table">
     <thead>

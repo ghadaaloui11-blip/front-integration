@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CampagneService } from '../../../core/services/campagne.service';
+import { CATEGORIES_CAMPAGNE } from '../../../core/constants/categories';
 
 @Component({
   selector: 'app-campagne-create',
@@ -16,6 +17,7 @@ export class CampagneCreateComponent {
 
   error = signal('');
   loading = signal(false);
+  readonly categories = CATEGORIES_CAMPAGNE;
 
   form = this.fb.nonNullable.group({
     titre: ['', [Validators.required, Validators.minLength(3)]],
@@ -23,6 +25,10 @@ export class CampagneCreateComponent {
     objectif_montant: [0, [Validators.required, Validators.min(1)]],
     date_debut: ['', Validators.required],
     date_fin: ['', Validators.required],
+    // US38 : categorie par defaut 'Autre', ville laissee vide -> heritee
+    // de l'association cote backend.
+    categorie: ['Autre', Validators.required],
+    ville: [''],
   });
 
   submit() {

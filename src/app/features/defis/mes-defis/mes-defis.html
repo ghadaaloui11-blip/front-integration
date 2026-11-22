@@ -1,0 +1,29 @@
+<div class="page">
+  <h1>Mes défis</h1>
+  <p class="sous-titre">Suivez votre progression et vos récompenses.</p>
+
+  @if (loading()) { <p class="info">Chargement…</p> }
+  @if (error()) { <p class="erreur">{{ error() }}</p> }
+
+  @if (!loading() && !error()) {
+    @if (participations().length === 0) {
+      <p class="info">
+        Vous ne participez à aucun défi.
+        <a routerLink="/defis">Découvrir les défis</a>
+      </p>
+    } @else {
+      <ul class="liste">
+        @for (p of participations(); track p.id) {
+          <li>
+            <a [routerLink]="['/defis', p.defi_id]">
+              <span class="icone">{{ p.icone || '🎯' }}</span>
+              <span class="titre">{{ p.titre || ('Défi #' + p.defi_id) }}</span>
+              <span class="statut">{{ libelleStatut(p.statut) }}</span>
+              <span class="prog">{{ p.progression }} / {{ p.objectif || '?' }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    }
+  }
+</div>

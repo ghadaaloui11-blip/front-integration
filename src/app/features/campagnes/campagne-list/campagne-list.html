@@ -12,6 +12,11 @@
 
 <!-- Campagnes -->
 @if (onglet === 'toutes') {
+  <app-filter-bar
+    [categories]="categories"
+    (filtresChange)="appliquerFiltres($event)"
+  />
+
   <div class="grid">
     @for (c of campagnes(); track c.id) {
       <a class="card-camp" [routerLink]="['/campagnes', c.id]">
@@ -19,6 +24,12 @@
         <div class="card-body">
           <h3 class="card-title">{{ c.titre }}</h3>
           <div class="card-asso">{{ c.association_nom }}</div>
+          @if (c.categorie || c.ville) {
+            <div class="card-meta">
+              @if (c.categorie) { <span class="badge">{{ c.categorie }}</span> }
+              @if (c.ville) { <span class="badge">📍 {{ c.ville }}</span> }
+            </div>
+          }
 
           <div class="bar"><div class="fill" [style.width.%]="pourcentage(c)"></div></div>
 

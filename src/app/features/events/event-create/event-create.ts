@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { EventService } from '../../../core/services/event.service';
+import { CATEGORIES_EVENEMENT } from '../../../core/constants/categories';
 
 @Component({
   selector: 'app-event-create',
@@ -18,15 +19,7 @@ export class EventCreateComponent {
   error = signal('');
   loading = signal(false);
 
-  categories = [
-    'Distribution alimentaire',
-    'Maraude solidaire',
-    'Collecte de dons',
-    'Aide aux devoirs',
-    'Nettoyage écologique',
-    'Visite aux personnes isolées',
-    'Autre',
-  ];
+  categories = CATEGORIES_EVENEMENT;
 
   form = this.fb.nonNullable.group({
     titre: ['', [Validators.required, Validators.minLength(3)]],

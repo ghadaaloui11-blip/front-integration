@@ -6,11 +6,16 @@ import {
   classeStatut,
   labelStatut,
 } from '../../../core/services/signalement.service';
+import {
+  FilterBarComponent,
+  FilterValues,
+} from '../../../core/components/filter-bar/filter-bar.component';
+import { CATEGORIES_SIGNALEMENT } from '../../../core/constants/categories';
 
 /** US06 / US32 : consultation PUBLIQUE des signalements (sans authentification). */
 @Component({
   selector: 'app-public-reports',
-  imports: [],
+  imports: [FilterBarComponent],
   templateUrl: './public-reports.html',
   styleUrl: './public-reports.css',
 })
@@ -22,6 +27,9 @@ export class PublicReportsComponent implements OnInit {
   loading = signal(true);
   error = signal('');
   filtreActif = signal<string>('');
+  filtresAvances = signal<FilterValues | null>(null);
+
+  readonly categories = CATEGORIES_SIGNALEMENT;
 
   selected: Signalement | null = null;
 
@@ -46,7 +54,18 @@ export class PublicReportsComponent implements OnInit {
     this.error.set('');
     this.selected = null;
 
-    this.signalements.listerPublic(this.filtreActif() || undefined).subscribe({
+    const filtres: FilterValues = {
+      search: '',
+      ville: '',
+      categorie: 'Toutes',
+      date_debut: '',
+      date_fin: '',
+      ...(this.filtresAvances() || {}),
+      // Le statut des onglets fait autorite sur celui de la barre (masquee ici).
+      statut: this.filtreActif(),
+    };
+
+    this.signalements.listerPublic(filtres).subscribe({
       next: (data) => {
         this.reports.set(data);
         this.loading.set(false);
@@ -63,6 +82,11 @@ export class PublicReportsComponent implements OnInit {
   definirFiltre(valeur: string) {
     if (this.filtreActif() === valeur) return;
     this.filtreActif.set(valeur);
+    this.charger();
+  }
+
+  appliquerFiltres(filtres: FilterValues) {
+    this.filtresAvances.set(filtres);
     this.charger();
   }
 

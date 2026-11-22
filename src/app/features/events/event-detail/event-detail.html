@@ -61,6 +61,11 @@
 
       <h1 class="event-title">{{ ev.titre }}</h1>
 
+      <!-- US19 : partage social (evenements publies uniquement) -->
+      @if (peutPartager() && shareContent(); as contenu) {
+        <app-share-buttons [contenu]="contenu" />
+      }
+
       <div class="organizer-box">
         <div class="organizer-avatar">🏢</div>
         <div class="organizer-details">

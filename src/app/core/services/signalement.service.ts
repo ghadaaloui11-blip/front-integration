@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_BASE } from '../config/api-base.token';
+import { FilterValues, filtresVersParametres } from '../components/filter-bar/filter-bar.component';
 
 /** Signalement brut renvoyé par l'API (les champs varient selon le backend). */
 export interface Signalement {
@@ -12,6 +13,7 @@ export interface Signalement {
   categorie?: string;
   adresse?: string;
   lieu?: string;
+  ville?: string | null;
   latitude?: string | number;
   longitude?: string | number;
   created_at?: string;
@@ -83,9 +85,11 @@ export class SignalementService {
     return this.http.get<Signalement[]>(`${this.apiSignalement}`);
   }
 
-  /** Public : tous les signalements publiés, sans authentification (US06/US32). */
-  listerPublic(statut?: string): Observable<Signalement[]> {
-    const params = statut ? new HttpParams().set('statut', statut) : undefined;
+  /** Public : liste filtrable, sans authentification (US06/US32/US38). */
+  listerPublic(filtres?: string | Partial<FilterValues>): Observable<Signalement[]> {
+    const valeurs: Partial<FilterValues> =
+      typeof filtres === 'string' ? { statut: filtres } : (filtres ?? {});
+    const params = new HttpParams({ fromObject: filtresVersParametres(valeurs) });
     return this.http.get<Signalement[]>(`${this.apiSignalement}/public`, { params });
   }
 
@@ -121,21 +125,21 @@ export class SignalementService {
     );
   }
 
-  /** Obtenir un signalement par ID (pour édition) */
+  /** Obtenir un signalement par ID (pour édition) — routes /api/reports. */
   getSignalement(id: number): Observable<Signalement> {
-    return this.http.get<Signalement>(`${this.apiSignalement}/${id}`);
+    return this.http.get<Signalement>(`${this.apiCreation}/${id}`);
   }
 
-  /** Mettre à jour un signalement */
+  /** Mettre à jour un signalement (createur uniquement, cote backend). */
   updateSignalement(id: number, formData: FormData): Observable<{ signalement: Signalement }> {
     return this.http.patch<{ signalement: Signalement }>(
-      `${this.apiSignalement}/${id}`,
+      `${this.apiCreation}/${id}`,
       formData
     );
   }
 
-  /** Supprimer un signalement */
+  /** Supprimer un signalement (createur uniquement, cote backend). */
   deleteSignalement(id: number): Observable<{ message: string }> {
-    return this.http.delete<{ message: string }>(`${this.apiSignalement}/${id}`);
+    return this.http.delete<{ message: string }>(`${this.apiCreation}/${id}`);
   }
 }

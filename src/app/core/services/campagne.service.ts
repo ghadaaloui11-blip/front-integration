@@ -1,7 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_BASE } from '../config/api-base.token';
+import { FilterValues, filtresVersParametres } from '../components/filter-bar/filter-bar.component';
 
 export interface Campagne {
   id: number;
@@ -13,8 +14,10 @@ export interface Campagne {
   date_fin: string;
   statut: string;
   association_id: number;
-  /** Renseigné par GET /api/campagnes (liste publique). */
+  /** Renseigné par GET /api/campagnes (liste publique, US38). */
   association_nom?: string;
+  ville?: string | null;
+  categorie?: string;
 }
 
 /** Association telle que renvoyée par GET /api/campagnes/associations. */
@@ -50,8 +53,10 @@ export class CampagneService {
   private http = inject(HttpClient);
   private api = `${inject(API_BASE)}/api/campagnes`;
 
-  getAll(): Observable<Campagne[]> {
-    return this.http.get<Campagne[]>(this.api);
+  /** US38 : liste publique avec filtres combines (ville, categorie, dates…). */
+  getAll(filtres?: Partial<FilterValues>): Observable<Campagne[]> {
+    const params = new HttpParams({ fromObject: filtresVersParametres(filtres) });
+    return this.http.get<Campagne[]>(this.api, { params });
   }
 
   getAssociations(): Observable<AssociationListee[]> {

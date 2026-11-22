@@ -4,20 +4,25 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EventService, Evenement } from '../../../core/services/event.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { ShareButtonsComponent } from '../../../core/components/share-buttons/share-buttons.component';
+import { ShareContent, ShareService } from '../../../core/services/share.service';
 
 @Component({
   selector: 'app-event-detail',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, ShareButtonsComponent],
   templateUrl: './event-detail.html',
   styleUrl: './event-detail.css',
 })
 export class EventDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private eventService = inject(EventService);
+  private shareService = inject(ShareService);
   protected auth = inject(AuthService);
 
   event = signal<Evenement | null>(null);
+  /** US19 : contenu de partage, construit des que l'evenement est charge. */
+  shareContent = signal<ShareContent | null>(null);
   loading = signal(true);
   error = signal('');
   successMsg = signal('');
@@ -38,6 +43,12 @@ export class EventDetailComponent implements OnInit {
     this.eventService.getById(id).subscribe({
       next: (data) => {
         this.event.set(data);
+        this.shareContent.set({
+          title: data.titre,
+          text: `Découvrez l'action solidaire « ${data.titre} » sur MennaFina.`,
+          // Q15 : la page backend porte les balises OG et redirige vers le SPA.
+          url: this.shareService.urlPartageEvenement(data.id),
+        });
         this.loading.set(false);
       },
       error: (err) => {
@@ -90,6 +101,11 @@ export class EventDetailComponent implements OnInit {
         this.error.set(err.error?.erreur || 'Impossible d\'annuler l\'inscription.');
       },
     });
+  }
+
+  /** US19 : le partage n'est propose que pour les evenements publies. */
+  peutPartager(): boolean {
+    return this.event()?.statut === 'publie';
   }
 
   formatDate(dateStr: string): string {

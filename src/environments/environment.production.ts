@@ -8,4 +8,5 @@
  */
 export const environment = {
   apiBase: '',
+  googleClientId: '392355876241-20biprsuqnumps0end23534p2h30hl39.apps.googleusercontent.com',
 };

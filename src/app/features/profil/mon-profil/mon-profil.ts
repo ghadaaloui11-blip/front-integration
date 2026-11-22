@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProfilService } from '../../../core/services/profil.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { Engagement, EngagementService } from '../../../core/services/engagement.service';
 
 @Component({
   selector: 'app-mon-profil',
@@ -14,12 +15,16 @@ import { AuthService } from '../../../core/services/auth.service';
 export class MonProfilComponent implements OnInit {
   private profilService = inject(ProfilService);
   private auth = inject(AuthService);
+  private engagementService = inject(EngagementService);
 
   loading = signal(true);
   envoi = signal(false);
   enEdition = signal(false);
   error = signal('');
   success = signal('');
+
+  /** US24 : points et badges (citoyens uniquement, decision Q2). */
+  engagement = signal<Engagement | null>(null);
 
   role = '';
   nom = '';
@@ -40,6 +45,7 @@ export class MonProfilComponent implements OnInit {
         this.email = p.email;
         this.telephone = p.telephone || '';
         this.loading.set(false);
+        if (this.estCitoyen()) this.chargerEngagement();
       },
       error: () => {
         this.error.set('Impossible de charger votre profil.');
@@ -107,5 +113,17 @@ export class MonProfilComponent implements OnInit {
     if (this.role === 'association') return 'Association';
     if (this.role === 'admin') return 'Administrateur';
     return 'Citoyen';
+  }
+
+  /** Q2 : les points et badges ne concernent que les citoyens. */
+  estCitoyen(): boolean {
+    return this.role === 'citoyen';
+  }
+
+  private chargerEngagement(): void {
+    this.engagementService.lireMoi().subscribe({
+      next: (engagement) => this.engagement.set(engagement),
+      error: () => this.engagement.set(null),
+    });
   }
 }

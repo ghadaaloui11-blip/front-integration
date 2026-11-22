@@ -103,3 +103,73 @@ button:disabled {
   font-weight: 600;
   margin-bottom: 12px;
 }
+
+/* US24 : carte d'engagement */
+.engagement {
+  margin-top: 20px;
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.engagement h2 {
+  margin: 0 0 12px;
+  font-size: 20px;
+  color: #0d6b52;
+}
+
+.engagement h3 {
+  margin: 16px 0 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+.solde {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.points {
+  font-size: 36px;
+  font-weight: 700;
+  color: #0d6b52;
+}
+
+.points-label {
+  color: #666;
+  font-size: 14px;
+}
+
+.badges {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  background: #eef6f1;
+  color: #0d6b52;
+  border: 1px solid #cfe6d9;
+}
+
+.badge.verrouille {
+  background: #f5f5f5;
+  color: #999;
+  border-color: #e5e5e5;
+  filter: grayscale(1);
+}
+
+.badge .icone {
+  font-size: 16px;
+}

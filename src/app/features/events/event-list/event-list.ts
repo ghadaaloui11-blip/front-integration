@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { EventService, Evenement, FiltresEvenement } from '../../../core/services/event.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { CATEGORIES_EVENEMENT } from '../../../core/constants/categories';
 
 @Component({
   selector: 'app-event-list',
@@ -20,16 +21,7 @@ export class EventListComponent implements OnInit {
   loading = signal(true);
   error = signal('');
 
-  categories = [
-    'Toutes',
-    'Distribution alimentaire',
-    'Maraude solidaire',
-    'Collecte de dons',
-    'Aide aux devoirs',
-    'Nettoyage écologique',
-    'Visite aux personnes isolées',
-    'Autre',
-  ];
+  categories = ['Toutes', ...CATEGORIES_EVENEMENT];
 
   filtres: FiltresEvenement = {
     search: '',

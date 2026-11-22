@@ -27,6 +27,18 @@
       </select>
     </div>
 
+    <!-- Ville (facultative, alimente le filtre US38) -->
+    <div class="field">
+      <label for="ville">Ville <span class="opt">(optionnel)</span></label>
+      <input
+        id="ville"
+        name="ville"
+        type="text"
+        placeholder="Ex : Tunis"
+        [(ngModel)]="ville"
+      >
+    </div>
+
     <!-- Description -->
     <div class="field">
       <label for="description">Description <span class="req">*</span></label>

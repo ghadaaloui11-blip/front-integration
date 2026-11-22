@@ -2,10 +2,9 @@ import { Component, ElementRef, OnDestroy, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SignalementService } from '../../../../core/services/signalement.service';
+import { CATEGORIES_SIGNALEMENT } from '../../../../core/constants/categories';
 
 const TAILLE_PHOTO_MAX = 10 * 1024 * 1024;
-
-const CATEGORIES = ['Environnement', 'Infrastructure', 'Santé', 'Éducation', 'Social', 'Urgence', 'Autre'];
 
 @Component({
   selector: 'app-report',
@@ -18,6 +17,7 @@ export class CreateReportComponent implements OnDestroy {
   titre       = '';
   categorie   = 'Autre';
   description = '';
+  ville       = '';
   latitude    = '';
   longitude   = '';
   estAnonyme  = false;
@@ -27,7 +27,7 @@ export class CreateReportComponent implements OnDestroy {
   erreur  = '';
   envoi   = false;
 
-  categories = CATEGORIES;
+  categories = CATEGORIES_SIGNALEMENT;
 
   private photoInput = viewChild<ElementRef<HTMLInputElement>>('photoInput');
 
@@ -119,6 +119,7 @@ export class CreateReportComponent implements OnDestroy {
     formData.append('titre',       this.titre.trim());
     formData.append('categorie',   this.categorie);
     formData.append('description', this.description.trim());
+    if (this.ville.trim()) formData.append('ville', this.ville.trim());
     formData.append('est_anonyme', String(this.estAnonyme));
     if (this.latitude)    formData.append('latitude',  this.latitude);
     if (this.longitude)   formData.append('longitude', this.longitude);
@@ -144,6 +145,7 @@ export class CreateReportComponent implements OnDestroy {
     this.titre       = '';
     this.categorie   = 'Autre';
     this.description = '';
+    this.ville       = '';
     this.latitude    = '';
     this.longitude   = '';
     this.estAnonyme  = false;

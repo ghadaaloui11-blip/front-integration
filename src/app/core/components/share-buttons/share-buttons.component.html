@@ -1,0 +1,29 @@
+<div class="partage" aria-label="Partager">
+  <span class="label">Partager :</span>
+
+  <button type="button" class="btn" (click)="partagerNativement()" title="Partager">
+    📤 <span>Partager</span>
+  </button>
+  <a class="btn" [href]="liens.whatsapp" target="_blank" rel="noopener noreferrer" title="WhatsApp">
+    💬 <span>WhatsApp</span>
+  </a>
+  <a class="btn" [href]="liens.facebook" target="_blank" rel="noopener noreferrer" title="Facebook">
+    📘 <span>Facebook</span>
+  </a>
+  <a class="btn" [href]="liens.x" target="_blank" rel="noopener noreferrer" title="X">
+    🐦 <span>X</span>
+  </a>
+  <a class="btn" [href]="liens.linkedin" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+    💼 <span>LinkedIn</span>
+  </a>
+  <a class="btn" [href]="liens.email" title="E-mail">
+    ✉️ <span>E-mail</span>
+  </a>
+  <button type="button" class="btn" (click)="copier()" title="Copier le lien">
+    🔗 <span>Copier le lien</span>
+  </button>
+
+  @if (message()) {
+    <span class="message" role="status">{{ message() }}</span>
+  }
+</div>

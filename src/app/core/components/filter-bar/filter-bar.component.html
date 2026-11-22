@@ -1,0 +1,79 @@
+<div class="filter-bar" role="search" aria-label="Filtrer la liste">
+  @if (showSearch()) {
+    <input
+      type="search"
+      class="champ"
+      placeholder="Rechercher…"
+      aria-label="Rechercher"
+      [ngModel]="valeurs().search"
+      (ngModelChange)="maj('search', $event)"
+      (keyup.enter)="appliquer()"
+    >
+  }
+
+  @if (showVille()) {
+    <input
+      type="text"
+      class="champ"
+      placeholder="Ville"
+      aria-label="Ville"
+      [ngModel]="valeurs().ville"
+      (ngModelChange)="maj('ville', $event)"
+      (keyup.enter)="appliquer()"
+    >
+  }
+
+  @if (categories().length) {
+    <select
+      class="champ"
+      aria-label="Catégorie"
+      [ngModel]="valeurs().categorie"
+      (ngModelChange)="maj('categorie', $event)"
+    >
+      <option value="Toutes">Toutes les catégories</option>
+      @for (cat of categories(); track cat) {
+        <option [value]="cat">{{ cat }}</option>
+      }
+    </select>
+  }
+
+  @if (showStatut() && statuts().length) {
+    <select
+      class="champ"
+      aria-label="Statut"
+      [ngModel]="valeurs().statut"
+      (ngModelChange)="maj('statut', $event)"
+    >
+      <option value="">Tous les statuts</option>
+      @for (s of statuts(); track s.valeur) {
+        <option [value]="s.valeur">{{ s.label }}</option>
+      }
+    </select>
+  }
+
+  @if (showDates()) {
+    <label class="date">
+      <span>Du</span>
+      <input
+        type="date"
+        class="champ"
+        aria-label="Date de début"
+        [ngModel]="valeurs().date_debut"
+        (ngModelChange)="maj('date_debut', $event)"
+      >
+    </label>
+    <label class="date">
+      <span>Au</span>
+      <input
+        type="date"
+        class="champ"
+        aria-label="Date de fin"
+        [ngModel]="valeurs().date_fin"
+        (ngModelChange)="maj('date_fin', $event)"
+      >
+    </label>
+  }
+
+  <button type="button" class="btn-filtrer" (click)="appliquer()">Filtrer</button>
+  <button type="button" class="btn-reset" (click)="reinitialiser()">Réinitialiser</button>
+</div>

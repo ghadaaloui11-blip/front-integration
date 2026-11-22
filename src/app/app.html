@@ -17,6 +17,7 @@
         <a routerLink="/campagnes"           routerLinkActive="visitor-active" class="visitor-link">Campagnes</a>
         <a routerLink="/associations"         routerLinkActive="visitor-active" class="visitor-link">Associations</a>
         <a routerLink="/evenements"           routerLinkActive="visitor-active" class="visitor-link">Événements</a>
+        <a routerLink="/defis"                routerLinkActive="visitor-active" class="visitor-link">Défis solidaires</a>
         <a routerLink="/signalements-publics" routerLinkActive="visitor-active" class="visitor-link">Signalements</a>
       </nav>
 
@@ -51,6 +52,7 @@
         <a routerLink="/campagnes"           routerLinkActive="active">Campagnes</a>
         <a routerLink="/associations"         routerLinkActive="active">Associations</a>
         <a routerLink="/evenements"           routerLinkActive="active">Événements solidaires</a>
+        <a routerLink="/defis"                 routerLinkActive="active">Défis solidaires</a>
         <a routerLink="/signalements-publics" routerLinkActive="active">Signalements publics</a>
 
         @if (auth.getRole() === 'admin') {
@@ -71,9 +73,11 @@
           <a routerLink="/devenir-benevole"   routerLinkActive="active">Devenir bénévole</a>
           <a routerLink="/mes-dons"           routerLinkActive="active">Mes dons</a>
           <a routerLink="/dons-nature"        routerLinkActive="active">Dons en nature</a>
+          <a routerLink="/mes-defis"          routerLinkActive="active">Mes défis</a>
         }
 
         @if (auth.getRole()) {
+          <a routerLink="/mes-activites" routerLinkActive="active">Mes activités</a>
           <a routerLink="/profil" routerLinkActive="active">Mon profil</a>
         }
       </nav>

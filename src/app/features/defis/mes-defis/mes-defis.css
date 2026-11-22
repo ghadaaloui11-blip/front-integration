@@ -1,0 +1,16 @@
+.page { max-width: 720px; margin: 0 auto; padding: 24px 16px; }
+h1 { color: #0d6b52; margin-bottom: 4px; }
+.sous-titre, .info { color: #666; }
+.erreur { color: #c62828; }
+.liste { list-style: none; padding: 0; }
+.liste li { margin-bottom: 10px; }
+.liste a {
+  display: flex; align-items: center; gap: 12px;
+  background: #fff; border: 1px solid #e5e5e5; border-radius: 10px;
+  padding: 14px; text-decoration: none; color: inherit;
+}
+.liste a:hover { border-color: #0d6b52; }
+.icone { font-size: 24px; }
+.titre { flex: 1; font-weight: 600; }
+.statut { font-size: 12px; color: #0d6b52; }
+.prog { font-size: 13px; color: #666; }

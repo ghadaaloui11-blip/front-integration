@@ -1,0 +1,70 @@
+<div class="page">
+  <a routerLink="/defis" class="retour">&larr; Tous les défis</a>
+
+  @if (loading()) { <p class="info">Chargement…</p> }
+  @if (error() && !defi()) { <p class="erreur">{{ error() }}</p> }
+
+  @if (defi(); as defi) {
+    <div class="carte">
+      <div class="entete">
+        <span class="icone">{{ defi.icone }}</span>
+        <div>
+          @if (defi.categorie) { <span class="categorie">{{ defi.categorie }}</span> }
+          <h1>{{ defi.titre }}</h1>
+        </div>
+      </div>
+
+      <p class="description">{{ defi.description }}</p>
+
+      <div class="stats">
+        <span>🎯 Objectif : <strong>{{ defi.objectif }}</strong></span>
+        <span>🏆 Récompense : <strong>{{ defi.recompense_points }} points</strong></span>
+        <span>📋 Mode : {{ defi.mode === 'automatique' ? 'suivi automatique' : 'preuve photo' }}</span>
+      </div>
+
+      @if (error()) { <p class="erreur">{{ error() }}</p> }
+      @if (successMsg()) { <p class="succes">{{ successMsg() }}</p> }
+
+      @if (auth.getToken()) {
+        @if (participation(); as p) {
+          <div class="progression">
+            <div class="barre"><div class="remplissage" [style.width.%]="pourcentage()"></div></div>
+            <p>
+              Progression : {{ p.progression }} / {{ defi.objectif }}
+              <span class="statut">{{ libelleStatut(p.statut) }}</span>
+            </p>
+          </div>
+
+          @if (defi.mode === 'manuelle' && p.statut !== 'complete') {
+            <div class="preuve">
+              <h3>Déposer une preuve</h3>
+              <input #photoInput type="file" accept="image/*" aria-label="Photo de preuve" />
+              <textarea
+                [(ngModel)]="commentaire"
+                rows="3"
+                placeholder="Commentaire (optionnel)"
+              ></textarea>
+              <button type="button" (click)="soumettrePreuve()" [disabled]="submitting()">
+                {{ submitting() ? 'Envoi…' : 'Envoyer ma preuve' }}
+              </button>
+            </div>
+          }
+        } @else {
+          <button type="button" class="btn-rejoindre" (click)="rejoindre()" [disabled]="submitting()">
+            {{ submitting() ? 'Inscription…' : 'Rejoindre ce défi' }}
+          </button>
+        }
+      } @else {
+        <p class="info"><a routerLink="/login">Connectez-vous</a> pour participer à ce défi.</p>
+      }
+
+      <!-- US19 / T5.4 : partager son action -->
+      @if (shareContent(); as contenu) {
+        <div class="partage-action">
+          <h3>Partager mon action</h3>
+          <app-share-buttons [contenu]="contenu" />
+        </div>
+      }
+    </div>
+  }
+</div>
