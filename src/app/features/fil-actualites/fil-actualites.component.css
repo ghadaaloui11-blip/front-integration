@@ -1,0 +1,104 @@
+.newsfeed-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.newsfeed-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.newsfeed-header h1 {
+  color: var(--pastel-green-dark, #3B6B52);
+  margin-bottom: 0.5rem;
+}
+.subtitle {
+  color: var(--text-muted, #718096);
+}
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.feed-item {
+  border: 1px solid var(--border-color, #E2E8F0);
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: var(--card-bg, #FFFFFF);
+  position: relative;
+  border-left: 5px solid var(--pastel-green-main, #68B088);
+  box-shadow: 0 4px 12px rgba(104, 176, 136, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.feed-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(104, 176, 136, 0.14);
+}
+.feed-item.type-evenement {
+  border-left-color: var(--pastel-green-hover, #559B74);
+}
+.feed-item.type-signalement_resolu {
+  border-left-color: var(--pastel-pink-main, #F48FB1);
+}
+.feed-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--pastel-green-dark, #3B6B52);
+  background: var(--pastel-green-light, #D4EDDA);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+.type-signalement_resolu .feed-badge {
+  color: var(--pastel-pink-dark, #C2185B);
+  background: var(--pastel-pink-light, #FCE4EC);
+}
+.feed-meta {
+  font-size: 0.85rem;
+  color: var(--text-muted, #718096);
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+.feed-title {
+  font-size: 1.3rem;
+  margin: 0.2rem 0 0.8rem 0;
+}
+.feed-title a {
+  color: var(--text-main, #2D3748);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.feed-title a:hover {
+  color: var(--pastel-pink-dark, #C2185B);
+}
+.feed-desc {
+  color: var(--text-main, #2D3748);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+.feed-extra, .feed-location {
+  font-size: 0.85rem;
+  color: var(--pastel-green-dark, #3B6B52);
+  background: var(--pastel-green-subtle, #F0FDF4);
+  border: 1px solid var(--pastel-green-border, #A7F3D0);
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  display: inline-block;
+  margin-top: 0.25rem;
+  margin-right: 0.5rem;
+}
+.alert-error {
+  background: var(--pastel-pink-light, #FCE4EC);
+  color: var(--pastel-pink-dark, #C2185B);
+  border: 1px solid var(--pastel-pink-border, #F8BBD0);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+.empty-state, .loading-state {
+  text-align: center;
+  padding: 2.5rem;
+  color: var(--text-muted, #718096);
+}

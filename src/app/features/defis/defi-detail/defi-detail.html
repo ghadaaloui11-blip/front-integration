@@ -17,9 +17,9 @@
       <p class="description">{{ defi.description }}</p>
 
       <div class="stats">
-        <span>🎯 Objectif : <strong>{{ defi.objectif }}</strong></span>
-        <span>🏆 Récompense : <strong>{{ defi.recompense_points }} points</strong></span>
-        <span>📋 Mode : {{ defi.mode === 'automatique' ? 'suivi automatique' : 'preuve photo' }}</span>
+        <span><i class="bi bi-bullseye"></i> Objectif : <strong>{{ defi.objectif }}</strong></span>
+        <span><i class="bi bi-trophy-fill"></i> Récompense : <strong>{{ defi.recompense_points }} points</strong></span>
+        <span><i class="bi bi-clipboard-check-fill"></i> Mode : {{ defi.mode === 'automatique' ? 'suivi automatique' : 'preuve photo' }}</span>
       </div>
 
       @if (error()) { <p class="erreur">{{ error() }}</p> }

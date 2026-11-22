@@ -1,0 +1,64 @@
+<div class="newsfeed-container">
+  <div class="newsfeed-header">
+    <h1>Fil d'actualités</h1>
+    <p class="subtitle">Suivez les dernières actions, campagnes actives et réussites de la communauté.</p>
+  </div>
+
+  @if (erreur()) {
+    <div class="alert alert-error">{{ erreur() }}</div>
+  }
+
+  @if (chargement()) {
+    <div class="loading-state">Chargement du fil d'actualités...</div>
+  } @else if (items().length === 0) {
+    <div class="empty-state">
+      <p>Aucune actualité disponible pour le moment.</p>
+    </div>
+  } @else {
+    <div class="timeline">
+      @for (item of items(); track item.id + item.type) {
+        <article class="feed-item" [ngClass]="'type-' + item.type">
+          <div class="feed-badge">
+            @if (item.type === 'campagne') { Campagne }
+            @else if (item.type === 'evenement') { Événement }
+            @else { Succès Signalement }
+          </div>
+
+          <div class="feed-content">
+            <div class="feed-meta">
+              <span class="feed-date">{{ formatDate(item.date) }}</span>
+              @if (item.auteur) {
+                <span class="feed-author">Par {{ item.auteur }}</span>
+              }
+            </div>
+
+            <h2 class="feed-title">
+              @if (item.type === 'campagne') {
+                <a [routerLink]="['/campagnes', item.id]">{{ item.titre }}</a>
+              } @else if (item.type === 'evenement') {
+                <a [routerLink]="['/evenements', item.id]">{{ item.titre }}</a>
+              } @else {
+                {{ item.titre }}
+              }
+            </h2>
+
+            <p class="feed-desc">{{ item.description }}</p>
+
+            @if (item.type === 'campagne' && item.montant_objectif) {
+              <div class="feed-extra">
+                <span>Objectif : {{ item.montant_objectif }} TND</span>
+                @if (item.montant_collecte !== undefined) {
+                  <span>Collecté : {{ item.montant_collecte }} TND</span>
+                }
+              </div>
+            }
+
+            @if (item.ville) {
+              <div class="feed-location">Lieu : {{ item.ville }}</div>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  }
+</div>

@@ -1,35 +1,58 @@
 :root {
-  /* Pastel Greens */
-  --pastel-green-main: #68B088;
-  --pastel-green-hover: #559B74;
-  --pastel-green-light: #D4EDDA;
-  --pastel-green-subtle: #F0FDF4;
-  --pastel-green-border: #A7F3D0;
-  --pastel-green-dark: #3B6B52;
+  /* Global Typography */
+  --font-base: 'Times New Roman', Times, serif;
 
-  /* Pastel Pinks */
-  --pastel-pink-main: #F48FB1;
-  --pastel-pink-hover: #EC407A;
-  --pastel-pink-light: #FCE4EC;
-  --pastel-pink-subtle: #FFF5F7;
-  --pastel-pink-border: #F8BBD0;
-  --pastel-pink-dark: #C2185B;
+  /* Greens */
+  --green-forest: #1E8449;
+  --green-emerald: #27AE60;
+  --green-sage: #82D1A5;
+  --green-olive: #689F38;
+  --green-teal: #147A5E;
 
-  /* Neutrals */
-  --text-main: #2D3748;
-  --text-muted: #718096;
-  --bg-main: #FAF9F6;
+  /* Pinks */
+  --pink-blush: #F6B8C6;
+  --pink-rose: #F28CA6;
+  --pink-coral: #F06A7E;
+  --pink-mauve: #D87A96;
+
+  /* Neutrals & Surfaces */
+  --ink-charcoal: #3A3330;
+  --warm-cream: #F5EFE2;
+  --warm-cream-light: #FBF8F2;
+  --text-main: var(--ink-charcoal);
+  --text-muted: #6B635E;
+  --bg-main: #FBF8F2; /* Warm watercolor cream background */
   --card-bg: #FFFFFF;
-  --border-color: #E2E8F0;
+  --border-color: #E6E1D8; /* Warm organic border */
 
-  /* Statuts pastel */
-  --status-ok: #48BB78;
-  --status-pending: #ED8936;
-  --status-refused: #E53E3E;
+  /* Aliases to maintain global consistency */
+  --pastel-green-main: var(--green-emerald);
+  --pastel-green-hover: var(--green-forest);
+  --pastel-green-light: #EBF7F0;
+  --pastel-green-subtle: #F3FAF5;
+  --pastel-green-border: var(--green-sage);
+  --pastel-green-dark: var(--green-forest);
+
+  --pastel-pink-main: var(--pink-rose);
+  --pastel-pink-hover: var(--pink-coral);
+  --pastel-pink-light: #FDF0F3;
+  --pastel-pink-subtle: #FFF7F9;
+  --pastel-pink-border: var(--pink-blush);
+  --pastel-pink-dark: var(--pink-mauve);
+
+  /* Statuts */
+  --status-ok: var(--green-emerald);
+  --status-pending: var(--green-olive);
+  --status-refused: var(--pink-coral);
 }
 
-* {
+*,
+button,
+input,
+select,
+textarea {
   box-sizing: border-box;
+  font-family: inherit;
 }
 
 html,
@@ -38,9 +61,10 @@ body {
   padding: 0;
   width: 100%;
   min-height: 100vh;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-base);
   background-color: var(--bg-main);
   color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
 }
 
 app-root {
@@ -54,12 +78,12 @@ app-root {
 .inscription-container,
 .report-container {
   background: var(--card-bg);
-  padding: 32px;
-  border-radius: 16px;
-  border: 1px solid var(--pastel-pink-border);
-  box-shadow: 0 8px 24px rgba(244, 143, 177, 0.08);
+  padding: 36px 32px;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 12px 32px rgba(58, 51, 48, 0.06);
   width: 100%;
-  max-width: 460px;
+  max-width: 480px;
 }
 
 .auth-container,
@@ -71,9 +95,11 @@ app-root {
 .inscription-container h2,
 .report-container h2 {
   text-align: center;
-  color: var(--pastel-green-dark);
+  color: var(--green-forest);
   margin-bottom: 25px;
   font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .auth-container .form-group,
@@ -102,13 +128,14 @@ app-root {
 .report-container input,
 .report-container select,
 .report-container textarea {
-  padding: 11px 14px;
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
   font-size: 14px;
+  font-family: inherit;
   background: #ffffff;
   color: var(--text-main);
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
 .auth-container input:focus,
@@ -121,8 +148,8 @@ app-root {
 .report-container select:focus,
 .report-container textarea:focus {
   outline: none;
-  border-color: var(--pastel-pink-main);
-  box-shadow: 0 0 0 3px rgba(244, 143, 177, 0.25);
+  border-color: var(--green-emerald);
+  box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.2);
 }
 
 .auth-container button[type='submit'],
@@ -130,30 +157,33 @@ app-root {
 .report-container button[type='submit'] {
   width: 100%;
   padding: 13px;
-  background-color: var(--pastel-pink-main);
+  background-color: var(--green-forest);
   color: white;
   border: none;
-  border-radius: 10px;
-  font-size: 16px;
+  border-radius: 12px;
+  font-size: 15px;
   font-weight: 600;
+  font-family: inherit;
   cursor: pointer;
-  margin-top: 12px;
-  transition: all 0.2s;
+  margin-top: 14px;
+  box-shadow: 0 4px 14px rgba(30, 132, 73, 0.25);
+  transition: all 0.2s ease;
 }
 
 .auth-container button[type='submit']:hover:not(:disabled),
 .inscription-container button[type='submit']:hover:not(:disabled),
 .report-container button[type='submit']:hover:not(:disabled) {
-  background-color: var(--pastel-pink-hover);
-  box-shadow: 0 4px 12px rgba(236, 64, 122, 0.25);
+  background-color: var(--green-teal);
+  box-shadow: 0 6px 18px rgba(20, 122, 94, 0.32);
 }
 
 .auth-container button[type='submit']:disabled,
 .inscription-container button[type='submit']:disabled,
 .report-container button[type='submit']:disabled {
-  background-color: #f1f5f9;
+  background-color: #EDE8DF;
   color: var(--text-muted);
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .auth-container .error,
@@ -166,10 +196,10 @@ app-root {
 
 .report-container .success {
   background-color: var(--pastel-green-light);
-  color: var(--pastel-green-dark);
+  color: var(--green-forest);
   border: 1px solid var(--pastel-green-border);
-  padding: 10px;
-  border-radius: 8px;
+  padding: 12px;
+  border-radius: 10px;
   text-align: center;
   font-size: 14px;
   margin-top: 15px;
@@ -179,10 +209,10 @@ app-root {
 .inscription-container .error-global,
 .report-container .error-global {
   background-color: var(--pastel-pink-light);
-  color: var(--pastel-pink-dark);
+  color: var(--pink-coral);
   border: 1px solid var(--pastel-pink-border);
-  padding: 10px;
-  border-radius: 8px;
+  padding: 12px;
+  border-radius: 10px;
   text-align: center;
   font-size: 14px;
   margin-bottom: 15px;
@@ -200,7 +230,7 @@ app-root {
 .auth-container a,
 .inscription-container a,
 .report-container a {
-  color: var(--pastel-green-main);
+  color: var(--green-forest);
   text-decoration: none;
   font-weight: 600;
 }
@@ -208,7 +238,7 @@ app-root {
 .auth-container a:hover,
 .inscription-container a:hover,
 .report-container a:hover {
-  color: var(--pastel-pink-hover);
+  color: var(--pink-coral);
   text-decoration: underline;
 }
 

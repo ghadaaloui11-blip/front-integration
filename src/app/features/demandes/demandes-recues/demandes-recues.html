@@ -28,11 +28,11 @@
 
         <p class="description">{{ d.description }}</p>
 
-        <p class="detail">📍 {{ d.ville }}</p>
+        <p class="detail"><i class="bi bi-geo-alt-fill"></i> {{ d.ville }}</p>
         @if (d.telephone) {
-          <p class="detail">📞 {{ d.telephone }}</p>
+          <p class="detail"><i class="bi bi-telephone-fill"></i> {{ d.telephone }}</p>
         }
-        <p class="detail">🕒 {{ d.created_at | date: 'dd/MM/yyyy HH:mm' }}</p>
+        <p class="detail"><i class="bi bi-clock-fill"></i> {{ d.created_at | date: 'dd/MM/yyyy HH:mm' }}</p>
 
         @if (d.statut === 'recue') {
           <div class="actions">

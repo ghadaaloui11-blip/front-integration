@@ -6,9 +6,9 @@
   @if (statut()) {
     <div class="statut-card" [ngClass]="'statut-' + statut()!.statut_validation">
       <span class="statut-icon">
-        @if (statut()!.statut_validation === 'approuve') { ✅ }
-        @else if (statut()!.statut_validation === 'refuse') { ❌ }
-        @else { ⏳ }
+        @if (statut()!.statut_validation === 'approuve') { <i class="bi bi-check-circle-fill"></i> }
+        @else if (statut()!.statut_validation === 'refuse') { <i class="bi bi-x-circle-fill"></i> }
+        @else { <i class="bi bi-hourglass-split"></i> }
       </span>
       <div>
         <strong>Statut : {{ getStatutLabel(statut()!.statut_validation) }}</strong>

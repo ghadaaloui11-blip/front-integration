@@ -42,15 +42,15 @@ export class ActiviteService {
   /** Icône simple, sans dependance externe. */
   icone(type: string): string {
     const icones: Record<string, string> = {
-      don: '💶',
-      inscription_evenement_acceptee: '📅',
-      don_nature_collecte: '📦',
-      demande_aide: '🆘',
-      signalement: '📢',
-      benevolat: '🤝',
-      defi_complete: '🏆',
+      don: 'bi bi-cash-stack',
+      inscription_evenement_acceptee: 'bi bi-calendar-event',
+      don_nature_collecte: 'bi bi-box-seam',
+      demande_aide: 'bi bi-heart',
+      signalement: 'bi bi-megaphone',
+      benevolat: 'bi bi-people',
+      defi_complete: 'bi bi-trophy',
     };
-    return icones[type] ?? '•';
+    return icones[type] ?? 'bi bi-circle';
   }
 
   estAnonyme(activite: Activite): boolean {

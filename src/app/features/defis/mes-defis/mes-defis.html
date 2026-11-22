@@ -16,7 +16,7 @@
         @for (p of participations(); track p.id) {
           <li>
             <a [routerLink]="['/defis', p.defi_id]">
-              <span class="icone">{{ p.icone || '🎯' }}</span>
+              <span class="icone"><i class="bi bi-bullseye"></i></span>
               <span class="titre">{{ p.titre || ('Défi #' + p.defi_id) }}</span>
               <span class="statut">{{ libelleStatut(p.statut) }}</span>
               <span class="prog">{{ p.progression }} / {{ p.objectif || '?' }}</span>

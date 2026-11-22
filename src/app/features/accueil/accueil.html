@@ -2,9 +2,14 @@
 
   <!-- ── Navbar ── -->
   <header class="accueil-header">
-    <div class="nav-logo">🌿 MennaFina</div>
+    <div class="nav-logo">
+      <img src="logo-mennafina.jpg" alt="MennaFina Logo" class="brand-logo-img">
+      <span>MennaFina</span>
+    </div>
 
     <nav class="nav-links">
+      <a routerLink="/recherche"           class="nav-link"><i class="bi bi-search"></i> Recherche</a>
+      <a routerLink="/fil-actualites"      class="nav-link"><i class="bi bi-newspaper"></i> Actualités</a>
       <a routerLink="/campagnes"          class="nav-link">Campagnes</a>
       <a routerLink="/associations"        class="nav-link">Associations</a>
       <a routerLink="/evenements"          class="nav-link">Événements</a>
@@ -23,7 +28,7 @@
     <!-- HERO -->
     <section class="hero">
       <div class="hero-content">
-        <div class="hero-badge">♥ Plateforme de Solidarité</div>
+        <div class="hero-badge"><i class="bi bi-heart-fill"></i> Plateforme de Solidarité</div>
         <h1 class="hero-title">
           Ensemble,<br>
           <span class="hero-accent">construisons</span><br>
@@ -39,12 +44,8 @@
         </div>
       </div>
 
-      <div class="hero-visual" aria-hidden="true">
-        <div class="hero-circle"></div>
-        <div class="bubble bubble-1">🤝</div>
-        <div class="bubble bubble-2">💚</div>
-        <div class="bubble bubble-3">🌱</div>
-        <div class="bubble bubble-4">❤️</div>
+      <div class="hero-visual">
+        <img src="mennafina-image.jpg" alt="MennaFina Photo" class="hero-main-photo">
       </div>
     </section>
 
@@ -79,21 +80,21 @@
       </div>
       <div class="steps-grid">
         <div class="step-card">
-          <div class="step-icon">📝</div>
+          <div class="step-icon"><i class="bi bi-person-plus-fill"></i></div>
           <div class="step-num">01</div>
           <h3 class="step-title">Créez votre compte</h3>
           <p class="step-desc">Inscrivez-vous en tant que citoyen ou association. C'est gratuit et rapide.</p>
         </div>
-        <div class="step-arrow">→</div>
+        <div class="step-arrow"><i class="bi bi-arrow-right"></i></div>
         <div class="step-card">
-          <div class="step-icon">🔍</div>
+          <div class="step-icon"><i class="bi bi-search"></i></div>
           <div class="step-num">02</div>
           <h3 class="step-title">Explorez la plateforme</h3>
           <p class="step-desc">Consultez les campagnes, événements et signalements près de chez vous.</p>
         </div>
-        <div class="step-arrow">→</div>
+        <div class="step-arrow"><i class="bi bi-arrow-right"></i></div>
         <div class="step-card">
-          <div class="step-icon">🌟</div>
+          <div class="step-icon"><i class="bi bi-stars"></i></div>
           <div class="step-num">03</div>
           <h3 class="step-title">Agissez ensemble</h3>
           <p class="step-desc">Faites un don, participez à un événement ou signalez une situation urgente.</p>
@@ -108,7 +109,7 @@
           <h2 class="section-title">Campagnes de dons</h2>
           <p class="section-sub">Soutenez des causes qui vous tiennent à cœur.</p>
         </div>
-        <a routerLink="/campagnes" class="btn-see-all">Toutes les campagnes →</a>
+        <a routerLink="/campagnes" class="btn-see-all">Toutes les campagnes <i class="bi bi-arrow-right"></i></a>
       </div>
 
       @if (campagnes().length === 0) {
@@ -117,7 +118,7 @@
         <div class="cards-row">
           @for (c of campagnes(); track c.id) {
             <a class="card-preview camp-card" [routerLink]="['/campagnes', c.id]">
-              <div class="card-icon-header camp-header">💰</div>
+              <div class="card-icon-header camp-header"><i class="bi bi-cash-stack"></i></div>
               <div class="card-preview-body">
                 <h3 class="card-preview-title">{{ c.titre }}</h3>
                 <p class="card-preview-meta">{{ c.association_nom }}</p>
@@ -145,7 +146,7 @@
           <h2 class="section-title">Événements solidaires</h2>
           <p class="section-sub">Participez à des actions sur le terrain.</p>
         </div>
-        <a routerLink="/evenements" class="btn-see-all">Tous les événements →</a>
+        <a routerLink="/evenements" class="btn-see-all">Tous les événements <i class="bi bi-arrow-right"></i></a>
       </div>
 
       @if (evenements().length === 0) {
@@ -154,7 +155,7 @@
         <div class="cards-row">
           @for (e of evenements(); track e.id) {
             <a class="card-preview event-card" [routerLink]="['/evenements', e.id]">
-              <div class="card-icon-header event-header">📅</div>
+              <div class="card-icon-header event-header"><i class="bi bi-calendar-event"></i></div>
               <div class="card-preview-body">
                 <div class="card-tags">
                   <span class="tag-cat">{{ e.categorie }}</span>
@@ -165,8 +166,8 @@
                   }
                 </div>
                 <h3 class="card-preview-title">{{ e.titre }}</h3>
-                <p class="card-preview-meta">📍 {{ e.lieu }}, {{ e.ville }}</p>
-                <p class="card-preview-meta">🗓 {{ formatDate(e.date_evenement) }}</p>
+                <p class="card-preview-meta"><i class="bi bi-geo-alt"></i> {{ e.lieu }}, {{ e.ville }}</p>
+                <p class="card-preview-meta"><i class="bi bi-calendar3"></i> {{ formatDate(e.date_evenement) }}</p>
               </div>
             </a>
           }
@@ -181,7 +182,7 @@
           <h2 class="section-title">Signalements récents</h2>
           <p class="section-sub">Situations signalées par les citoyens.</p>
         </div>
-        <a routerLink="/signalements-publics" class="btn-see-all">Tous les signalements →</a>
+        <a routerLink="/signalements-publics" class="btn-see-all">Tous les signalements <i class="bi bi-arrow-right"></i></a>
       </div>
 
       @if (signalements().length === 0) {
@@ -190,7 +191,7 @@
         <div class="cards-row">
           @for (s of signalements(); track s.id) {
             <div class="card-preview signal-card">
-              <div class="card-icon-header signal-header">🚨</div>
+              <div class="card-icon-header signal-header"><i class="bi bi-exclamation-triangle-fill"></i></div>
               <div class="card-preview-body">
                 <div class="card-tags">
                   <span [class]="'tag-statut ' + classeStatut(s.statut)">{{ labelStatut(s.statut) }}</span>
@@ -200,7 +201,7 @@
                 </div>
                 <h3 class="card-preview-title">{{ s.titre || ('Signalement #' + s.id) }}</h3>
                 <p class="card-preview-desc">{{ s.description }}</p>
-                <p class="card-preview-meta">🗓 {{ formatDate(s.created_at || '') }}</p>
+                <p class="card-preview-meta"><i class="bi bi-calendar3"></i> {{ formatDate(s.created_at || '') }}</p>
               </div>
             </div>
           }
@@ -211,7 +212,7 @@
     <!-- CTA -->
     <section class="section-cta">
       <div class="cta-card">
-        <div class="cta-icon">🌍</div>
+        <div class="cta-icon"><i class="bi bi-globe-americas"></i></div>
         <h2 class="cta-title">Prêt à faire la différence ?</h2>
         <p class="cta-sub">
           Rejoignez des milliers de citoyens et d'associations qui agissent ensemble chaque jour.
@@ -229,7 +230,7 @@
   <footer class="accueil-footer">
     <div class="footer-content">
       <p>&copy; 2025 Plateforme MennaFina — Tous droits réservés.</p>
-      <p>Construire ensemble un monde plus solidaire 🌍💚</p>
+      <p>Construire ensemble un monde plus solidaire.</p>
     </div>
   </footer>
 

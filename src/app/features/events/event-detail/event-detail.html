@@ -20,9 +20,9 @@
     @if (ev.statut_mon_inscription) {
       <div class="registration-status-card" [class]="ev.statut_mon_inscription">
         <div class="status-icon">
-          @if (ev.statut_mon_inscription === 'accepte') { ✅ }
-          @else if (ev.statut_mon_inscription === 'refuse') { ❌ }
-          @else if (ev.statut_mon_inscription === 'en_attente') { ⏳ }
+          @if (ev.statut_mon_inscription === 'accepte') { <i class="bi bi-check-circle-fill"></i> }
+          @else if (ev.statut_mon_inscription === 'refuse') { <i class="bi bi-x-circle-fill"></i> }
+          @else if (ev.statut_mon_inscription === 'en_attente') { <i class="bi bi-hourglass-split"></i> }
         </div>
         <div class="status-content">
           <h4>
@@ -67,12 +67,12 @@
       }
 
       <div class="organizer-box">
-        <div class="organizer-avatar">🏢</div>
+        <div class="organizer-avatar"><i class="bi bi-building"></i></div>
         <div class="organizer-details">
           <span class="label">Organisé par</span>
           <span class="name">{{ ev.association_nom || 'Association partenaire' }}</span>
           @if (ev.association_email) {
-            <span class="contact">✉ {{ ev.association_email }}</span>
+            <span class="contact"><i class="bi bi-envelope"></i> {{ ev.association_email }}</span>
           }
         </div>
       </div>
@@ -81,7 +81,7 @@
 
       <div class="grid-details">
         <div class="info-block">
-          <span class="icon">📅</span>
+          <span class="icon"><i class="bi bi-calendar-event"></i></span>
           <div>
             <strong>Date &amp; Heure</strong>
             <p>{{ formatDate(ev.date_evenement) }}</p>
@@ -89,7 +89,7 @@
         </div>
 
         <div class="info-block">
-          <span class="icon">📍</span>
+          <span class="icon"><i class="bi bi-geo-alt"></i></span>
           <div>
             <strong>Lieu &amp; Ville</strong>
             <p>{{ ev.lieu }}, {{ ev.ville }}</p>
@@ -97,7 +97,7 @@
         </div>
 
         <div class="info-block">
-          <span class="icon">👥</span>
+          <span class="icon"><i class="bi bi-people"></i></span>
           <div>
             <strong>Participation</strong>
             <p>{{ ev.nb_inscrits_acceptes }} / {{ ev.places_disponibles }} bénévoles confirmés</p>

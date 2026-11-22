@@ -1,0 +1,84 @@
+<div class="recurring-donations-container">
+  <div class="page-header">
+    <div>
+      <h1>Mes Dons Récurrents</h1>
+      <p class="subtitle">Gérez vos contributions régulières et automatiques aux campagnes solidaires.</p>
+    </div>
+    <button class="btn-create" (click)="showForm.set(!showForm())">
+      {{ showForm() ? 'Fermer le formulaire' : '+ Nouveau don récurrent' }}
+    </button>
+  </div>
+
+  @if (succes()) {
+    <div class="alert alert-success">{{ succes() }}</div>
+  }
+  @if (erreur()) {
+    <div class="alert alert-error">{{ erreur() }}</div>
+  }
+
+  @if (showForm()) {
+    <div class="card form-card">
+      <h2>Programmer un don régulier</h2>
+      <form (ngSubmit)="creerDon()">
+        <div class="form-group">
+          <label>Choisir la campagne solidaire</label>
+          <select [(ngModel)]="campagneIdSelectionnee" name="campagne" required>
+            <option [ngValue]="null" disabled selected>-- Sélectionnez une campagne --</option>
+            @for (c of campagnes(); track c.id) {
+              <option [ngValue]="c.id">{{ c.titre }} ({{ c.association_nom || 'Association' }})</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Montant récurrent (TND)</label>
+            <input type="number" [(ngModel)]="montant" name="montant" min="1" required />
+          </div>
+
+          <div class="form-group">
+            <label>Périodicité</label>
+            <select [(ngModel)]="periodicite" name="periodicite">
+              <option value="mensuel">Chaque mois (Mensuel)</option>
+              <option value="trimestriel">Tous les 3 mois (Trimestriel)</option>
+              <option value="annuel">Chaque année (Annuel)</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Valider et activer</button>
+      </form>
+    </div>
+  }
+
+  @if (chargement()) {
+    <div class="loading-state">Chargement de vos engagements...</div>
+  } @else if (dons().length === 0) {
+    <div class="empty-state">
+      <p>Vous n'avez aucun don récurrent programmé.</p>
+    </div>
+  } @else {
+    <div class="grid-dons">
+      @for (d of dons(); track d.id) {
+        <div class="card don-card" [class.inactive]="!d.actif">
+          <div class="don-header">
+            <h3>{{ d.campagne_titre }}</h3>
+            <span class="badge" [class.badge-active]="d.actif" [class.badge-inactive]="!d.actif">
+              {{ d.actif ? 'Actif' : 'Annulé' }}
+            </span>
+          </div>
+
+          <div class="don-details">
+            <div class="amount">{{ d.montant }} TND</div>
+            <div class="frequency">Fréquence : {{ d.periodicite }}</div>
+            <div class="date-info">Date début : {{ d.date_debut }}</div>
+          </div>
+
+          @if (d.actif) {
+            <button class="btn-cancel" (click)="annuler(d.id)">Arrêter les prélèvements</button>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

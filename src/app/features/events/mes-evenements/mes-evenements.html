@@ -66,7 +66,7 @@
                 class="btn-action participants"
                 (click)="ouvrirParticipants(ev)"
               >
-                👥 Gérer les candidats ({{ ev.nb_inscrits_attente }})
+                <i class="bi bi-people-fill"></i> Gérer les candidats ({{ ev.nb_inscrits_attente }})
               </button>
               @if (ev.statut === 'publie') {
                 <button
@@ -74,7 +74,7 @@
                   title="Annuler l'événement"
                   (click)="annulerEvenement(ev)"
                 >
-                  ✕
+                  <i class="bi bi-x-circle"></i>
                 </button>
               }
             </td>
@@ -96,7 +96,7 @@
             Pour l'événement : <strong>{{ currentEvent.titre }}</strong> ({{ currentEvent.nb_inscrits_acceptes }} / {{ currentEvent.places_disponibles }} places)
           </p>
         </div>
-        <button class="btn-close" (click)="fermerParticipants()">✕</button>
+        <button class="btn-close" (click)="fermerParticipants()"><i class="bi bi-x-lg"></i></button>
       </div>
 
       <div class="modal-body">
@@ -116,9 +116,9 @@
                     <span class="badge-status" [class]="p.statut">{{ p.statut }}</span>
                   </div>
                   <div class="participant-contact">
-                    <span>✉ {{ p.email }}</span>
+                    <span><i class="bi bi-envelope"></i> {{ p.email }}</span>
                     @if (p.telephone) {
-                      <span>📞 {{ p.telephone }}</span>
+                      <span><i class="bi bi-telephone"></i> {{ p.telephone }}</span>
                     }
                     <span class="date-ins">Inscrit le : {{ formatDate(p.date_inscription) }}</span>
                   </div>
@@ -137,14 +137,14 @@
                       [disabled]="participantActionLoading() === p.inscription_id || currentEvent.places_restantes <= 0"
                       (click)="changerStatutParticipant(p.inscription_id, 'accepte')"
                     >
-                      ✓ Accepter
+                      <i class="bi bi-check-lg"></i> Accepter
                     </button>
                     <button
                       class="btn-reject"
                       [disabled]="participantActionLoading() === p.inscription_id"
                       (click)="changerStatutParticipant(p.inscription_id, 'refuse')"
                     >
-                      ✕ Refuser
+                      <i class="bi bi-x-lg"></i> Refuser
                     </button>
                   } @else if (p.statut === 'accepte') {
                     <button
@@ -152,7 +152,7 @@
                       [disabled]="participantActionLoading() === p.inscription_id"
                       (click)="changerStatutParticipant(p.inscription_id, 'refuse')"
                     >
-                      ✕ Rétrograder en refusé
+                      <i class="bi bi-arrow-down-circle"></i> Rétrograder en refusé
                     </button>
                   } @else if (p.statut === 'refuse') {
                     <button
@@ -160,7 +160,7 @@
                       [disabled]="participantActionLoading() === p.inscription_id || currentEvent.places_restantes <= 0"
                       (click)="changerStatutParticipant(p.inscription_id, 'accepte')"
                     >
-                      ✓ Repêcher (Accepter)
+                      <i class="bi bi-check-circle"></i> Repêcher (Accepter)
                     </button>
                   }
                 </div>

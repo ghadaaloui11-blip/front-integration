@@ -1,0 +1,72 @@
+<div class="moderation-container">
+  <h1>Modération des Signalements</h1>
+  <p class="subtitle">Espace d'administration pour valider, mettre à jour ou supprimer des signalements signalés par les utilisateurs.</p>
+
+  <div class="filter-bar">
+    <button (click)="filtrerParStatut('')" [class.active]="statutFiltre() === ''">Tous</button>
+    <button (click)="filtrerParStatut('recu')" [class.active]="statutFiltre() === 'recu'">Reçus</button>
+    <button (click)="filtrerParStatut('en_cours')" [class.active]="statutFiltre() === 'en_cours'">En cours</button>
+    <button (click)="filtrerParStatut('resolu')" [class.active]="statutFiltre() === 'resolu'">Résolus</button>
+  </div>
+
+  @if (succes()) {
+    <div class="alert alert-success">{{ succes() }}</div>
+  }
+  @if (erreur()) {
+    <div class="alert alert-error">{{ erreur() }}</div>
+  }
+
+  @if (chargement()) {
+    <div class="loading-state">Chargement des signalements...</div>
+  } @else if (signalements().length === 0) {
+    <div class="empty-state">Aucun signalement trouvé pour ce filtre.</div>
+  } @else {
+    <div class="table-responsive">
+      <table class="moderation-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Catégorie</th>
+            <th>Auteur</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (s of signalements(); track s.id) {
+            <tr>
+              <td>#{{ s.id }}</td>
+              <td>
+                <strong>{{ s.titre }}</strong>
+                <p class="table-desc">{{ s.description }}</p>
+              </td>
+              <td>{{ s.categorie }}</td>
+              <td>
+                @if (s.est_anonyme) {
+                  <em>Anonyme</em>
+                } @else {
+                  {{ s.citoyen_nom || 'Utilisateur' }}
+                }
+              </td>
+              <td>
+                <span class="status-badge" [ngClass]="'status-' + s.statut">{{ s.statut }}</span>
+              </td>
+              <td>
+                <div class="actions-group">
+                  <select (change)="changerStatut(s, $any($event.target).value)">
+                    <option value="" disabled selected>Changer statut</option>
+                    <option value="recu">Reçu</option>
+                    <option value="en_cours">En cours</option>
+                    <option value="resolu">Résolu</option>
+                  </select>
+                  <button class="btn-delete" (click)="supprimer(s.id)">Supprimer</button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

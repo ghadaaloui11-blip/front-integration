@@ -1,0 +1,124 @@
+<div class="search-page-container">
+  <div class="search-header">
+    <h1>Recherche Globale</h1>
+    <p class="subtitle">Trouvez des campagnes, des signalements, des événements et des associations.</p>
+
+    <form (ngSubmit)="lancerRecherche()" class="search-form">
+      <input
+        type="text"
+        [(ngModel)]="terme"
+        name="search"
+        placeholder="Rechercher par mot-clé (ex: aide, santé, Tunis)..."
+        class="search-input"
+      />
+      <button type="submit" class="btn-search" [disabled]="chargement()">
+        {{ chargement() ? 'Recherche en cours...' : 'Rechercher' }}
+      </button>
+    </form>
+
+    <div class="filter-tabs">
+      <button type="button" [class.active]="typeActif() === ''" (click)="changerType('')">Tous</button>
+      <button type="button" [class.active]="typeActif() === 'campagne'" (click)="changerType('campagne')">Campagnes</button>
+      <button type="button" [class.active]="typeActif() === 'signalement'" (click)="changerType('signalement')">Signalements</button>
+      <button type="button" [class.active]="typeActif() === 'evenement'" (click)="changerType('evenement')">Événements</button>
+      <button type="button" [class.active]="typeActif() === 'association'" (click)="changerType('association')">Associations</button>
+    </div>
+  </div>
+
+  @if (erreur()) {
+    <div class="alert alert-error">{{ erreur() }}</div>
+  }
+
+  @if (chargement()) {
+    <div class="loading-state">Recherche en cours...</div>
+  } @else if (resultats()) {
+    <div class="search-summary">
+      <span>{{ totalResultats() }} résultat(s) trouvé(s)</span>
+    </div>
+
+    @if (totalResultats() === 0) {
+      <div class="empty-state">
+        <p>Aucun résultat ne correspond à votre recherche.</p>
+      </div>
+    }
+
+    <!-- Campagnes -->
+    @if (resultats()?.campagnes?.length) {
+      <section class="result-section">
+        <h2>Campagnes ({{ resultats()?.campagnes?.length }})</h2>
+        <div class="grid-cards">
+          @for (item of resultats()?.campagnes; track item.id) {
+            <div class="card">
+              <div class="badge badge-campagne">Campagne</div>
+              <h3><a [routerLink]="['/campagnes', item.id]">{{ item.titre }}</a></h3>
+              <p class="desc">{{ item.description }}</p>
+              <div class="card-meta">
+                @if (item.ville) { <span>Ville: {{ item.ville }}</span> }
+                @if (item.categorie) { <span>Catégorie: {{ item.categorie }}</span> }
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Signalements -->
+    @if (resultats()?.signalements?.length) {
+      <section class="result-section">
+        <h2>Signalements ({{ resultats()?.signalements?.length }})</h2>
+        <div class="grid-cards">
+          @for (item of resultats()?.signalements; track item.id) {
+            <div class="card">
+              <div class="badge badge-signalement">Signalement</div>
+              <h3>{{ item.titre }}</h3>
+              <p class="desc">{{ item.description }}</p>
+              <div class="card-meta">
+                <span class="status-pill">{{ item.statut }}</span>
+                @if (item.ville) { <span>Ville: {{ item.ville }}</span> }
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Evenements -->
+    @if (resultats()?.evenements?.length) {
+      <section class="result-section">
+        <h2>Événements ({{ resultats()?.evenements?.length }})</h2>
+        <div class="grid-cards">
+          @for (item of resultats()?.evenements; track item.id) {
+            <div class="card">
+              <div class="badge badge-evenement">Événement</div>
+              <h3><a [routerLink]="['/evenements', item.id]">{{ item.titre }}</a></h3>
+              <p class="desc">{{ item.description }}</p>
+              <div class="card-meta">
+                @if (item.ville) { <span>Ville: {{ item.ville }}</span> }
+                @if (item.categorie) { <span>Catégorie: {{ item.categorie }}</span> }
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Associations -->
+    @if (resultats()?.associations?.length) {
+      <section class="result-section">
+        <h2>Associations ({{ resultats()?.associations?.length }})</h2>
+        <div class="grid-cards">
+          @for (item of resultats()?.associations; track item.id) {
+            <div class="card">
+              <div class="badge badge-association">Association</div>
+              <h3>{{ item.titre }}</h3>
+              <p class="desc">{{ item.description }}</p>
+              <div class="card-meta">
+                @if (item.ville) { <span>Ville: {{ item.ville }}</span> }
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+  }
+</div>

@@ -200,6 +200,33 @@ export const routes: Routes = [
       import('./features/defis/defi-detail/defi-detail').then(m => m.DefiDetailComponent),
   },
 
+  // US20 : Recherche globale
+  {
+    path: 'recherche',
+    loadComponent: () =>
+      import('./features/recherche/recherche.component').then(m => m.RechercheComponent),
+  },
+  // US25 : Fil d'actualités
+  {
+    path: 'fil-actualites',
+    loadComponent: () =>
+      import('./features/fil-actualites/fil-actualites.component').then(m => m.FilActualitesComponent),
+  },
+  // US15 : Dons récurrents (citoyen)
+  {
+    path: 'mes-dons-recurrents',
+    canActivate: [citoyenGuard],
+    loadComponent: () =>
+      import('./features/campagnes/mes-dons-recurrents/mes-dons-recurrents.component').then(m => m.MesDonsRecurrentsComponent),
+  },
+  // US23 : Modération des signalements (admin)
+  {
+    path: 'admin/moderation',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./features/admin/moderation/moderation.component').then(m => m.ModerationComponent),
+  },
+
   { path: '', redirectTo: 'accueil', pathMatch: 'full' },
 
   // Page d'accueil publique

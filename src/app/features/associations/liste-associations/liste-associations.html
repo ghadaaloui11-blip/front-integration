@@ -28,10 +28,10 @@
           <p class="badge">{{ a.categorie }}</p>
         }
         @if (a.ville) {
-          <p>🏙️ {{ a.ville }}</p>
+          <p><i class="bi bi-building"></i> {{ a.ville }}</p>
         }
         @if (a.adresse) {
-          <p>📍 {{ a.adresse }}</p>
+          <p><i class="bi bi-geo-alt-fill"></i> {{ a.adresse }}</p>
         }
       </div>
     }

@@ -69,7 +69,7 @@
   <div class="state-msg">Chargement...</div>
 } @else if (dons().length === 0 && !showForm()) {
   <div class="empty-state">
-    <div class="empty-icon">📦</div>
+    <div class="empty-icon"><i class="bi bi-box-seam-fill"></i></div>
     <h3>Aucun don proposé pour le moment</h3>
     <p>Proposez des articles dont vous n'avez plus besoin à des associations qui en ont besoin.</p>
     <button class="btn-main" (click)="ouvrirFormulaire()">Proposer mon premier don</button>
@@ -81,13 +81,13 @@
       <div class="don-card">
         <div class="don-top">
           <div class="don-left">
-            <div class="don-type-icon">📦</div>
+            <div class="don-type-icon"><i class="bi bi-box-seam-fill"></i></div>
             <div class="don-info">
               <span class="don-type">{{ don.type_don }}</span>
               @if (don.quantite) {
                 <span class="don-quantite">{{ don.quantite }}</span>
               }
-              <span class="don-ville">📍 {{ don.ville }}</span>
+              <span class="don-ville"><i class="bi bi-geo-alt"></i> {{ don.ville }}</span>
               <span class="don-date">{{ formatDate(don.created_at) }}</span>
             </div>
           </div>
@@ -103,12 +103,12 @@
 
         @if (don.statut === 'accepte' && (don.date_collecte || don.lieu_collecte || don.nom_association)) {
           <div class="collecte-info">
-            <strong>✅ Accepté par {{ don.nom_association }}</strong>
+            <strong><i class="bi bi-check-circle-fill"></i> Accepté par {{ don.nom_association }}</strong>
             @if (don.date_collecte) {
-              <span>🗓 Collecte le {{ formatDate(don.date_collecte) }}</span>
+              <span><i class="bi bi-calendar3"></i> Collecte le {{ formatDate(don.date_collecte) }}</span>
             }
             @if (don.lieu_collecte) {
-              <span>📍 {{ don.lieu_collecte }}</span>
+              <span><i class="bi bi-geo-alt"></i> {{ don.lieu_collecte }}</span>
             }
             @if (don.commentaire) {
               <span class="don-message">"{{ don.commentaire }}"</span>

@@ -1,6 +1,6 @@
 <div class="nc">
   <button class="nc-bell" (click)="toggle()">
-    <span class="nc-icon">🔔</span>
+    <span class="nc-icon"><i class="bi bi-bell-fill"></i></span>
     <span class="nc-text">Notifications</span>
     @if (service.nonLues() > 0) {
       <span class="nc-badge">{{ service.nonLues() }}</span>

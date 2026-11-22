@@ -27,7 +27,7 @@
           @if (c.categorie || c.ville) {
             <div class="card-meta">
               @if (c.categorie) { <span class="badge">{{ c.categorie }}</span> }
-              @if (c.ville) { <span class="badge">📍 {{ c.ville }}</span> }
+              @if (c.ville) { <span class="badge"><i class="bi bi-geo-alt"></i> {{ c.ville }}</span> }
             </div>
           }
 
