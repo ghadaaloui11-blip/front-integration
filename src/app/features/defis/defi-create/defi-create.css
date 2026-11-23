@@ -1,0 +1,4 @@
+.page { max-width: 800px; margin: 0 auto; padding: 20px; }
+.retour { display: inline-block; margin-bottom: 12px; color: var(--pastel-green-main); text-decoration: none; }
+.erreur { color: #e74c3c; }
+.succes { color: #27ae60; }

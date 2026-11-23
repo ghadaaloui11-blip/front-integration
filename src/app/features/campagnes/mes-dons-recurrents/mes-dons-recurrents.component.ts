@@ -1,14 +1,13 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { DonsRecurrentsService, DonRecurrent } from '../../../core/services/dons-recurrents.service';
 import { CampagneService, Campagne } from '../../../core/services/campagne.service';
 
 @Component({
   selector: 'app-mes-dons-recurrents',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   templateUrl: './mes-dons-recurrents.component.html',
   styleUrl: './mes-dons-recurrents.component.css'
 })

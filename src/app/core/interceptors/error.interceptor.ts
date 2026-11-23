@@ -74,12 +74,16 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       }
 
       // Afficher l'erreur dans la console pour le débogage
-      console.error('HTTP Error:', {
-        url: req.url,
-        status: error.status,
-        message: errorMessage,
-        error: error.error
-      });
+      const estBenevoleNonInscrit =
+        error.status === 404 && req.url.includes('/benevoles/me');
+      if (!estBenevoleNonInscrit) {
+        console.error('HTTP Error:', {
+          url: req.url,
+          status: error.status,
+          message: errorMessage,
+          error: error.error
+        });
+      }
 
       // Ne pas rediriger si c'est une erreur de validation (pour garder l'utilisateur sur la page)
       if (!shouldRedirect && errorType !== 'validation') {

@@ -33,13 +33,24 @@ export class NotificationService {
     // Créer un élément de notification dans le DOM
     const notificationElement = document.createElement('div');
     notificationElement.className = `notification notification-${type}`;
-    notificationElement.innerHTML = `
-      <div class="notification-content">
-        <span class="notification-icon">${this.getIcon(type)}</span>
-        <span class="notification-message">${message}</span>
-        <button class="notification-close">&times;</button>
-      </div>
-    `;
+
+    const content = document.createElement('div');
+    content.className = 'notification-content';
+
+    const icon = document.createElement('span');
+    icon.className = 'notification-icon';
+    icon.textContent = this.getIcon(type);
+
+    const msg = document.createElement('span');
+    msg.className = 'notification-message';
+    msg.textContent = message;
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'notification-close';
+    closeBtn.textContent = '\u00D7';
+
+    content.append(icon, msg, closeBtn);
+    notificationElement.appendChild(content);
 
     // Ajouter au DOM
     document.body.appendChild(notificationElement);
@@ -50,8 +61,8 @@ export class NotificationService {
     }, 10);
 
     // Gérer la fermeture
-    const closeBtn = notificationElement.querySelector('.notification-close');
-    closeBtn?.addEventListener('click', () => this.remove(notificationElement, notification.id));
+    const closeButton = notificationElement.querySelector('.notification-close');
+    closeButton?.addEventListener('click', () => this.remove(notificationElement, notification.id));
 
     // Auto-suppression après la durée
     if (duration > 0) {
@@ -103,112 +114,3 @@ export class NotificationService {
     }
   }
 }
-
-// Composant de notification pour Angular (si on veut le faire en composant Angular)
-// @Component({
-//   selector: 'app-notification',
-//   template: `
-//     <div class="notification notification-{{ type }}" *ngIf="visible">
-//       <div class="notification-content">
-//         <span class="notification-icon">{{ getIcon(type) }}</span>
-//         <span class="notification-message">{{ message }}</span>
-//         <button class="notification-close" (click)="close()">&times;</button>
-//       </div>
-//     </div>
-//   `,
-//   styles: [`
-//     .notification {
-//       position: fixed;
-//       top: 20px;
-//       right: 20px;
-//       padding: 16px 20px;
-//       border-radius: 8px;
-//       color: white;
-//       font-weight: 500;
-//       z-index: 10000;
-//       opacity: 0;
-//       transform: translateX(100%);
-//       transition: all 0.3s ease;
-//       max-width: 400px;
-//       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-//     }
-     
-//     .notification-show {
-//       opacity: 1;
-//       transform: translateX(0);
-//     }
-     
-//     .notification-content {
-//       display: flex;
-//       align-items: center;
-//       gap: 12px;
-//     }
-     
-//     .notification-icon {
-//       font-size: 18px;
-//       font-weight: bold;
-//     }
-     
-//     .notification-message {
-//       flex: 1;
-//     }
-     
-//     .notification-close {
-//       background: none;
-//       border: none;
-//       color: white;
-//       font-size: 18px;
-//       cursor: pointer;
-//       padding: 0;
-//       margin-left: 8px;
-//     }
-     
-//     .notification-success {
-//       background: #10b981;
-//     }
-     
-//     .notification-error {
-//       background: #ef4444;
-//     }
-     
-//     .notification-warning {
-//       background: #f59e0b;
-//     }
-     
-//     .notification-info {
-//       background: #3b82f6;
-//     }
-//   `]
-// })
-// export class NotificationComponent {
-//   @Input() type: NotificationType = 'info';
-//   @Input() message = '';
-//   @Input() duration = 5000;
-//   visible = true;
-
-//   private timeoutId: any;
-
-//   ngOnInit() {
-//     if (this.duration > 0) {
-//       this.timeoutId = setTimeout(() => this.close(), this.duration);
-//     }
-//   }
-
-//   close() {
-//     this.visible = false;
-//     clearTimeout(this.timeoutId);
-//     setTimeout(() => {
-//       // Notifie le parent de supprimer ce composant
-//     }, 300);
-//   }
-
-//   getIcon(type: NotificationType): string {
-//     switch (type) {
-//       case 'success': return '✓';
-//       case 'error': return '✕';
-//       case 'warning': return '⚠';
-//       case 'info': return 'i';
-//       default: return '•';
-//     }
-//   }
-// }

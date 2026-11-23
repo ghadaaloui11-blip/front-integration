@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './edit-campaign.component.html',
-  styleUrls: ['./edit-campaign.component.css']
+  styleUrls: ['./edit-campaign.component.css', '../../../core/styles/form-base.css']
 })
 export class EditCampaignComponent implements OnInit {
   campaignId!: number;

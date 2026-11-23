@@ -184,6 +184,12 @@ export const routes: Routes = [
   // US26 : catalog des defis (public) et mes participations (citoyen).
   // 'mes-defis' DOIT rester avant 'defis/:id' pour ne pas etre capture comme id.
   {
+    path: 'defis/nouveau',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./features/defis/defi-create/defi-create').then(m => m.DefiCreateComponent),
+  },
+  {
     path: 'defis',
     loadComponent: () =>
       import('./features/defis/defi-list/defi-list').then(m => m.DefiListComponent),

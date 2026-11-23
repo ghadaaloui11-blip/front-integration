@@ -1,0 +1,84 @@
+<div class="page">
+  <a routerLink="/defis" class="retour">&larr; Tous les défis</a>
+  <h1>Créer un défi solidaire</h1>
+
+  @if (error()) { <p class="erreur">{{ error() }}</p> }
+  @if (success()) { <p class="succes">{{ success() }}</p> }
+
+  <form class="form-container" (ngSubmit)="enregistrer()">
+    <div class="form-group">
+      <label>Titre *</label>
+      <input type="text" [(ngModel)]="titre" name="titre" required minlength="3" />
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <textarea [(ngModel)]="description" name="description" rows="3"></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Catégorie</label>
+        <input type="text" [(ngModel)]="categorie" name="categorie" />
+      </div>
+      <div class="form-group">
+        <label>Icône</label>
+        <input type="text" [(ngModel)]="icone" name="icone" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Mode *</label>
+        <select [(ngModel)]="mode" name="mode">
+          @for (m of modes; track m.value) {
+            <option [value]="m.value">{{ m.label }}</option>
+          }
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Statut</label>
+        <select [(ngModel)]="statut" name="statut">
+          @for (s of statuts; track s.value) {
+            <option [value]="s.value">{{ s.label }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    @if (typeActiviteRequis) {
+      <div class="form-group">
+        <label>Type d’activité suivi *</label>
+        <input type="text" [(ngModel)]="type_activite" name="type_activite" required />
+      </div>
+    }
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Objectif *</label>
+        <input type="number" [(ngModel)]="objectif" name="objectif" min="1" required />
+      </div>
+      <div class="form-group">
+        <label>Récompense (points)</label>
+        <input type="number" [(ngModel)]="recompense_points" name="recompense_points" min="0" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Date de début</label>
+        <input type="date" [(ngModel)]="date_debut" name="date_debut" />
+      </div>
+      <div class="form-group">
+        <label>Date de fin</label>
+        <input type="date" [(ngModel)]="date_fin" name="date_fin" />
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="envoi()">
+        {{ envoi() ? 'Création…' : 'Créer le défi' }}
+      </button>
+    </div>
+  </form>
+</div>

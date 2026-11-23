@@ -48,6 +48,10 @@ export class DefiService {
   private http = inject(HttpClient);
   private api = `${inject(API_BASE)}/api/defis`;
 
+  creer(defi: Partial<Defi> & { titre: string; mode: 'automatique' | 'manuelle'; objectif: number; type_activite?: string | null }): Observable<Defi> {
+    return this.http.post<Defi>(this.api, defi);
+  }
+
   lister(filtres: FiltresDefi = {}): Observable<Defi[]> {
     let params = new HttpParams();
     if (filtres.categorie && filtres.categorie !== 'Toutes') {

@@ -10,7 +10,7 @@ import { CATEGORIES_SIGNALEMENT } from '../../../core/constants/categories';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './edit-report.component.html',
-  styleUrls: ['./edit-report.component.css']
+  styleUrls: ['./edit-report.component.css', '../../../core/styles/form-base.css']
 })
 export class EditReportComponent implements OnInit {
   readonly categories = CATEGORIES_SIGNALEMENT;
