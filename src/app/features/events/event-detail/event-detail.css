@@ -149,6 +149,15 @@
   margin: 0 0 18px 0;
 }
 
+.signaler-abuse {
+  display: inline-block;
+  margin: -8px 0 16px;
+  color: #b3261e;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .organizer-box {
   display: flex;
   align-items: center;

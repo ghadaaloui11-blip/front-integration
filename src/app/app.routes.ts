@@ -227,6 +227,35 @@ export const routes: Routes = [
       import('./features/admin/moderation/moderation.component').then(m => m.ModerationComponent),
   },
 
+  // US30 : signalement d'un contenu abusif + suivi par le signalant
+  {
+    path: 'signaler-abuse',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/abuse/signaler-abuse/signaler-abuse').then(m => m.SignalerAbuseComponent),
+  },
+  {
+    path: 'mes-signalisations-abuse',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/abuse/mes-signalisations-abuse/mes-signalisations-abuse').then(m => m.MesSignalisationsAbuseComponent),
+  },
+
+  // US31 / US32 : examen et suppression des contenus abusifs (admin)
+  {
+    path: 'admin/signalements-abuse',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./features/admin/abusifs/admin-abusifs').then(m => m.AdminAbusifsComponent),
+  },
+
+  // US36 : carte interactive des signalements géolocalisés (public)
+  {
+    path: 'signalements-carte',
+    loadComponent: () =>
+      import('./features/reports/carte-signalements/carte-signalements').then(m => m.CarteSignalementsComponent),
+  },
+
   { path: '', redirectTo: 'accueil', pathMatch: 'full' },
 
   // Page d'accueil publique

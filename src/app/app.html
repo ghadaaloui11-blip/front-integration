@@ -24,6 +24,7 @@
         <a routerLink="/evenements"           routerLinkActive="visitor-active" class="visitor-link">Événements</a>
         <a routerLink="/defis"                routerLinkActive="visitor-active" class="visitor-link">Défis solidaires</a>
         <a routerLink="/signalements-publics" routerLinkActive="visitor-active" class="visitor-link">Signalements</a>
+        <a routerLink="/signalements-carte" routerLinkActive="visitor-active" class="visitor-link">Carte</a>
       </nav>
 
       <div class="visitor-actions">
@@ -64,11 +65,13 @@
         <a routerLink="/evenements"           routerLinkActive="active">Événements solidaires</a>
         <a routerLink="/defis"                 routerLinkActive="active">Défis solidaires</a>
         <a routerLink="/signalements-publics" routerLinkActive="active">Signalements publics</a>
+        <a routerLink="/signalements-carte"   routerLinkActive="active">Carte des signalements</a>
 
         @if (auth.getRole() === 'admin') {
-          <a routerLink="/admin/dashboard"    routerLinkActive="active">Tableau de bord</a>
-          <a routerLink="/admin/moderation"   routerLinkActive="active">Modération signalements</a>
-          <a routerLink="/admin/associations" routerLinkActive="active">Gestion associations</a>
+          <a routerLink="/admin/dashboard"         routerLinkActive="active">Tableau de bord</a>
+          <a routerLink="/admin/moderation"        routerLinkActive="active">Modération signalements</a>
+          <a routerLink="/admin/signalements-abuse" routerLinkActive="active">Contenus abusifs</a>
+          <a routerLink="/admin/associations"      routerLinkActive="active">Gestion associations</a>
         }
 
         @if (auth.getRole() === 'association') {
@@ -89,6 +92,8 @@
         }
 
         @if (auth.getRole()) {
+          <a routerLink="/signaler-abuse"           routerLinkActive="active">Signaler un contenu abusif</a>
+          <a routerLink="/mes-signalisations-abuse" routerLinkActive="active">Mes signalements de contenu</a>
           <a routerLink="/mes-activites" routerLinkActive="active">Mes activités</a>
           <a routerLink="/profil" routerLinkActive="active">Mon profil</a>
         }

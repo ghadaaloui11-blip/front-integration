@@ -124,6 +124,18 @@
   margin: 0 0 10px 0;
 }
 
+.detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.signaler {
+  color: #b3261e;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .detail-photo {
   max-width: 320px;
   max-height: 220px;

@@ -11,6 +11,11 @@
         <h1 class="title">{{ d.titre }}</h1>
         <p class="verified">{{ d.statut }}</p>
 
+        @if (auth.getRole()) {
+          <a class="signaler" [routerLink]="['/signaler-abuse']"
+             [queryParams]="{ type: 'campagne', id: campagneId }">Signaler un contenu abusif</a>
+        }
+
         <h3 class="section">Utilisation des fonds</h3>
 
         @for (u of d.utilisation_fonds; track u.id) {

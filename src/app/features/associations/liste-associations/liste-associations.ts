@@ -1,5 +1,6 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import {
   AssociationPubliqueService,
   AssociationPublique,
@@ -13,7 +14,7 @@ import { CATEGORIES_ASSOCIATION } from '../../../core/constants/categories';
 @Component({
   selector: 'app-liste-associations',
   standalone: true,
-  imports: [CommonModule, FilterBarComponent],
+  imports: [CommonModule, RouterLink, FilterBarComponent],
   templateUrl: './liste-associations.html',
   styleUrls: ['./liste-associations.css'],
 })

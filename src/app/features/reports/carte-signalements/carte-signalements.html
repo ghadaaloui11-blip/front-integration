@@ -1,0 +1,34 @@
+<div class="page">
+  <h1>Carte des signalements</h1>
+  <p class="intro">
+    Retrouvez les situations signalées par la communauté directement sur la carte.
+    Cliquez sur un repère ou sur un signalement de la liste pour l’afficher.
+  </p>
+
+  @if (erreur()) { <div class="alert alert-error">{{ erreur() }}</div> }
+  @if (chargement()) { <p class="info">Chargement des signalements...</p> }
+
+  <div class="layout">
+    <div #carte class="carte" aria-label="Carte interactive des signalements"></div>
+
+    <aside class="liste">
+      <h2>Signalements localisés ({{ localises().length }})</h2>
+      @for (s of localises(); track s.id) {
+        <button
+          type="button"
+          class="item"
+          [disabled]="!cartePret()"
+          (click)="focus(s)"
+        >
+          <strong>{{ titreDe(s) }}</strong>
+          <span class="statut">{{ labelStatut(s.statut) }}</span>
+          @if (s.ville) { <small>{{ s.ville }}</small> }
+        </button>
+      } @empty {
+        @if (!chargement()) {
+          <p class="info">Aucun signalement ne comporte de coordonnées pour le moment.</p>
+        }
+      }
+    </aside>
+  </div>
+</div>

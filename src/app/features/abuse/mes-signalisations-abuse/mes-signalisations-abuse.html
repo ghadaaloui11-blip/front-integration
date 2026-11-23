@@ -1,0 +1,31 @@
+<div class="page">
+  <div class="head">
+    <h1>Mes signalements de contenu</h1>
+    <a routerLink="/signaler-abuse" class="btn">Signaler un contenu</a>
+  </div>
+
+  @if (erreur()) { <div class="alert alert-error">{{ erreur() }}</div> }
+  @if (chargement()) { <p>Chargement...</p> }
+
+  @if (!chargement()) {
+    <div class="card">
+      @for (s of signalements(); track s.id) {
+        <div class="row">
+          <div class="row-head">
+            <strong>#{{ s.id }} — {{ s.titre_cible || 'Contenu supprimé' }}</strong>
+            <span class="badge" [class]="'badge-' + s.statut">{{ libelleStatut(s.statut) }}</span>
+          </div>
+          <p class="meta">
+            {{ libelleType(s.type_cible) }} · {{ libelleMotif(s.motif) }} ·
+            {{ formaterDate(s.date_creation) }}
+          </p>
+          @if (s.description) { <p class="desc">{{ s.description }}</p> }
+          @if (s.decision) { <p class="decision"><strong>Décision :</strong> {{ s.decision }}</p> }
+          @if (s.contenu_supprime) { <p class="supprime">Le contenu a été supprimé.</p> }
+        </div>
+      } @empty {
+        <p class="empty">Vous n’avez encore signalé aucun contenu.</p>
+      }
+    </div>
+  }
+</div>

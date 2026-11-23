@@ -47,6 +47,15 @@
   margin: 0 0 24px 0;
 }
 
+.signaler {
+  display: inline-block;
+  margin: -12px 0 18px;
+  color: #b3261e;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .section {
   color: #0f172a;
   font-size: 20px;

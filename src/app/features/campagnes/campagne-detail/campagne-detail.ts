@@ -13,7 +13,7 @@ import { AuthService } from '../../../core/services/auth.service';
 export class CampagneDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private service = inject(CampagneService);
-  private auth = inject(AuthService);
+  protected auth = inject(AuthService);
 
   data = signal<Avancement | null>(null);
   error = signal('');

@@ -1,4 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { API_BASE } from '../../../core/config/api-base.token';
 import {
   Signalement,
@@ -15,7 +16,7 @@ import { CATEGORIES_SIGNALEMENT } from '../../../core/constants/categories';
 /** US06 / US32 : consultation PUBLIQUE des signalements (sans authentification). */
 @Component({
   selector: 'app-public-reports',
-  imports: [FilterBarComponent],
+  imports: [FilterBarComponent, RouterLink],
   templateUrl: './public-reports.html',
   styleUrl: './public-reports.css',
 })

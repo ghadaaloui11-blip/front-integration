@@ -1,0 +1,19 @@
+.page { max-width: 900px; margin: 0 auto; }
+.head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+.btn { background: #0d6efd; color: #fff; text-decoration: none; padding: .6rem 1rem; border-radius: 8px; font-weight: 600; }
+.card { background: #fff; border: 1px solid #e3e7ec; border-radius: 12px; overflow: hidden; }
+.row { padding: 1rem 1.2rem; border-bottom: 1px solid #eef1f4; }
+.row:last-child { border-bottom: 0; }
+.row-head { display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
+.meta { color: #6c757d; margin: .35rem 0 0; font-size: .9rem; }
+.desc { margin: .5rem 0 0; }
+.decision { margin: .5rem 0 0; color: #176b38; }
+.supprime { margin: .5rem 0 0; color: #b3261e; font-weight: 600; }
+.badge { border-radius: 999px; padding: .2rem .6rem; font-size: .8rem; background: #eef1f4; }
+.badge-recu { background: #fff3cd; }
+.badge-en_cours { background: #cfe2ff; }
+.badge-resolu { background: #d1e7dd; }
+.badge-rejete { background: #f8d7da; }
+.empty { padding: 1.2rem; color: #6c757d; margin: 0; }
+.alert { padding: .8rem 1rem; border-radius: 8px; margin-bottom: 1rem; }
+.alert-error { background: #fdecea; color: #b3261e; }

@@ -61,6 +61,11 @@
 
       <h1 class="event-title">{{ ev.titre }}</h1>
 
+      @if (auth.getRole()) {
+        <a class="signaler-abuse" [routerLink]="['/signaler-abuse']"
+           [queryParams]="{ type: 'evenement', id: ev.id }">Signaler un contenu abusif</a>
+      }
+
       <!-- US19 : partage social (evenements publies uniquement) -->
       @if (peutPartager() && shareContent(); as contenu) {
         <app-share-buttons [contenu]="contenu" />

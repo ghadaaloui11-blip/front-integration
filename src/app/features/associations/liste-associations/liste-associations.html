@@ -33,6 +33,8 @@
         @if (a.adresse) {
           <p><i class="bi bi-geo-alt-fill"></i> {{ a.adresse }}</p>
         }
+        <a class="signaler" [routerLink]="['/signaler-abuse']"
+           [queryParams]="{ type: 'association', id: a.id }">Signaler un contenu abusif</a>
       </div>
     }
   </div>

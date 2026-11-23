@@ -1,0 +1,62 @@
+<div class="page">
+  <a routerLink="/mes-signalisations-abuse" class="back">‹ Mes signalements de contenu</a>
+
+  <h1>Signaler un contenu abusif</h1>
+  <p class="intro">
+    Un contenu vous semble frauduleux, haineux ou inapproprié ? Décrivez-le ci-dessous.
+    L’équipe d’administration examinera votre signalement et pourra supprimer le contenu.
+  </p>
+
+  @if (erreur()) { <div class="alert alert-error">{{ erreur() }}</div> }
+  @if (succes()) { <div class="alert alert-success">{{ succes() }}</div> }
+
+  <form class="card" (ngSubmit)="soumettre()">
+    <div class="field">
+      <label for="type">Type de contenu</label>
+      <select id="type" name="type" [(ngModel)]="typeCible">
+        @for (t of types; track t.valeur) {
+          <option [value]="t.valeur">{{ t.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="cible">Identifiant du contenu</label>
+      <input
+        id="cible"
+        name="cible"
+        type="number"
+        min="1"
+        required
+        [(ngModel)]="cibleId"
+        placeholder="Ex. 12"
+      />
+      <small>L’identifiant figure dans l’URL de la page du contenu.</small>
+    </div>
+
+    <div class="field">
+      <label for="motif">Motif du signalement</label>
+      <select id="motif" name="motif" [(ngModel)]="motif">
+        @for (m of motifs; track m.valeur) {
+          <option [value]="m.valeur">{{ m.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="description">Précisions (facultatif)</label>
+      <textarea
+        id="description"
+        name="description"
+        rows="5"
+        maxlength="2000"
+        [(ngModel)]="description"
+        placeholder="Expliquez en quoi ce contenu est abusif..."
+      ></textarea>
+    </div>
+
+    <button class="btn" type="submit" [disabled]="envoi()">
+      {{ envoi() ? 'Envoi en cours…' : 'Envoyer le signalement' }}
+    </button>
+  </form>
+</div>

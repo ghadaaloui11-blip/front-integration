@@ -77,3 +77,11 @@
 .erreur {
   color: #c62828;
 }
+
+.signaler {
+  display: inline-block;
+  margin-top: 10px;
+  color: #b3261e;
+  font-size: 13px;
+  text-decoration: underline;
+}

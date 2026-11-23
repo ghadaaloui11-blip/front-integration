@@ -1,5 +1,6 @@
 <h1 class="title">Signalements publics</h1>
 <p class="sub">Suivez les situations signalées par la communauté et l'avancement de leur traitement.</p>
+<p class="sub"><a routerLink="/signalements-carte">Voir ces signalements sur la carte interactive ›</a></p>
 
 @if (loading()) { <p class="sub">Chargement...</p> }
 @if (error()) { <div class="alert-error">{{ error() }}</div> }
@@ -68,7 +69,11 @@
   <div class="card-box detail">
     <div class="detail-head">
       <h3 class="detail-title">{{ titreDe(selected) }}</h3>
-      <a class="voir" (click)="selected = null">Fermer</a>
+      <div class="detail-actions">
+        <a class="signaler" [routerLink]="['/signaler-abuse']"
+           [queryParams]="{ type: 'signalement', id: selected.id }">Signaler un contenu abusif</a>
+        <a class="voir" (click)="selected = null">Fermer</a>
+      </div>
     </div>
 
     @if (photoUrl(selected); as photo) {

@@ -1,0 +1,91 @@
+<div class="page">
+  <h1>Contenus signalés comme abusifs</h1>
+  <p class="intro">Examinez les signalements, consignez votre décision et supprimez les contenus contraires aux règles.</p>
+
+  <div class="filters">
+    <label>
+      Statut
+      <select [(ngModel)]="statutFiltre" (ngModelChange)="appliquerFiltres()">
+        @for (s of statuts; track s.valeur) {
+          <option [value]="s.valeur">{{ s.label }}</option>
+        }
+      </select>
+    </label>
+    <label>
+      Type de contenu
+      <select [(ngModel)]="typeFiltre" (ngModelChange)="appliquerFiltres()">
+        <option value="">Tous</option>
+        @for (t of types; track t.valeur) {
+          <option [value]="t.valeur">{{ t.label }}</option>
+        }
+      </select>
+    </label>
+  </div>
+
+  @if (succes()) { <div class="alert alert-success">{{ succes() }}</div> }
+  @if (erreur()) { <div class="alert alert-error">{{ erreur() }}</div> }
+  @if (chargement()) { <p>Chargement...</p> }
+
+  @if (!chargement()) {
+    <p class="total">{{ total() }} signalement(s)</p>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Contenu visé</th>
+            <th>Motif</th>
+            <th>Signalé par</th>
+            <th>Date</th>
+            <th>Statut</th>
+            <th>Décision / Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (s of signalements(); track s.id) {
+            <tr>
+              <td>
+                <strong>{{ s.titre_cible || 'Contenu sans titre' }}</strong>
+                <p class="meta">{{ libelleType(s.type_cible) }} #{{ s.cible_id }}</p>
+                <a [routerLink]="lienCible(s)">Voir le contenu ›</a>
+                @if (s.description) { <p class="desc">{{ s.description }}</p> }
+              </td>
+              <td>{{ libelleMotif(s.motif) }}</td>
+              <td>{{ s.signalant_prenom }} {{ s.signalant_nom }}<br /><small>{{ s.signalant_email }}</small></td>
+              <td class="date">{{ formaterDate(s.date_creation) }}</td>
+              <td>
+                <span class="badge" [class]="'badge-' + s.statut">{{ libelleStatut(s.statut) }}</span>
+                @if (s.contenu_supprime) { <p class="supprime">Contenu supprimé</p> }
+              </td>
+              <td>
+                @if (s.decision) { <p class="decision">{{ s.decision }}</p> }
+                <textarea
+                  rows="2"
+                  [ngModel]="decisions[s.id] || ''"
+                  (ngModelChange)="decisions[s.id] = $event"
+                  placeholder="Motif de la décision (facultatif)"
+                ></textarea>
+                <div class="actions">
+                  <select
+                    [value]="s.statut"
+                    (change)="changerStatut(s, $any($event.target).value)"
+                  >
+                    <option value="" disabled>Changer le statut</option>
+                    <option value="recu">Reçu</option>
+                    <option value="en_cours">En cours</option>
+                    <option value="resolu">Résolu</option>
+                    <option value="rejete">Classer sans suite</option>
+                  </select>
+                  @if (!s.contenu_supprime && s.statut !== 'rejete') {
+                    <button type="button" class="danger" (click)="supprimerContenu(s)">Supprimer le contenu</button>
+                  }
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr><td colspan="6" class="empty">Aucun signalement pour ces filtres.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
