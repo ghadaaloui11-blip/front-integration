@@ -12,7 +12,7 @@
       <ul class="timeline">
         @for (a of activites(); track a.id) {
           <li class="item">
-            <span class="icone">{{ icone(a.type) }}</span>
+            <span class="icone"><i [class]="icone(a.type)"></i></span>
             <div class="contenu">
               <span class="type">{{ libelleType(a.type) }}</span>
               <p class="libelle">

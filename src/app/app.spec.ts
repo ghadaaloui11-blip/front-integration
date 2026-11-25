@@ -30,7 +30,7 @@ describe('AppComponent', () => {
     localStorage.removeItem('token');
     fixture.detectChanges();
     let compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.visitor-logo')?.textContent).toContain('MennaFina');
+    expect(compiled.querySelector('.visitor-logo')?.textContent).toContain('منّا فينا');
     expect(compiled.querySelector('.sidebar')).toBeFalsy();
     expect(compiled.querySelector('router-outlet')).toBeTruthy();
 
@@ -38,7 +38,7 @@ describe('AppComponent', () => {
     localStorage.setItem('token', 'token-de-test');
     fixture.detectChanges();
     compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.sidebar .logo')?.textContent).toContain('MennaFina');
+    expect(compiled.querySelector('.sidebar .logo')?.textContent).toContain('منّا فينا');
     expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
 

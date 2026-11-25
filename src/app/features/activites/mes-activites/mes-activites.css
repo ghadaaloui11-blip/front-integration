@@ -38,10 +38,14 @@ h1 {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #eef6f1;
+  background: var(--pastel-green-light, #eef6f1);
+  color: var(--green-forest, #1E8449);
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .contenu {
