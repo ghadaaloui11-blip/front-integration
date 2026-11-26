@@ -4,11 +4,13 @@ import { CommonModule } from '@angular/common';
 import { CampagneService, Campagne, pourcentageCampagne } from '../../core/services/campagne.service';
 import { EventService, Evenement } from '../../core/services/event.service';
 import { SignalementService, Signalement } from '../../core/services/signalement.service';
+import { AppPublicHeaderComponent } from '../../core/layout/app-public-header.component';
+import { AppPublicFooterComponent } from '../../core/layout/app-public-footer.component';
 
 @Component({
   selector: 'app-accueil',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, AppPublicHeaderComponent, AppPublicFooterComponent],
   templateUrl: './accueil.html',
   styleUrl: './accueil.css',
 })

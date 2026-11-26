@@ -1,6 +1,6 @@
 .page { max-width: 900px; margin: 0 auto; }
 .head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
-.btn { background: #0d6efd; color: #fff; text-decoration: none; padding: .6rem 1rem; border-radius: 8px; font-weight: 600; }
+.btn { background: var(--green-emerald); color: #fff; text-decoration: none; padding: .6rem 1rem; border-radius: 8px; font-weight: 600; }
 .card { background: #fff; border: 1px solid #e3e7ec; border-radius: 12px; overflow: hidden; }
 .row { padding: 1rem 1.2rem; border-bottom: 1px solid #eef1f4; }
 .row:last-child { border-bottom: 0; }

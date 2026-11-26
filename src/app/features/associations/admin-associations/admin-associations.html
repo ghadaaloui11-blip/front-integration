@@ -12,7 +12,7 @@
   <!-- Filtres -->
   <div class="filters">
     @for (opt of statutOptions; track opt.value) {
-      <button
+      <button type="button"
         class="filter-btn"
         [class.active]="filtreStatut === opt.value"
         (click)="filtreStatut = opt.value; charger()"
@@ -29,15 +29,15 @@
     } @else if (associations().length === 0) {
       <p class="empty-text">Aucune association trouvée.</p>
     } @else {
-      <table class="assoc-table">
+      <table class="assoc-table" aria-label="Associations à valider">
         <thead>
           <tr>
-            <th>Association</th>
-            <th>Responsable</th>
-            <th>Email</th>
-            <th>Docs</th>
-            <th>Statut</th>
-            <th>Action</th>
+            <th scope="col">Association</th>
+            <th scope="col">Responsable</th>
+            <th scope="col">Email</th>
+            <th scope="col">Docs</th>
+            <th scope="col">Statut</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -56,7 +56,7 @@
                 </span>
               </td>
               <td>
-                <button class="btn-review" (click)="ouvrirModal(assoc)">Examiner</button>
+                <button type="button" class="btn-review" (click)="ouvrirModal(assoc)">Examiner</button>
               </td>
             </tr>
           }
@@ -67,31 +67,25 @@
 
   <!-- Modal -->
   @if (showModal && selectedAssoc) {
-    <div
-      style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;"
-      (click)="fermerModal()"
-    >
+    <div class="modal-backdrop" (click)="fermerModal()">
       <div
-        style="background:#fff;border-radius:14px;padding:32px;width:580px;max-width:95vw;max-height:85vh;overflow-y:auto;position:relative;"
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-assoc-title"
         (click)="stopProp($event)"
       >
-        <!-- Fermer -->
-        <button
-          style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:16px;cursor:pointer;color:#94a3b8;"
-          (click)="fermerModal()"
-        ><i class="bi bi-x-lg"></i></button>
+        <button class="modal-close" type="button" aria-label="Fermer la fenêtre" (click)="fermerModal()">
+          <i class="bi bi-x-lg" aria-hidden="true"></i>
+        </button>
 
-        <h2 style="margin:0 0 4px;font-size:20px;color:#1e293b;">{{ selectedAssoc.nom_association }}</h2>
-        <p style="margin:0 0 20px;font-size:13px;color:#64748b;">
+        <h2 id="modal-assoc-title" class="modal-title">{{ selectedAssoc.nom_association }}</h2>
+        <p class="modal-subtitle">
           {{ selectedAssoc.adresse }} — Matricule : {{ selectedAssoc.matricule_fiscal }}
         </p>
 
-        <!-- Statut actuel si pas pending -->
         @if (selectedAssoc.statut_validation !== 'pending') {
-          <div
-            style="padding:10px 14px;border-radius:8px;font-size:14px;margin-bottom:16px;"
-            [ngClass]="'statut-' + selectedAssoc.statut_validation"
-          >
+          <div class="modal-status" [ngClass]="'statut-' + selectedAssoc.statut_validation">
             Statut actuel : <strong>{{ getStatutLabel(selectedAssoc.statut_validation) }}</strong>
             @if (selectedAssoc.commentaire_admin) {
               <span> — {{ selectedAssoc.commentaire_admin }}</span>
@@ -99,62 +93,50 @@
           </div>
         }
 
-        <!-- Documents -->
-        <h3 style="font-size:15px;font-weight:600;color:#1e293b;margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid #e2e8f0;">
-          Documents déposés
-        </h3>
+        <h3 class="modal-section-title">Documents déposés</h3>
 
         @if (loadingDocs) {
-          <p style="color:#94a3b8;font-style:italic;">Chargement des documents...</p>
+          <p class="modal-hint">Chargement des documents...</p>
         } @else if (documents().length === 0) {
-          <p style="color:#94a3b8;font-style:italic;">Aucun document déposé.</p>
+          <p class="modal-hint">Aucun document déposé.</p>
         } @else {
-          <ul style="list-style:none;padding:0;margin:0 0 16px;display:flex;flex-direction:column;gap:8px;">
+          <ul class="doc-list">
             @for (doc of documents(); track doc.id) {
-              <li style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
-                <span style="font-size:20px;">{{ getDocIcon(doc.nom_original) }}</span>
+              <li class="doc-item">
+                <span class="doc-icon" aria-hidden="true">{{ getDocIcon(doc.nom_original) }}</span>
                 <div>
-                  <a href="" (click)="telechargerDoc(doc); $event.preventDefault()"
-                     style="font-size:14px;color:#1f4e79;text-decoration:none;font-weight:500;">
+                  <a class="doc-link" href="" (click)="telechargerDoc(doc); $event.preventDefault()">
                     {{ doc.nom_original }}
                   </a>
-                  <div style="font-size:12px;color:#94a3b8;">{{ doc.type_document }} — {{ doc.date_depot }}</div>
+                  <div class="doc-meta">{{ doc.type_document }} — {{ doc.date_depot }}</div>
                 </div>
               </li>
             }
           </ul>
         }
 
-        <!-- Décision -->
-        <h3 style="font-size:15px;font-weight:600;color:#1e293b;margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid #e2e8f0;">
-          Décision
-        </h3>
+        <h3 class="modal-section-title">Décision</h3>
 
-        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px;">
-          <label style="font-size:14px;font-weight:500;color:#374151;">Commentaire (optionnel)</label>
+        <div class="decision-field">
+          <label class="decision-label" for="commentaire-admin">Commentaire (optionnel)</label>
           <textarea
+            id="commentaire-admin"
+            class="decision-input"
             rows="3"
             placeholder="Motif du refus, remarques..."
             [(ngModel)]="commentaire"
-            style="padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;resize:vertical;font-family:inherit;outline:none;"
           ></textarea>
         </div>
 
-        <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <button
-            style="background:#16a34a;color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:14px;font-weight:600;cursor:pointer;"
-            (click)="valider('approuve')"
-          ><i class="bi bi-check-circle-fill"></i> Valider</button>
-          <button
-            style="background:#dc2626;color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:14px;font-weight:600;cursor:pointer;"
-            (click)="valider('refuse')"
-          ><i class="bi bi-x-circle-fill"></i> Refuser</button>
-          <button
-            style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;border-radius:8px;padding:10px 18px;font-size:14px;cursor:pointer;"
-            (click)="fermerModal()"
-          >Annuler</button>
+        <div class="modal-actions">
+          <button class="decision-approve" type="button" (click)="valider('approuve')">
+            <i class="bi bi-check-circle-fill" aria-hidden="true"></i> Valider
+          </button>
+          <button class="decision-refuse" type="button" (click)="valider('refuse')">
+            <i class="bi bi-x-circle-fill" aria-hidden="true"></i> Refuser
+          </button>
+          <button class="decision-cancel" type="button" (click)="fermerModal()">Annuler</button>
         </div>
-
       </div>
     </div>
   }

@@ -6,7 +6,7 @@
 }
 
 .title {
-  color: var(--pastel-green-main, #68B088);
+  color: var(--green-emerald);
   font-size: 34px;
   font-weight: 700;
   margin: 0 0 4px 0;
@@ -19,7 +19,7 @@
 }
 
 .btn-main {
-  background: var(--pastel-green-main, #68B088);
+  background: var(--green-emerald);
   color: #ffffff;
   border-radius: 10px;
   padding: 14px 20px;
@@ -49,7 +49,7 @@
 }
 
 .card-camp:hover {
-  border-color: var(--pastel-green-main, #68B088);
+  border-color: var(--green-emerald);
   box-shadow: 0 4px 14px rgba(104, 176, 136, 0.12);
 }
 
@@ -103,7 +103,7 @@
 }
 
 .link {
-  color: var(--pastel-green-main, #68B088);
+  color: var(--green-emerald);
   text-decoration: underline;
   font-size: 15px;
 }
@@ -143,7 +143,7 @@
   flex: 1;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
-  color: var(--pastel-green-main, #68B088);
+  color: var(--green-emerald);
   border-radius: 6px;
   padding: 8px 12px;
   text-align: center;
@@ -154,13 +154,13 @@
 }
 
 .btn-link:hover {
-  background: var(--pastel-green-main, #68B088);
+  background: var(--green-emerald);
   color: white;
-  border-color: var(--pastel-green-main, #68B088);
+  border-color: var(--green-emerald);
 }
 
 .btn-edit {
-  background: var(--pastel-pink-main, #F48FB1);
+  background: var(--pink-rose);
   color: white;
   border: none;
   border-radius: 6px;
@@ -173,5 +173,5 @@
 }
 
 .btn-edit:hover {
-  background: var(--pastel-pink-hover, #EC407A);
+  background: var(--green-forest);
 }

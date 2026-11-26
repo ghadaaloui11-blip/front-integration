@@ -3,10 +3,10 @@
   <p class="subtitle">Espace d'administration pour valider, mettre à jour ou supprimer des signalements signalés par les utilisateurs.</p>
 
   <div class="filter-bar">
-    <button (click)="filtrerParStatut('')" [class.active]="statutFiltre() === ''">Tous</button>
-    <button (click)="filtrerParStatut('recu')" [class.active]="statutFiltre() === 'recu'">Reçus</button>
-    <button (click)="filtrerParStatut('en_cours')" [class.active]="statutFiltre() === 'en_cours'">En cours</button>
-    <button (click)="filtrerParStatut('resolu')" [class.active]="statutFiltre() === 'resolu'">Résolus</button>
+    <button type="button" (click)="filtrerParStatut('')" [class.active]="statutFiltre() === ''">Tous</button>
+    <button type="button" (click)="filtrerParStatut('recu')" [class.active]="statutFiltre() === 'recu'">Reçus</button>
+    <button type="button" (click)="filtrerParStatut('en_cours')" [class.active]="statutFiltre() === 'en_cours'">En cours</button>
+    <button type="button" (click)="filtrerParStatut('resolu')" [class.active]="statutFiltre() === 'resolu'">Résolus</button>
   </div>
 
   @if (succes()) {
@@ -22,15 +22,15 @@
     <div class="empty-state">Aucun signalement trouvé pour ce filtre.</div>
   } @else {
     <div class="table-responsive">
-      <table class="moderation-table">
+      <table class="moderation-table" aria-label="Contenus à modérer">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Titre</th>
-            <th>Catégorie</th>
-            <th>Auteur</th>
-            <th>Statut</th>
-            <th>Actions</th>
+            <th scope="col">ID</th>
+            <th scope="col">Titre</th>
+            <th scope="col">Catégorie</th>
+            <th scope="col">Auteur</th>
+            <th scope="col">Statut</th>
+            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -60,7 +60,7 @@
                     <option value="en_cours">En cours</option>
                     <option value="resolu">Résolu</option>
                   </select>
-                  <button class="btn-delete" (click)="supprimer(s.id)">Supprimer</button>
+                  <button type="button" class="btn-delete" (click)="supprimer(s.id)">Supprimer</button>
                 </div>
               </td>
             </tr>

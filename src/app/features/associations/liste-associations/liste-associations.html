@@ -28,10 +28,10 @@
           <p class="badge">{{ a.categorie }}</p>
         }
         @if (a.ville) {
-          <p><i class="bi bi-building"></i> {{ a.ville }}</p>
+          <p><i class="bi bi-building" aria-hidden="true"></i> {{ a.ville }}</p>
         }
         @if (a.adresse) {
-          <p><i class="bi bi-geo-alt-fill"></i> {{ a.adresse }}</p>
+          <p><i class="bi bi-geo-alt-fill" aria-hidden="true"></i> {{ a.adresse }}</p>
         }
         <a class="signaler" [routerLink]="['/signaler-abuse']"
            [queryParams]="{ type: 'association', id: a.id }">Signaler un contenu abusif</a>

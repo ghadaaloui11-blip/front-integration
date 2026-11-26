@@ -28,11 +28,11 @@
 
 .btn:hover {
   background: #f3f7f4;
-  border-color: #0d6b52;
+  border-color: var(--green-teal);
 }
 
 .message {
-  color: #0d6b52;
+  color: var(--green-teal);
   font-size: 13px;
   font-weight: 600;
 }

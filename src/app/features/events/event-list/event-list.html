@@ -49,8 +49,8 @@
   </div>
 
   <div class="filter-actions">
-    <button class="btn-filter" (click)="chargerEvenements()">Filtrer</button>
-    <button class="btn-reset" (click)="reinitialiserFiltres()">Réinitialiser</button>
+    <button type="button" class="btn-filter" (click)="chargerEvenements()">Filtrer</button>
+    <button type="button" class="btn-reset" (click)="reinitialiserFiltres()">Réinitialiser</button>
   </div>
 </div>
 
@@ -62,7 +62,7 @@
 } @else if (evenements().length === 0) {
   <div class="empty-state">
     <p>Aucun événement ne correspond à vos critères de recherche.</p>
-    <button class="btn-reset" (click)="reinitialiserFiltres()">Effacer les filtres</button>
+    <button type="button" class="btn-reset" (click)="reinitialiserFiltres()">Effacer les filtres</button>
   </div>
 } @else {
   <!-- Grille des événements -->
@@ -81,7 +81,7 @@
         <h3 class="card-title">{{ event.titre }}</h3>
 
         <div class="asso-info">
-          <span class="icon"><i class="bi bi-building"></i></span>
+          <span class="icon"><i class="bi bi-building" aria-hidden="true"></i></span>
           <span>Organisé par : <strong>{{ event.association_nom || 'Association partenaire' }}</strong></span>
         </div>
 
@@ -89,15 +89,15 @@
 
         <div class="details-list">
           <div class="detail-item">
-            <span class="icon"><i class="bi bi-calendar-event"></i></span>
+            <span class="icon"><i class="bi bi-calendar-event" aria-hidden="true"></i></span>
             <span>{{ formatDate(event.date_evenement) }}</span>
           </div>
           <div class="detail-item">
-            <span class="icon"><i class="bi bi-geo-alt"></i></span>
+            <span class="icon"><i class="bi bi-geo-alt" aria-hidden="true"></i></span>
             <span>{{ event.lieu }}, <strong>{{ event.ville }}</strong></span>
           </div>
           <div class="detail-item">
-            <span class="icon"><i class="bi bi-people"></i></span>
+            <span class="icon"><i class="bi bi-people" aria-hidden="true"></i></span>
             <span>{{ event.nb_inscrits_acceptes }} / {{ event.places_disponibles }} bénévoles confirmés</span>
           </div>
         </div>

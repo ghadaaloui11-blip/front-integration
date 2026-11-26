@@ -6,9 +6,9 @@
   @if (statut()) {
     <div class="statut-card" [ngClass]="'statut-' + statut()!.statut_validation">
       <span class="statut-icon">
-        @if (statut()!.statut_validation === 'approuve') { <i class="bi bi-check-circle-fill"></i> }
-        @else if (statut()!.statut_validation === 'refuse') { <i class="bi bi-x-circle-fill"></i> }
-        @else { <i class="bi bi-hourglass-split"></i> }
+        @if (statut()!.statut_validation === 'approuve') { <i class="bi bi-check-circle-fill" aria-hidden="true"></i> }
+        @else if (statut()!.statut_validation === 'refuse') { <i class="bi bi-x-circle-fill" aria-hidden="true"></i> }
+        @else { <i class="bi bi-hourglass-split" aria-hidden="true"></i> }
       </span>
       <div>
         <strong>Statut : {{ getStatutLabel(statut()!.statut_validation) }}</strong>
@@ -58,7 +58,7 @@
         }
       </div>
 
-      <button class="btn-main" (click)="deposer()" [disabled]="uploading()">
+      <button type="button" class="btn-main" (click)="deposer()" [disabled]="uploading()">
         @if (uploading()) { Envoi en cours... } @else { Déposer le document }
       </button>
     </div>
@@ -73,13 +73,13 @@
     } @else if (documents().length === 0) {
       <p class="empty-text">Aucun document déposé pour le moment.</p>
     } @else {
-      <table class="doc-table">
+      <table class="doc-table" aria-label="Documents déposés">
         <thead>
           <tr>
-            <th>Type</th>
-            <th>Nom du fichier</th>
-            <th>Date de dépôt</th>
-            <th>Action</th>
+            <th scope="col">Type</th>
+            <th scope="col">Nom du fichier</th>
+            <th scope="col">Date de dépôt</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -89,7 +89,7 @@
               <td>{{ doc.nom_original }}</td>
               <td>{{ doc.date_depot }}</td>
               <td>
-                <button class="btn-delete" (click)="supprimer(doc.id)">Supprimer</button>
+                <button type="button" class="btn-delete" (click)="supprimer(doc.id)">Supprimer</button>
               </td>
             </tr>
           }

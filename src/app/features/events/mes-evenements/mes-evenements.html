@@ -23,16 +23,16 @@
 } @else {
   <!-- Liste des événements créés par l'association -->
   <div class="events-table-wrapper">
-    <table class="events-table">
+    <table class="events-table" aria-label="Mes événements">
       <thead>
         <tr>
-          <th>Événement</th>
-          <th>Date &amp; Lieu</th>
-          <th>Catégorie</th>
-          <th>Bénévoles confirmés</th>
-          <th>En attente</th>
-          <th>Statut</th>
-          <th>Actions</th>
+          <th scope="col">Événement</th>
+          <th scope="col">Date &amp; Lieu</th>
+          <th scope="col">Catégorie</th>
+          <th scope="col">Bénévoles confirmés</th>
+          <th scope="col">En attente</th>
+          <th scope="col">Statut</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -62,19 +62,19 @@
               <span class="badge-status" [class]="ev.statut">{{ ev.statut }}</span>
             </td>
             <td class="action-cell">
-              <button
+              <button type="button"
                 class="btn-action participants"
                 (click)="ouvrirParticipants(ev)"
               >
-                <i class="bi bi-people-fill"></i> Gérer les candidats ({{ ev.nb_inscrits_attente }})
+                <i class="bi bi-people-fill" aria-hidden="true"></i> Gérer les candidats ({{ ev.nb_inscrits_attente }})
               </button>
               @if (ev.statut === 'publie') {
-                <button
+                <button type="button"
                   class="btn-action cancel"
                   title="Annuler l'événement"
                   (click)="annulerEvenement(ev)"
                 >
-                  <i class="bi bi-x-circle"></i>
+                  <i class="bi bi-x-circle" aria-hidden="true"></i>
                 </button>
               }
             </td>
@@ -88,15 +88,23 @@
 <!-- Modal / Panneau de gestion des participants (US18 & US35) -->
 @if (selectedEvent(); as currentEvent) {
   <div class="modal-backdrop" (click)="fermerParticipants()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
+    <div
+      class="modal-content"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-participants-title"
+      (click)="$event.stopPropagation()"
+    >
       <div class="modal-header">
         <div>
-          <h2>Participants &amp; Candidatures</h2>
+          <h2 id="modal-participants-title">Participants &amp; Candidatures</h2>
           <p class="modal-sub">
             Pour l'événement : <strong>{{ currentEvent.titre }}</strong> ({{ currentEvent.nb_inscrits_acceptes }} / {{ currentEvent.places_disponibles }} places)
           </p>
         </div>
-        <button class="btn-close" (click)="fermerParticipants()"><i class="bi bi-x-lg"></i></button>
+        <button class="btn-close" type="button" aria-label="Fermer la fenêtre" (click)="fermerParticipants()">
+          <i class="bi bi-x-lg" aria-hidden="true"></i>
+        </button>
       </div>
 
       <div class="modal-body">
@@ -116,9 +124,9 @@
                     <span class="badge-status" [class]="p.statut">{{ p.statut }}</span>
                   </div>
                   <div class="participant-contact">
-                    <span><i class="bi bi-envelope"></i> {{ p.email }}</span>
+                    <span><i class="bi bi-envelope" aria-hidden="true"></i> {{ p.email }}</span>
                     @if (p.telephone) {
-                      <span><i class="bi bi-telephone"></i> {{ p.telephone }}</span>
+                      <span><i class="bi bi-telephone" aria-hidden="true"></i> {{ p.telephone }}</span>
                     }
                     <span class="date-ins">Inscrit le : {{ formatDate(p.date_inscription) }}</span>
                   </div>
@@ -132,35 +140,35 @@
                 <!-- Actions Accepter / Refuser (US35) -->
                 <div class="participant-actions">
                   @if (p.statut === 'en_attente') {
-                    <button
+                    <button type="button"
                       class="btn-accept"
                       [disabled]="participantActionLoading() === p.inscription_id || currentEvent.places_restantes <= 0"
                       (click)="changerStatutParticipant(p.inscription_id, 'accepte')"
                     >
-                      <i class="bi bi-check-lg"></i> Accepter
+                      <i class="bi bi-check-lg" aria-hidden="true"></i> Accepter
                     </button>
-                    <button
+                    <button type="button"
                       class="btn-reject"
                       [disabled]="participantActionLoading() === p.inscription_id"
                       (click)="changerStatutParticipant(p.inscription_id, 'refuse')"
                     >
-                      <i class="bi bi-x-lg"></i> Refuser
+                      <i class="bi bi-x-lg" aria-hidden="true"></i> Refuser
                     </button>
                   } @else if (p.statut === 'accepte') {
-                    <button
+                    <button type="button"
                       class="btn-reject"
                       [disabled]="participantActionLoading() === p.inscription_id"
                       (click)="changerStatutParticipant(p.inscription_id, 'refuse')"
                     >
-                      <i class="bi bi-arrow-down-circle"></i> Rétrograder en refusé
+                      <i class="bi bi-arrow-down-circle" aria-hidden="true"></i> Rétrograder en refusé
                     </button>
                   } @else if (p.statut === 'refuse') {
-                    <button
+                    <button type="button"
                       class="btn-accept"
                       [disabled]="participantActionLoading() === p.inscription_id || currentEvent.places_restantes <= 0"
                       (click)="changerStatutParticipant(p.inscription_id, 'accepte')"
                     >
-                      <i class="bi bi-check-circle"></i> Repêcher (Accepter)
+                      <i class="bi bi-check-circle" aria-hidden="true"></i> Repêcher (Accepter)
                     </button>
                   }
                 </div>
@@ -171,7 +179,7 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn-close-modal" (click)="fermerParticipants()">Fermer</button>
+        <button type="button" class="btn-close-modal" (click)="fermerParticipants()">Fermer</button>
       </div>
     </div>
   </div>

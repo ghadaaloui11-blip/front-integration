@@ -1,0 +1,67 @@
+<header class="public-header">
+  <a routerLink="/accueil" class="public-logo" (click)="fermer()">
+    <img src="logo-mennafina.jpg" alt="" class="brand-logo-img" />
+    <span>منّا فينا</span>
+  </a>
+
+  <nav class="public-nav" aria-label="Navigation publique">
+    @for (lien of liens; track lien.path) {
+      <a
+        [routerLink]="lien.path"
+        routerLinkActive="actif"
+        ariaCurrentWhenActive="page"
+        (click)="fermer()"
+      >
+        <i [class]="lien.icon" aria-hidden="true"></i>
+        <span>{{ lien.label }}</span>
+      </a>
+    }
+  </nav>
+
+  <div class="public-actions">
+    @if (connecte()) {
+      <a routerLink="/profil" class="pill-outline" (click)="fermer()">Mon espace</a>
+      <button class="pill-outline" type="button" (click)="deconnecter()">Déconnexion</button>
+    } @else {
+      <a routerLink="/login" class="pill-outline" (click)="fermer()">Connexion</a>
+      <a routerLink="/inscription" class="pill-solid" (click)="fermer()">S’inscrire</a>
+    }
+  </div>
+
+  <button
+    class="menu-toggle"
+    type="button"
+    (click)="basculer()"
+    [attr.aria-expanded]="menuOuvert()"
+    aria-controls="public-nav-drawer"
+    aria-label="Afficher le menu"
+  >
+    <i [class]="menuOuvert() ? 'bi bi-x-lg' : 'bi bi-list'" aria-hidden="true"></i>
+  </button>
+</header>
+
+@if (menuOuvert()) {
+  <nav class="public-drawer" id="public-nav-drawer" aria-label="Navigation publique mobile">
+    @for (lien of liens; track lien.path) {
+      <a
+        [routerLink]="lien.path"
+        routerLinkActive="actif"
+        ariaCurrentWhenActive="page"
+        (click)="fermer()"
+      >
+        <i [class]="lien.icon" aria-hidden="true"></i>
+        <span>{{ lien.label }}</span>
+      </a>
+    }
+
+    <div class="drawer-actions">
+      @if (connecte()) {
+        <a routerLink="/profil" class="pill-outline" (click)="fermer()">Mon espace</a>
+        <button class="pill-outline" type="button" (click)="deconnecter()">Déconnexion</button>
+      } @else {
+        <a routerLink="/login" class="pill-outline" (click)="fermer()">Connexion</a>
+        <a routerLink="/inscription" class="pill-solid" (click)="fermer()">S’inscrire</a>
+      }
+    </div>
+  </nav>
+}

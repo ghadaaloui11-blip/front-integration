@@ -1,5 +1,5 @@
 .title {
-  color: var(--pastel-green-main, #68B088);
+  color: var(--green-emerald);
   font-size: 34px;
   font-weight: 700;
   margin: 0 0 4px 0;
@@ -60,8 +60,8 @@
   padding: 4px 14px;
   font-size: 14px;
   background: #ffffff;
-  border: 1px solid var(--pastel-green-main, #68B088);
-  color: var(--pastel-green-main, #68B088);
+  border: 1px solid var(--green-emerald);
+  color: var(--green-emerald);
 }
 
 .badge.social {
@@ -91,7 +91,7 @@
 }
 
 .voir {
-  color: var(--pastel-green-main, #68B088);
+  color: var(--green-emerald);
   text-decoration: underline;
   cursor: pointer;
 }
@@ -102,7 +102,7 @@
 }
 
 .detail-title {
-  color: var(--pastel-green-main, #68B088);
+  color: var(--green-emerald);
   font-size: 22px;
   margin: 0 0 10px 0;
 }
@@ -149,8 +149,8 @@
 }
 
 .onglets button.actif {
-  background: var(--pastel-green-main, #68B088);
-  border-color: var(--pastel-green-main, #68B088);
+  background: var(--green-emerald);
+  border-color: var(--green-emerald);
   color: #ffffff;
 }
 
@@ -161,8 +161,8 @@
 }
 
 .btn-action {
-  background: var(--pastel-green-main, #68B088);
-  border: 1px solid var(--pastel-green-main, #68B088);
+  background: var(--green-emerald);
+  border: 1px solid var(--green-emerald);
   color: #ffffff;
   border-radius: 10px;
   padding: 7px 15px;

@@ -59,6 +59,22 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
+  /** État d'affichage : un jeton expiré ne doit pas laisser croire que l'utilisateur est connecté. */
+  estConnecte(): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+
+    const payload = this.decodePayload();
+    if (!payload) return false;
+
+    const exp = (payload as JwtPayload & { exp?: number }).exp;
+    return typeof exp !== 'number' || exp * 1000 > Date.now();
+  }
+
+  getPrenom(): string | null {
+    return this.decodePayload()?.prenom ?? null;
+  }
+
   deconnecter(): void {
     localStorage.removeItem('token');
   }

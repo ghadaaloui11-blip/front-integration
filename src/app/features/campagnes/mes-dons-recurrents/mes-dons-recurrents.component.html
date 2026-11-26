@@ -4,7 +4,7 @@
       <h1>Mes Dons Récurrents</h1>
       <p class="subtitle">Gérez vos contributions régulières et automatiques aux campagnes solidaires.</p>
     </div>
-    <button class="btn-create" (click)="showForm.set(!showForm())">
+    <button type="button" class="btn-create" (click)="showForm.set(!showForm())">
       {{ showForm() ? 'Fermer le formulaire' : '+ Nouveau don récurrent' }}
     </button>
   </div>
@@ -75,7 +75,7 @@
           </div>
 
           @if (d.actif) {
-            <button class="btn-cancel" (click)="annuler(d.id)">Arrêter les prélèvements</button>
+            <button type="button" class="btn-cancel" (click)="annuler(d.id)">Arrêter les prélèvements</button>
           }
         </div>
       }

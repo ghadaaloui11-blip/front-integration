@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, HostListener, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { EventService, Evenement, Participant } from '../../../core/services/event.service';
@@ -65,6 +65,11 @@ export class MesEvenementsComponent implements OnInit {
   fermerParticipants() {
     this.selectedEvent.set(null);
     this.participants.set([]);
+  }
+
+  @HostListener('document:keydown.escape')
+  surEchap(): void {
+    if (this.selectedEvent()) this.fermerParticipants();
   }
 
   // US35 : Accepter ou refuser une candidature

@@ -1,0 +1,65 @@
+<aside
+  class="sidebar"
+  id="app-sidebar"
+  aria-label="Navigation principale"
+  [class.ouverte]="layout.menuOuvert()"
+>
+  <a routerLink="/accueil" class="brand" (click)="layout.fermer()">
+    <img src="logo-mennafina.jpg" alt="" class="brand-logo-img" />
+    <span class="brand-name">منّا فينا</span>
+  </a>
+
+  <a
+    routerLink="/accueil"
+    routerLinkActive="active"
+    ariaCurrentWhenActive="page"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class="home-link"
+    (click)="layout.fermer()"
+  >
+    <i class="bi bi-house-door" aria-hidden="true"></i>
+    <span>Accueil</span>
+  </a>
+
+  <nav class="menu" aria-label="Rubriques de la plateforme">
+    @for (groupe of groupes; track groupe.label) {
+      @if (itemsVisibles(groupe).length) {
+        <section class="menu-group">
+          <button
+            class="group-head"
+            type="button"
+            (click)="basculer(groupe.label)"
+            [attr.aria-expanded]="estDeplie(groupe.label)"
+            [attr.aria-controls]="'groupe-' + groupe.label"
+          >
+            <i [class]="groupe.icon" aria-hidden="true"></i>
+            <span>{{ groupe.label }}</span>
+            <i
+              class="bi bi-chevron-down caret"
+              [class.tourne]="estDeplie(groupe.label)"
+              aria-hidden="true"
+            ></i>
+          </button>
+
+          @if (estDeplie(groupe.label)) {
+            <div class="group-items" [id]="'groupe-' + groupe.label">
+              @for (item of itemsVisibles(groupe); track item.path) {
+                <a
+                  [routerLink]="item.path"
+                  routerLinkActive="active"
+                  ariaCurrentWhenActive="page"
+                  (click)="layout.fermer()"
+                >
+                  <i [class]="item.icon" aria-hidden="true"></i>
+                  <span>{{ item.label }}</span>
+                </a>
+              }
+            </div>
+          }
+        </section>
+      }
+    }
+  </nav>
+
+  <p class="sidebar-foot">Plateforme de solidarité · MennaFina</p>
+</aside>

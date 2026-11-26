@@ -116,7 +116,7 @@ button:disabled {
 .engagement h2 {
   margin: 0 0 12px;
   font-size: 20px;
-  color: #0d6b52;
+  color: var(--green-teal);
 }
 
 .engagement h3 {
@@ -134,7 +134,7 @@ button:disabled {
 .points {
   font-size: 36px;
   font-weight: 700;
-  color: #0d6b52;
+  color: var(--green-teal);
 }
 
 .points-label {
@@ -159,7 +159,7 @@ button:disabled {
   border-radius: 999px;
   font-size: 13px;
   background: #eef6f1;
-  color: #0d6b52;
+  color: var(--green-teal);
   border: 1px solid #cfe6d9;
 }
 

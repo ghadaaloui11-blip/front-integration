@@ -1,0 +1,223 @@
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 70;
+}
+
+.public-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 66px;
+  padding: 10px 32px;
+  background: rgba(251, 248, 242, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 1px 6px rgba(58, 51, 48, 0.05);
+}
+
+.public-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  color: var(--green-forest);
+  font-family: var(--font-arabic);
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.brand-logo-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--warm-cream);
+  background: var(--warm-cream);
+  box-shadow: 0 2px 8px rgba(30, 132, 73, 0.16);
+}
+
+.public-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.public-nav a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 11px;
+  border-radius: 9px;
+  color: var(--text-main);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.public-nav a i {
+  color: var(--green-emerald);
+  font-size: 14px;
+}
+
+.public-nav a:hover,
+.public-nav a.actif {
+  background: var(--pastel-green-light);
+  color: var(--green-forest);
+}
+
+.public-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.pill-outline,
+.pill-solid {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.pill-outline {
+  border: 1.5px solid var(--green-sage);
+  background: #fff;
+  color: var(--green-forest);
+}
+
+.pill-outline:hover {
+  background: var(--pastel-green-light);
+  border-color: var(--green-emerald);
+}
+
+.pill-solid {
+  border: 1.5px solid var(--green-emerald);
+  background: var(--green-emerald);
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(39, 174, 96, 0.22);
+}
+
+.pill-solid:hover {
+  background: var(--green-forest);
+  border-color: var(--green-forest);
+}
+
+.menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--green-forest);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.public-drawer {
+  display: none;
+}
+
+:where(a, button):focus-visible {
+  outline: 2px solid var(--green-emerald);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1100px) {
+  .public-nav a {
+    padding-inline: 8px;
+    font-size: 12px;
+  }
+
+  .public-nav a i {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .public-header {
+    min-height: 60px;
+    padding: 8px 16px;
+  }
+
+  .public-nav,
+  .public-actions {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .public-drawer {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 16px 18px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--warm-cream-light);
+    box-shadow: 0 12px 24px rgba(58, 51, 48, 0.1);
+  }
+
+  .public-drawer a:not(.pill-outline):not(.pill-solid) {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 10px 12px;
+    border-radius: 9px;
+    color: var(--text-main);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .public-drawer a.actif {
+    background: var(--pastel-green-light);
+    color: var(--green-forest);
+  }
+
+  .drawer-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .drawer-actions > * {
+    flex: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .public-nav a,
+  .pill-outline,
+  .pill-solid {
+    transition: none;
+  }
+}

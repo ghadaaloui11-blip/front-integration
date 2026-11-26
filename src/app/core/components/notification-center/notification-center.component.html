@@ -1,17 +1,31 @@
 <div class="nc">
-  <button class="nc-bell" (click)="toggle()">
-    <span class="nc-icon"><i class="bi bi-bell-fill"></i></span>
-    <span class="nc-text">Notifications</span>
+  <button
+    class="nc-bell"
+    type="button"
+    (click)="toggle()"
+    [attr.aria-expanded]="ouvert"
+    aria-haspopup="dialog"
+    aria-controls="notifications-panel"
+    aria-label="Notifications"
+  >
+    <i class="bi bi-bell" aria-hidden="true"></i>
     @if (service.nonLues() > 0) {
-      <span class="nc-badge">{{ service.nonLues() }}</span>
+      <span class="nc-badge" [attr.aria-label]="service.nonLues() + ' notifications non lues'">
+        {{ service.nonLues() }}
+      </span>
     }
   </button>
 
   @if (ouvert) {
-    <div class="nc-panel">
+    <div
+      class="nc-panel"
+      id="notifications-panel"
+      role="dialog"
+      aria-label="Centre de notifications"
+    >
       <div class="nc-head">
         <strong>Notifications</strong>
-        <button class="nc-link" (click)="toutLire()">Tout marquer lu</button>
+        <button class="nc-link" type="button" (click)="toutLire()">Tout marquer lu</button>
       </div>
 
       @if (liste.length === 0) {
@@ -19,11 +33,16 @@
       }
 
       @for (n of liste; track n.id) {
-        <div class="nc-item" [class.nc-nonlue]="!n.lue" (click)="lire(n)">
-          <div class="nc-titre">{{ n.titre }}</div>
-          <div class="nc-msg">{{ n.message }}</div>
-          <div class="nc-date">{{ n.date_creation | date: 'dd/MM/yyyy HH:mm' }}</div>
-        </div>
+        <button
+          class="nc-item"
+          type="button"
+          [class.nc-nonlue]="!n.lue"
+          (click)="lire(n)"
+        >
+          <span class="nc-titre">{{ n.titre }}</span>
+          <span class="nc-msg">{{ n.message }}</span>
+          <span class="nc-date">{{ n.date_creation | date: 'dd/MM/yyyy HH:mm' }}</span>
+        </button>
       }
     </div>
   }

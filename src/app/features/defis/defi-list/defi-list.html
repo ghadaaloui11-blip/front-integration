@@ -17,8 +17,8 @@
             <h3>{{ defi.titre }}</h3>
             <p class="desc">{{ defi.description }}</p>
             <div class="meta">
-              <span><i class="bi bi-bullseye"></i> Objectif : {{ defi.objectif }}</span>
-              <span><i class="bi bi-trophy-fill"></i> {{ defi.recompense_points }} pts</span>
+              <span><i class="bi bi-bullseye" aria-hidden="true"></i> Objectif : {{ defi.objectif }}</span>
+              <span><i class="bi bi-trophy-fill" aria-hidden="true"></i> {{ defi.recompense_points }} pts</span>
             </div>
             <span class="mode">
               {{ defi.mode === 'automatique' ? 'Suivi automatique' : 'Preuve photo' }}

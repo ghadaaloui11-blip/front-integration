@@ -8,7 +8,7 @@
   margin-bottom: 2rem;
 }
 .search-header h1 {
-  color: var(--pastel-green-dark, #3B6B52);
+  color: var(--green-forest);
   margin-bottom: 0.5rem;
 }
 .subtitle {
@@ -23,6 +23,7 @@
 }
 .search-input {
   flex: 1;
+  min-width: 0;
   padding: 0.75rem 1rem;
   border: 1px solid var(--pastel-green-border, #A7F3D0);
   border-radius: 8px;
@@ -33,12 +34,12 @@
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 .search-input:focus {
-  border-color: var(--pastel-green-main, #68B088);
+  border-color: var(--green-emerald);
   box-shadow: 0 0 0 3px rgba(104, 176, 136, 0.15);
 }
 .btn-search {
   padding: 0.75rem 1.5rem;
-  background-color: var(--pastel-green-main, #68B088);
+  background-color: var(--green-emerald);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -59,7 +60,7 @@
   padding: 0.5rem 1.1rem;
   border: 1px solid var(--pastel-pink-border, #F8BBD0);
   background: var(--pastel-pink-subtle, #FFF5F7);
-  color: var(--pastel-pink-dark, #C2185B);
+  color: var(--pink-mauve);
   border-radius: 20px;
   cursor: pointer;
   font-size: 0.9rem;
@@ -70,9 +71,9 @@
   background: var(--pastel-pink-light, #FCE4EC);
 }
 .filter-tabs button.active {
-  background: var(--pastel-pink-main, #F48FB1);
+  background: var(--pink-rose);
   color: #fff;
-  border-color: var(--pastel-pink-main, #F48FB1);
+  border-color: var(--pink-rose);
   box-shadow: 0 2px 6px rgba(244, 143, 177, 0.35);
 }
 .result-section {
@@ -83,11 +84,11 @@
   margin-bottom: 1rem;
   border-bottom: 2px solid var(--pastel-green-light, #D4EDDA);
   padding-bottom: 0.5rem;
-  color: var(--pastel-green-dark, #3B6B52);
+  color: var(--green-forest);
 }
 .grid-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: 1.25rem;
 }
 .card {
@@ -109,11 +110,11 @@
   font-size: 1.1rem;
 }
 .card h3 a {
-  color: var(--pastel-green-dark, #3B6B52);
+  color: var(--green-forest);
   text-decoration: none;
 }
 .card h3 a:hover {
-  color: var(--pastel-pink-dark, #C2185B);
+  color: var(--pink-mauve);
 }
 .card .desc {
   color: var(--text-muted, #718096);
@@ -138,25 +139,25 @@
 }
 .badge-campagne {
   background: var(--pastel-green-light, #D4EDDA);
-  color: var(--pastel-green-dark, #3B6B52);
+  color: var(--green-forest);
 }
 .badge-signalement {
   background: var(--pastel-pink-light, #FCE4EC);
-  color: var(--pastel-pink-dark, #C2185B);
+  color: var(--pink-mauve);
 }
 .badge-evenement {
   background: var(--pastel-green-subtle, #F0FDF4);
-  color: var(--pastel-green-main, #68B088);
+  color: var(--green-emerald);
   border: 1px solid var(--pastel-green-border, #A7F3D0);
 }
 .badge-association {
   background: var(--pastel-pink-subtle, #FFF5F7);
-  color: var(--pastel-pink-main, #F48FB1);
+  color: var(--pink-rose);
   border: 1px solid var(--pastel-pink-border, #F8BBD0);
 }
 .alert-error {
   background: var(--pastel-pink-light, #FCE4EC);
-  color: var(--pastel-pink-dark, #C2185B);
+  color: var(--pink-mauve);
   border: 1px solid var(--pastel-pink-border, #F8BBD0);
   padding: 1rem;
   border-radius: 8px;
@@ -166,4 +167,14 @@
   text-align: center;
   padding: 2.5rem;
   color: var(--text-muted, #718096);
+}
+
+@media (max-width: 480px) {
+  .search-form {
+    flex-direction: column;
+  }
+
+  .btn-search {
+    width: 100%;
+  }
 }

@@ -5,7 +5,7 @@
 }
 
 h1 {
-  color: #0d6b52;
+  color: var(--green-teal);
   margin-bottom: 4px;
 }
 
@@ -61,7 +61,7 @@ h1 {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #0d6b52;
+  color: var(--green-teal);
   font-weight: 700;
 }
 

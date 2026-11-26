@@ -271,6 +271,11 @@ export const routes: Routes = [
       import('./features/accueil/accueil').then(m => m.AccueilComponent),
   },
 
-  // 404 : toute route inconnue renvoie vers les campagnes (TOUJOURS en dernier)
-  { path: '**', redirectTo: 'accueil' },
+  // 404 : page dédiée plutôt qu'une redirection silencieuse (TOUJOURS en dernier)
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./core/layout/not-found.component').then((m) => m.NotFoundComponent),
+    data: { titre: 'Page introuvable' },
+  },
 ];

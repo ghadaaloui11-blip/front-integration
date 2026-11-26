@@ -2,9 +2,9 @@
 <p class="sub">Choisissez une cause à soutenir.</p>
 
 <!-- Onglets -->
-<div class="tabs">
-  <button type="button" class="tab" [class.active]="onglet === 'toutes'" (click)="onglet = 'toutes'">Toutes</button>
-  <button type="button" class="tab" [class.active]="onglet === 'associations'" (click)="onglet = 'associations'">Associations</button>
+<div class="tabs" role="group" aria-label="Filtrer les campagnes">
+  <button type="button" class="tab" [class.active]="onglet === 'toutes'" [attr.aria-pressed]="onglet === 'toutes'" (click)="onglet = 'toutes'">Toutes</button>
+  <button type="button" class="tab" [class.active]="onglet === 'associations'" [attr.aria-pressed]="onglet === 'associations'" (click)="onglet = 'associations'">Associations</button>
 </div>
 
 @if (loading()) { <p class="sub">Chargement...</p> }
@@ -27,7 +27,7 @@
           @if (c.categorie || c.ville) {
             <div class="card-meta">
               @if (c.categorie) { <span class="badge">{{ c.categorie }}</span> }
-              @if (c.ville) { <span class="badge"><i class="bi bi-geo-alt"></i> {{ c.ville }}</span> }
+              @if (c.ville) { <span class="badge"><i class="bi bi-geo-alt" aria-hidden="true"></i> {{ c.ville }}</span> }
             </div>
           }
 

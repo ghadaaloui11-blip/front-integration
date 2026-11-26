@@ -4,7 +4,7 @@
   padding: 0 1rem;
 }
 .moderation-container h1 {
-  color: var(--pastel-green-dark, #3B6B52);
+  color: var(--green-forest);
   margin-bottom: 0.25rem;
 }
 .subtitle {
@@ -21,7 +21,7 @@
   padding: 0.5rem 1.1rem;
   border: 1px solid var(--pastel-pink-border, #F8BBD0);
   background: var(--pastel-pink-subtle, #FFF5F7);
-  color: var(--pastel-pink-dark, #C2185B);
+  color: var(--pink-mauve);
   border-radius: 20px;
   cursor: pointer;
   font-weight: 500;
@@ -31,9 +31,9 @@
   background: var(--pastel-pink-light, #FCE4EC);
 }
 .filter-bar button.active {
-  background: var(--pastel-pink-main, #F48FB1);
+  background: var(--pink-rose);
   color: #fff;
-  border-color: var(--pastel-pink-main, #F48FB1);
+  border-color: var(--pink-rose);
   box-shadow: 0 2px 6px rgba(244, 143, 177, 0.35);
 }
 .table-responsive {
@@ -54,7 +54,7 @@
 }
 .moderation-table th {
   background: var(--pastel-green-subtle, #F0FDF4);
-  color: var(--pastel-green-dark, #3B6B52);
+  color: var(--green-forest);
   font-weight: 600;
 }
 .table-desc {
@@ -73,7 +73,7 @@
 }
 .status-recu {
   background: var(--pastel-pink-light, #FCE4EC);
-  color: var(--pastel-pink-dark, #C2185B);
+  color: var(--pink-mauve);
 }
 .status-en_cours {
   background: #FFF3E0;
@@ -81,7 +81,7 @@
 }
 .status-resolu {
   background: var(--pastel-green-light, #D4EDDA);
-  color: var(--pastel-green-dark, #3B6B52);
+  color: var(--green-forest);
 }
 .actions-group {
   display: flex;
@@ -100,7 +100,7 @@
 .btn-delete {
   padding: 0.4rem 0.75rem;
   background: var(--pastel-pink-subtle, #FFF5F7);
-  color: var(--pastel-pink-dark, #C2185B);
+  color: var(--pink-mauve);
   border: 1px solid var(--pastel-pink-border, #F8BBD0);
   border-radius: 6px;
   cursor: pointer;
@@ -118,12 +118,12 @@
 }
 .alert-success {
   background: var(--pastel-green-light, #D4EDDA);
-  color: var(--pastel-green-dark, #3B6B52);
+  color: var(--green-forest);
   border: 1px solid var(--pastel-green-border, #A7F3D0);
 }
 .alert-error {
   background: var(--pastel-pink-light, #FCE4EC);
-  color: var(--pastel-pink-dark, #C2185B);
+  color: var(--pink-mauve);
   border: 1px solid var(--pastel-pink-border, #F8BBD0);
 }
 .empty-state, .loading-state {

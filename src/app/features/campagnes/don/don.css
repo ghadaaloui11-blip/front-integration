@@ -3,7 +3,7 @@
 }
 
 .page-title {
-  color: var(--pastel-green-main, #68B088);
+  color: var(--green-emerald);
   font-size: 32px;
   font-weight: 700;
   margin: 0 0 4px 0;
@@ -16,7 +16,7 @@
 
 .back {
   display: inline-block;
-  color: var(--pastel-green-main, #68B088);
+  color: var(--green-emerald);
   text-decoration: none;
   font-weight: 600;
   margin-bottom: 16px;
@@ -45,7 +45,7 @@
 }
 
 .summary-item .num {
-  color: var(--pastel-green-main, #68B088);
+  color: var(--green-emerald);
   font-size: 22px;
   font-weight: 700;
 }
@@ -86,7 +86,7 @@
 
 .field input:focus,
 .field textarea:focus {
-  border-color: var(--pastel-green-main, #68B088);
+  border-color: var(--green-emerald);
   background: #ffffff;
   box-shadow: 0 0 0 3px rgba(104, 176, 136, 0.15);
 }
@@ -110,17 +110,17 @@
   padding: 10px 20px;
   font-size: 15px;
   font-weight: 600;
-  color: var(--pastel-green-main, #68B088);
+  color: var(--green-emerald);
   cursor: pointer;
 }
 
 .chip:hover {
-  border-color: var(--pastel-green-main, #68B088);
+  border-color: var(--green-emerald);
 }
 
 .chip.active {
-  background: var(--pastel-green-main, #68B088);
-  border-color: var(--pastel-green-main, #68B088);
+  background: var(--green-emerald);
+  border-color: var(--green-emerald);
   color: #ffffff;
 }
 
@@ -138,7 +138,7 @@
 .field.check input[type='checkbox'] {
   width: 18px;
   height: 18px;
-  accent-color: var(--pastel-green-main, #68B088);
+  accent-color: var(--green-emerald);
 }
 
 /* Erreurs */
@@ -164,7 +164,7 @@
 /* Bouton */
 .btn-main {
   width: 100%;
-  background: var(--pastel-green-main, #68B088);
+  background: var(--green-emerald);
   color: #ffffff;
   border: 0;
   border-radius: 10px;
@@ -207,7 +207,7 @@
 }
 
 .receipt-logo {
-  color: var(--pastel-green-main, #68B088);
+  color: var(--green-emerald);
   font-size: 22px;
   font-weight: 700;
 }
@@ -252,7 +252,7 @@
 }
 
 .receipt-total strong {
-  color: var(--pastel-green-main, #68B088);
+  color: var(--green-emerald);
   font-size: 22px;
 }
 
@@ -276,7 +276,7 @@
 
 .receipt-actions .btn-link {
   text-align: center;
-  color: var(--pastel-green-main, #68B088);
+  color: var(--green-emerald);
   font-weight: 600;
   text-decoration: none;
 }

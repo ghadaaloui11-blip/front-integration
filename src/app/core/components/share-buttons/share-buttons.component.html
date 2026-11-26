@@ -2,25 +2,25 @@
   <span class="label">Partager :</span>
 
   <button type="button" class="btn" (click)="partagerNativement()" title="Partager">
-    <i class="bi bi-share-fill"></i> <span>Partager</span>
+    <i class="bi bi-share-fill" aria-hidden="true"></i> <span>Partager</span>
   </button>
   <a class="btn" [href]="liens.whatsapp" target="_blank" rel="noopener noreferrer" title="WhatsApp">
-    <i class="bi bi-whatsapp"></i> <span>WhatsApp</span>
+    <i class="bi bi-whatsapp" aria-hidden="true"></i> <span>WhatsApp</span>
   </a>
   <a class="btn" [href]="liens.facebook" target="_blank" rel="noopener noreferrer" title="Facebook">
-    <i class="bi bi-facebook"></i> <span>Facebook</span>
+    <i class="bi bi-facebook" aria-hidden="true"></i> <span>Facebook</span>
   </a>
   <a class="btn" [href]="liens.x" target="_blank" rel="noopener noreferrer" title="X">
-    <i class="bi bi-twitter-x"></i> <span>X</span>
+    <i class="bi bi-twitter-x" aria-hidden="true"></i> <span>X</span>
   </a>
   <a class="btn" [href]="liens.linkedin" target="_blank" rel="noopener noreferrer" title="LinkedIn">
-    <i class="bi bi-linkedin"></i> <span>LinkedIn</span>
+    <i class="bi bi-linkedin" aria-hidden="true"></i> <span>LinkedIn</span>
   </a>
   <a class="btn" [href]="liens.email" title="E-mail">
-    <i class="bi bi-envelope-fill"></i> <span>E-mail</span>
+    <i class="bi bi-envelope-fill" aria-hidden="true"></i> <span>E-mail</span>
   </a>
   <button type="button" class="btn" (click)="copier()" title="Copier le lien">
-    <i class="bi bi-link-45deg"></i> <span>Copier le lien</span>
+    <i class="bi bi-link-45deg" aria-hidden="true"></i> <span>Copier le lien</span>
   </button>
 
   @if (message()) {

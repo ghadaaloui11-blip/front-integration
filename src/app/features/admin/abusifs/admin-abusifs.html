@@ -29,15 +29,15 @@
   @if (!chargement()) {
     <p class="total">{{ total() }} signalement(s)</p>
     <div class="table-responsive">
-      <table class="table">
+      <table class="table" aria-label="Signalements abusifs">
         <thead>
           <tr>
-            <th>Contenu visé</th>
-            <th>Motif</th>
-            <th>Signalé par</th>
-            <th>Date</th>
-            <th>Statut</th>
-            <th>Décision / Actions</th>
+            <th scope="col">Contenu visé</th>
+            <th scope="col">Motif</th>
+            <th scope="col">Signalé par</th>
+            <th scope="col">Date</th>
+            <th scope="col">Statut</th>
+            <th scope="col">Décision / Actions</th>
           </tr>
         </thead>
         <tbody>

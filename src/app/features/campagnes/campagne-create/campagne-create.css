@@ -3,7 +3,7 @@
 }
 
 .page-title {
-  color: var(--pastel-green-main, #68B088);
+  color: var(--green-emerald);
   font-size: 32px;
   font-weight: 700;
   margin: 0 0 4px 0;
@@ -53,7 +53,7 @@
 
 .field input:focus,
 .field textarea:focus {
-  border-color: var(--pastel-green-main, #68B088);
+  border-color: var(--green-emerald);
   background: #ffffff;
   box-shadow: 0 0 0 3px rgba(104, 176, 136, 0.15);
 }
@@ -92,7 +92,7 @@
 /* Bouton */
 .btn-main {
   width: 100%;
-  background: var(--pastel-green-main, #68B088);
+  background: var(--green-emerald);
   color: #ffffff;
   border: 0;
   border-radius: 10px;

@@ -28,14 +28,14 @@
 
 @if (onglet() === 'disponibles') {
   <div class="card-box">
-    <table class="table">
+    <table class="table" aria-label="Mes signalements">
       <thead>
         <tr>
-          <th>Signalement</th>
-          <th>Statut</th>
-          <th>Responsable</th>
-          <th>Soumis</th>
-          <th></th>
+          <th scope="col">Signalement</th>
+          <th scope="col">Statut</th>
+          <th scope="col">Responsable</th>
+          <th scope="col">Soumis</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -82,13 +82,13 @@
 
 @if (onglet() === 'mes') {
   <div class="card-box">
-    <table class="table">
+    <table class="table" aria-label="Signalements pris en charge">
       <thead>
         <tr>
-          <th>Signalement</th>
-          <th>Statut</th>
-          <th>Pris en charge le</th>
-          <th></th>
+          <th scope="col">Signalement</th>
+          <th scope="col">Statut</th>
+          <th scope="col">Pris en charge le</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>

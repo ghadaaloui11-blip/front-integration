@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   NotificationsApiService,
@@ -16,6 +16,8 @@ export class NotificationCenterComponent implements OnInit {
   service = inject(NotificationsApiService);
   liste: NotificationServeur[] = [];
   ouvert = false;
+
+  private readonly host: ElementRef<HTMLElement> = inject(ElementRef);
 
   ngOnInit() {
     this.service.rafraichirCompteur();
@@ -60,5 +62,17 @@ export class NotificationCenterComponent implements OnInit {
       },
       error: (err) => console.error('Erreur test', err),
     });
+  }
+
+  @HostListener('document:click', ['$event.target'])
+  surClicExterne(cible: EventTarget | null): void {
+    if (this.ouvert && (!(cible instanceof Node) || !this.host.nativeElement.contains(cible))) {
+      this.ouvert = false;
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  surEchap(): void {
+    this.ouvert = false;
   }
 }

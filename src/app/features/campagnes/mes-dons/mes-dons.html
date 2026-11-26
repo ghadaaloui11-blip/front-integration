@@ -3,7 +3,7 @@
     <h1 class="title">Mes dons</h1>
     <p class="sub">Historique de toutes vos contributions financières.</p>
   </div>
-  <a routerLink="/campagnes" class="btn-explore">Découvrir des campagnes <i class="bi bi-arrow-right"></i></a>
+  <a routerLink="/campagnes" class="btn-explore">Découvrir des campagnes <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
 </div>
 
 <!-- Résumé -->
@@ -33,7 +33,7 @@
   <div class="alert-error">{{ error() }}</div>
 } @else if (dons().length === 0) {
   <div class="empty-state">
-    <div class="empty-icon"><i class="bi bi-heart-fill text-success"></i></div>
+    <div class="empty-icon"><i class="bi bi-heart-fill text-success" aria-hidden="true"></i></div>
     <h3>Vous n'avez pas encore fait de don</h3>
     <p>Découvrez les campagnes en cours et soutenez une cause qui vous tient à cœur.</p>
     <a routerLink="/campagnes" class="btn-explore">Voir les campagnes</a>
@@ -44,7 +44,7 @@
     @for (don of dons(); track don.id) {
       <div class="don-card">
         <div class="don-left">
-          <div class="don-icon"><i class="bi bi-cash-coin"></i></div>
+          <div class="don-icon"><i class="bi bi-cash-coin" aria-hidden="true"></i></div>
           <div class="don-info">
             <a [routerLink]="['/campagnes', don.campagne_id]" class="don-campagne">
               {{ don.campagne_titre }}

@@ -8,7 +8,7 @@
   margin-bottom: 2rem;
 }
 .newsfeed-header h1 {
-  color: var(--pastel-green-dark, #3B6B52);
+  color: var(--green-forest);
   margin-bottom: 0.5rem;
 }
 .subtitle {
@@ -25,7 +25,7 @@
   padding: 1.5rem;
   background: var(--card-bg, #FFFFFF);
   position: relative;
-  border-left: 5px solid var(--pastel-green-main, #68B088);
+  border-left: 5px solid var(--green-emerald);
   box-shadow: 0 4px 12px rgba(104, 176, 136, 0.08);
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -37,21 +37,21 @@
   border-left-color: var(--pastel-green-hover, #559B74);
 }
 .feed-item.type-signalement_resolu {
-  border-left-color: var(--pastel-pink-main, #F48FB1);
+  border-left-color: var(--pink-rose);
 }
 .feed-badge {
   display: inline-block;
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--pastel-green-dark, #3B6B52);
+  color: var(--green-forest);
   background: var(--pastel-green-light, #D4EDDA);
   padding: 0.25rem 0.6rem;
   border-radius: 6px;
   margin-bottom: 0.5rem;
 }
 .type-signalement_resolu .feed-badge {
-  color: var(--pastel-pink-dark, #C2185B);
+  color: var(--pink-mauve);
   background: var(--pastel-pink-light, #FCE4EC);
 }
 .feed-meta {
@@ -71,7 +71,7 @@
   transition: color 0.2s;
 }
 .feed-title a:hover {
-  color: var(--pastel-pink-dark, #C2185B);
+  color: var(--pink-mauve);
 }
 .feed-desc {
   color: var(--text-main, #2D3748);
@@ -80,7 +80,7 @@
 }
 .feed-extra, .feed-location {
   font-size: 0.85rem;
-  color: var(--pastel-green-dark, #3B6B52);
+  color: var(--green-forest);
   background: var(--pastel-green-subtle, #F0FDF4);
   border: 1px solid var(--pastel-green-border, #A7F3D0);
   padding: 0.4rem 0.75rem;
@@ -91,7 +91,7 @@
 }
 .alert-error {
   background: var(--pastel-pink-light, #FCE4EC);
-  color: var(--pastel-pink-dark, #C2185B);
+  color: var(--pink-mauve);
   border: 1px solid var(--pastel-pink-border, #F8BBD0);
   padding: 1rem;
   border-radius: 8px;

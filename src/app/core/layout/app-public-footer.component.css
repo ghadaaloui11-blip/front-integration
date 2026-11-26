@@ -1,0 +1,77 @@
+.public-footer {
+  margin-top: auto;
+  padding: 26px 32px;
+  background: var(--green-forest);
+  color: #fff;
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 28px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-arabic);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.footer-logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--warm-cream);
+}
+
+.footer-tagline,
+.footer-legal {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 18px;
+}
+
+.footer-links a {
+  color: #fff;
+  font-size: 12px;
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+  text-underline-offset: 3px;
+}
+
+.footer-links a:hover {
+  text-decoration-color: #fff;
+}
+
+.footer-legal {
+  flex: 1 1 100%;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 11px;
+}
+
+:where(a):focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+  .public-footer {
+    padding: 22px 16px;
+  }
+}

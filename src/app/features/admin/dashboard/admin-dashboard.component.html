@@ -6,7 +6,7 @@
       <h1>Tableau de bord</h1>
       <p class="date">{{ dateDuJour }}</p>
     </div>
-    <button class="bouton-actu" (click)="actualiser()">
+    <button type="button" class="bouton-actu" (click)="actualiser()">
       {{ chargement ? 'Chargement...' : '↻ Actualiser' }}
     </button>
   </div>
@@ -20,7 +20,7 @@
     <!-- KPI -->
     <div class="kpis">
       <div class="kpi">
-        <div class="kpi-icone c-vert"><i class="bi bi-people-fill"></i></div>
+        <div class="kpi-icone c-vert"><i class="bi bi-people-fill" aria-hidden="true"></i></div>
         <div>
           <div class="kpi-chiffre">{{ stats.utilisateurs.total }}</div>
           <div class="kpi-texte">Utilisateurs</div>
@@ -29,7 +29,7 @@
       </div>
 
       <div class="kpi">
-        <div class="kpi-icone c-bleu"><i class="bi bi-person-raised-hand"></i></div>
+        <div class="kpi-icone c-bleu"><i class="bi bi-person-raised-hand" aria-hidden="true"></i></div>
         <div>
           <div class="kpi-chiffre">{{ stats.benevoles }}</div>
           <div class="kpi-texte">Bénévoles</div>
@@ -38,7 +38,7 @@
       </div>
 
       <div class="kpi">
-        <div class="kpi-icone c-orange"><i class="bi bi-megaphone-fill"></i></div>
+        <div class="kpi-icone c-orange"><i class="bi bi-megaphone-fill" aria-hidden="true"></i></div>
         <div>
           <div class="kpi-chiffre">{{ total(stats.signalements) }}</div>
           <div class="kpi-texte">Signalements</div>
@@ -47,7 +47,7 @@
       </div>
 
       <div class="kpi">
-        <div class="kpi-icone c-violet"><i class="bi bi-heart-half"></i></div>
+        <div class="kpi-icone c-violet"><i class="bi bi-heart-half" aria-hidden="true"></i></div>
         <div>
           <div class="kpi-chiffre">{{ total(stats.demandesAide) }}</div>
           <div class="kpi-texte">Demandes d'aide</div>
@@ -59,7 +59,7 @@
     <!-- KPI supplémentaires : campagnes, dons, événements, inscriptions -->
     <div class="kpis">
       <div class="kpi">
-        <div class="kpi-icone c-vert"><i class="bi bi-bullseye"></i></div>
+        <div class="kpi-icone c-vert"><i class="bi bi-bullseye" aria-hidden="true"></i></div>
         <div>
           <div class="kpi-chiffre">{{ stats.campagnes ?? 0 }}</div>
           <div class="kpi-texte">Campagnes</div>
@@ -68,7 +68,7 @@
       </div>
 
       <div class="kpi">
-        <div class="kpi-icone c-orange"><i class="bi bi-gift-fill"></i></div>
+        <div class="kpi-icone c-orange"><i class="bi bi-gift-fill" aria-hidden="true"></i></div>
         <div>
           <div class="kpi-chiffre">{{ stats.dons ?? 0 }}</div>
           <div class="kpi-texte">Dons</div>
@@ -77,7 +77,7 @@
       </div>
 
       <div class="kpi">
-        <div class="kpi-icone c-bleu"><i class="bi bi-calendar-event-fill"></i></div>
+        <div class="kpi-icone c-bleu"><i class="bi bi-calendar-event-fill" aria-hidden="true"></i></div>
         <div>
           <div class="kpi-chiffre">{{ stats.evenements ?? 0 }}</div>
           <div class="kpi-texte">Événements</div>
@@ -86,7 +86,7 @@
       </div>
 
       <div class="kpi">
-        <div class="kpi-icone c-violet"><i class="bi bi-hand-index-thumb-fill"></i></div>
+        <div class="kpi-icone c-violet"><i class="bi bi-hand-index-thumb-fill" aria-hidden="true"></i></div>
         <div>
           <div class="kpi-chiffre">{{ stats.inscriptions ?? 0 }}</div>
           <div class="kpi-texte">Inscriptions</div>
@@ -161,19 +161,19 @@
         placeholder="Rechercher (nom, prénom, email)"
         (keyup.enter)="rechercher()"
       />
-      <button class="bouton" (click)="rechercher()">Rechercher</button>
+      <button type="button" class="bouton" (click)="rechercher()">Rechercher</button>
     </div>
 
     <div class="tableau">
-      <table class="liste">
+      <table class="liste" aria-label="Utilisateurs récents">
         <thead>
           <tr>
-            <th>Utilisateur</th>
-            <th>Email</th>
-            <th>ID</th>
-            <th>Rôle</th>
-            <th>Statut</th>
-            <th>Action</th>
+            <th scope="col">Utilisateur</th>
+            <th scope="col">Email</th>
+            <th scope="col">ID</th>
+            <th scope="col">Rôle</th>
+            <th scope="col">Statut</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -195,7 +195,7 @@
               </td>
               <td>
                 @if (u.role !== 'admin') {
-                  <button
+                  <button type="button"
                     class="bouton-statut"
                     [class.reactiver]="u.actif === false"
                     [disabled]="enCours === u.id"
@@ -216,9 +216,9 @@
     }
 
     <div class="pagination">
-      <button class="bouton" (click)="pagePrecedente()" [disabled]="page === 1">Précédent</button>
+      <button type="button" class="bouton" (click)="pagePrecedente()" [disabled]="page === 1">Précédent</button>
       <span>Page {{ page }}</span>
-      <button class="bouton" (click)="pageSuivante()" [disabled]="utilisateurs.length < 10">Suivant</button>
+      <button type="button" class="bouton" (click)="pageSuivante()" [disabled]="utilisateurs.length < 10">Suivant</button>
     </div>
   </div>
 

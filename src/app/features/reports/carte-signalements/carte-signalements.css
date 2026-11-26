@@ -6,9 +6,9 @@ h1 { margin-bottom: .4rem; }
 .liste { max-height: 560px; overflow-y: auto; background: #fff; border: 1px solid #e3e7ec; border-radius: 12px; padding: 1rem; }
 .liste h2 { font-size: 1.05rem; margin: 0 0 .8rem; }
 .item { display: grid; gap: .2rem; width: 100%; text-align: left; border: 1px solid #eef1f4; background: #fff; border-radius: 8px; padding: .7rem; margin-bottom: .5rem; cursor: pointer; }
-.item:hover { border-color: #0d6efd; }
+.item:hover { border-color: var(--green-emerald); }
 .item:disabled { opacity: .6; cursor: wait; }
-.statut { font-size: .8rem; color: #0d6efd; }
+.statut { font-size: .8rem; color: var(--green-emerald); }
 .info { color: #6c757d; }
 .alert { padding: .8rem 1rem; border-radius: 8px; margin-bottom: 1rem; }
 .alert-error { background: #fdecea; color: #b3261e; }
@@ -17,7 +17,7 @@ h1 { margin-bottom: .4rem; }
 :host ::ng-deep .marqueur-signalement { background: transparent; border: 0; }
 :host ::ng-deep .marqueur-signalement .point { display: block; width: 22px; height: 22px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 1px 5px rgba(0,0,0,.35); }
 :host ::ng-deep .marqueur-signalement .point.recu { background: #ffc107; }
-:host ::ng-deep .marqueur-signalement .point.encours { background: #0d6efd; }
+:host ::ng-deep .marqueur-signalement .point.encours { background: var(--green-emerald); }
 :host ::ng-deep .marqueur-signalement .point.resolve { background: #198754; }
 
 @media (max-width: 900px) {

@@ -1,6 +1,7 @@
 :root {
   /* Global Typography */
-  --font-base: 'Times New Roman', Times, serif;
+  --font-base: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-arabic: 'Noto Sans Arabic', Tahoma, 'Segoe UI', sans-serif;
 
   /* Greens */
   --green-forest: #1E8449;
@@ -44,6 +45,14 @@
   --status-ok: var(--green-emerald);
   --status-pending: var(--green-olive);
   --status-refused: var(--pink-coral);
+
+  /* Rythme visuel partagé */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --shadow-card: 0 12px 32px rgba(58, 51, 48, 0.06);
+  --shadow-pop: 0 14px 36px rgba(58, 51, 48, 0.14);
+  --page-width: 1120px;
 }
 
 *,
@@ -242,6 +251,39 @@ app-root {
   text-decoration: underline;
 }
 
+/* ===== Compatibilité légère (remplace le CSS Bootstrap inutilisé) ===== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 15px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--green-emerald);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.alert {
+  margin: 12px 0;
+  padding: 12px 15px;
+  border-radius: var(--radius-sm);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.text-success {
+  color: var(--green-forest);
+}
+
 /* ===== Impression (reçu de don) ===== */
 @media print {
   .sidebar,
@@ -257,5 +299,49 @@ app-root {
 
   .content {
     padding: 0;
+  }
+}
+
+/* ===== Utilitaires partagés ===== */
+
+/* Largeur et espacement cohérents pour toutes les pages. */
+.page-shell {
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus clavier visible partout, y compris là où outline était supprimé. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--green-emerald);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  body.menu-ouvert {
+    overflow: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

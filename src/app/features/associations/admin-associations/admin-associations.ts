@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, HostListener, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -88,6 +88,11 @@ export class AdminAssociationsComponent implements OnInit {
 
   stopProp(event: Event) {
     event.stopPropagation();
+  }
+
+  @HostListener('document:keydown.escape')
+  surEchap(): void {
+    if (this.showModal) this.fermerModal();
   }
 
   valider(statut: 'approuve' | 'refuse') {

@@ -5,10 +5,11 @@
 
     <form (ngSubmit)="lancerRecherche()" class="search-form">
       <input
-        type="text"
+        type="search"
         [(ngModel)]="terme"
         name="search"
         placeholder="Rechercher par mot-clé (ex: aide, santé, Tunis)..."
+        aria-label="Mot-clé de la recherche globale"
         class="search-input"
       />
       <button type="submit" class="btn-search" [disabled]="chargement()">
@@ -17,11 +18,11 @@
     </form>
 
     <div class="filter-tabs">
-      <button type="button" [class.active]="typeActif() === ''" (click)="changerType('')">Tous</button>
-      <button type="button" [class.active]="typeActif() === 'campagne'" (click)="changerType('campagne')">Campagnes</button>
-      <button type="button" [class.active]="typeActif() === 'signalement'" (click)="changerType('signalement')">Signalements</button>
-      <button type="button" [class.active]="typeActif() === 'evenement'" (click)="changerType('evenement')">Événements</button>
-      <button type="button" [class.active]="typeActif() === 'association'" (click)="changerType('association')">Associations</button>
+      <button type="button" [class.active]="typeActif() === ''" [attr.aria-pressed]="typeActif() === ''" (click)="changerType('')">Tous</button>
+      <button type="button" [class.active]="typeActif() === 'campagne'" [attr.aria-pressed]="typeActif() === 'campagne'" (click)="changerType('campagne')">Campagnes</button>
+      <button type="button" [class.active]="typeActif() === 'signalement'" [attr.aria-pressed]="typeActif() === 'signalement'" (click)="changerType('signalement')">Signalements</button>
+      <button type="button" [class.active]="typeActif() === 'evenement'" [attr.aria-pressed]="typeActif() === 'evenement'" (click)="changerType('evenement')">Événements</button>
+      <button type="button" [class.active]="typeActif() === 'association'" [attr.aria-pressed]="typeActif() === 'association'" (click)="changerType('association')">Associations</button>
     </div>
   </div>
 

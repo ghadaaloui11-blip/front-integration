@@ -1,0 +1,70 @@
+<header class="topbar">
+  <div class="topbar-start">
+    <button
+      class="icon-btn menu-toggle"
+      type="button"
+      (click)="layout.basculer()"
+      [attr.aria-expanded]="layout.menuOuvert()"
+      aria-controls="app-sidebar"
+      aria-label="Afficher le menu de navigation"
+    >
+      <i class="bi bi-list" aria-hidden="true"></i>
+    </button>
+
+    <div class="page-context">
+      <span class="eyebrow">Espace solidaire</span>
+      <h1 class="page-title">{{ titre() }}</h1>
+    </div>
+  </div>
+
+  <form class="global-search" role="search" (ngSubmit)="rechercher()">
+    <i class="bi bi-search" aria-hidden="true"></i>
+    <input
+      type="search"
+      name="q"
+      [(ngModel)]="terme"
+      placeholder="Rechercher une campagne, un événement…"
+      aria-label="Recherche globale"
+    />
+    <button type="submit" aria-label="Lancer la recherche">
+      <i class="bi bi-arrow-right" aria-hidden="true"></i>
+    </button>
+  </form>
+
+  <div class="topbar-actions">
+    <app-notification-center></app-notification-center>
+
+    <div class="user-menu">
+      <button
+        class="user-trigger"
+        type="button"
+        (click)="basculerMenu()"
+        [attr.aria-expanded]="menuOuvert()"
+        aria-haspopup="true"
+        aria-controls="user-menu-panel"
+      >
+        <span class="avatar" aria-hidden="true">{{ initiales() }}</span>
+        <span class="user-name">{{ prenom() }}</span>
+        <i class="bi bi-chevron-down caret" aria-hidden="true"></i>
+      </button>
+
+      @if (menuOuvert()) {
+        <div class="user-panel" id="user-menu-panel" aria-label="Menu utilisateur">
+          <div class="user-panel-head">
+            <strong>{{ auth.getNom() || 'Mon compte' }}</strong>
+            <span>{{ auth.getRole() || '' }}</span>
+          </div>
+          <a routerLink="/profil" (click)="menuOuvert.set(false)">
+            <i class="bi bi-person" aria-hidden="true"></i> Mon profil
+          </a>
+          <a routerLink="/mes-activites" (click)="menuOuvert.set(false)">
+            <i class="bi bi-clock-history" aria-hidden="true"></i> Mes activités
+          </a>
+          <button type="button" (click)="deconnecter()">
+            <i class="bi bi-box-arrow-right" aria-hidden="true"></i> Se déconnecter
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</header>
